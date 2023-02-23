@@ -278,7 +278,7 @@ apt-key --keyring /etc/apt/trusted.gpg del CDFFDE29
 
 # Recover backup files
 show_message "Recuperando arquivos de backup"
-user_do "gpg ./assets/backups/home.tar.gz.gpg"
+user_do "gpg --decrypt ./assets/backups/home.tar.gz.gpg"
 user_do "tar -zxvf ./assets/backups/home.tar.gz -C /home/$RUID/"
 
 # Customize Plymouth theme
