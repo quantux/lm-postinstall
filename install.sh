@@ -179,13 +179,6 @@ user_do "rm ~/.poshthemes/themes.zip"
 show_message "Aplicando Wallpaper"
 user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${RUSER_UID}/bus' gsettings set org.cinnamon.desktop.background picture-uri 'file:///$PWD/assets/wallpapers/default-wallpaper.jpg'"
 
-# Home folder - config files
-show_message "Copiando arquivos de configuração para a pasta home"
-git clone https://github.com/quantux/home /tmp/home
-shopt -s dotglob
-mv /tmp/home/* /home/$RUID/
-chown -R $RUID:$RUID /home/$RUID/.git
-
 # Install grub themes
 show_message "Instalando grub themes"
 git clone https://github.com/vinceliuice/grub2-themes assets/grub2-themes
