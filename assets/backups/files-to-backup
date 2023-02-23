@@ -8,10 +8,6 @@
 .dropbox
 .dropbox-dist
 .fzf
-.fz
-.bash
-.fz
-.zsh
 .git
 .gitconfig
 .git-credentials
@@ -23,10 +19,8 @@
 .ngrok
 .npm
 .oh-my-zsh
-.poshthemes Postman
+.poshthemes
 .ssh
-.tmu
-.conf
 .tool-versions
 .var
 .vim
