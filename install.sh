@@ -276,6 +276,11 @@ apt install -y anydesk
 apt-key export CDFFDE29 | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/anydesk.gpg
 apt-key --keyring /etc/apt/trusted.gpg del CDFFDE29
 
+# Recover backup files
+show_message "Recuperando arquivos de backup"
+user_do "gpg ./assets/backups/home.tar.gz.gpg"
+user_do "tar -zxvf ./assets/backups/home.tar.gz -C /home/$RUID/"
+
 # Customize Plymouth theme
 show_message "Instalando tema do plymouth"
 git clone https://github.com/adi1090x/plymouth-themes /usr/share/themes/plymouth-themes
