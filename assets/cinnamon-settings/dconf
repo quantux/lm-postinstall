@@ -21,7 +21,7 @@ autorefresh-hours=2
 hide-systray=true
 hide-window-after-update=true
 install-last-run=1667763660
-refresh-last-run=1677030254
+refresh-last-run=1677181916
 refresh-minutes=10
 show-welcome-page=false
 tracker-grace-period=30
@@ -45,9 +45,9 @@ width=1366
 
 [org/cinnamon]
 command-history=['r', 'scrcpy', 'reboot']
-enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:13:show-desktop@cinnamon.org:1', 'panel1:right:2:systray@cinnamon.org:3', 'panel1:right:3:xapp-status@cinnamon.org:4', 'panel1:right:5:printers@cinnamon.org:6', 'panel1:right:7:keyboard@cinnamon.org:8', 'panel1:right:8:favorites@cinnamon.org:9', 'panel1:right:9:network@cinnamon.org:10', 'panel1:right:10:sound@cinnamon.org:11', 'panel1:right:11:power@cinnamon.org:12', 'panel1:right:12:calendar@cinnamon.org:13', 'panel1:left:2:window-list@cinnamon.org:14', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel2:left:0:window-list@cinnamon.org:17', 'panel2:right:1:calendar@cinnamon.org:18']
+enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:14:show-desktop@cinnamon.org:1', 'panel1:right:3:systray@cinnamon.org:3', 'panel1:right:4:xapp-status@cinnamon.org:4', 'panel1:right:6:printers@cinnamon.org:6', 'panel1:right:8:keyboard@cinnamon.org:8', 'panel1:right:9:favorites@cinnamon.org:9', 'panel1:right:10:network@cinnamon.org:10', 'panel1:right:11:sound@cinnamon.org:11', 'panel1:right:12:power@cinnamon.org:12', 'panel1:right:13:calendar@cinnamon.org:13', 'panel1:left:2:window-list@cinnamon.org:14', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel2:left:0:window-list@cinnamon.org:17', 'panel2:right:1:calendar@cinnamon.org:18']
 favorite-apps=['google-chrome.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'cinnamon-settings.desktop', 'mintupdate.desktop']
-next-applet-id=20
+next-applet-id=21
 panel-edit-mode=false
 panel-launchers=['DEPRECATED']
 panel-zone-icon-sizes='[{"panelId":1,"left":0,"center":0,"right":24},{"left":0,"center":0,"right":0,"panelId":2}]'
@@ -215,8 +215,23 @@ picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/background
 migrated=true
 network-monitor-gio-name=''
 
+[org/gnome/file-roller/dialogs/new]
+default-extension='.zip'
+encrypt-header=false
+expand-options=true
+volume-size=0
+
 [org/gnome/file-roller/listing]
+list-mode='as-folder'
+name-column-width=250
 show-path=false
+sort-method='name'
+sort-type='descending'
+
+[org/gnome/file-roller/ui]
+sidebar-width=200
+window-height=480
+window-width=600
 
 [org/gnome/terminal/legacy]
 default-show-menubar=false
@@ -247,8 +262,8 @@ sort-column='name'
 sort-directories-first=true
 sort-order='ascending'
 type-format='category'
-window-position=(1415, 256)
-window-size=(1096, 711)
+window-position=(1415, 283)
+window-size=(1096, 631)
 
 [org/nemo/desktop]
 computer-icon-visible=false
@@ -260,14 +275,19 @@ volumes-visible=false
 show-hidden-files=false
 
 [org/nemo/window-state]
-geometry='1071x592+1409+339'
+geometry='1071x592+1366+342'
 maximized=false
 sidebar-bookmark-breakpoint=5
 sidebar-width=256
 start-with-sidebar=true
 
 [org/x/editor/plugins]
-active-plugins=['joinlines', 'sort', 'modelines', 'bracketcompletion', 'textsize', 'spell', 'filebrowser', 'open-uri-context-menu', 'docinfo', 'time']
+active-plugins=['sort', 'time', 'joinlines', 'filebrowser', 'modelines', 'docinfo', 'spell', 'bracketcompletion', 'textsize', 'open-uri-context-menu']
+
+[org/x/editor/plugins/filebrowser/on-load]
+root='file:///'
+tree-view=true
+virtual-root='file:///home/mths/%C3%81rea%20de%20Trabalho'
 
 [org/x/editor/preferences/ui]
 statusbar-visible=true
