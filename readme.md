@@ -1,3 +1,3 @@
-Executar primeiro o script backup.sh para copiar os arquivos de configuração da /home. O script deve ser executado sem usar root.
-Depois, executar o script install.sh na máquina já formatada, para instalar todos os pacotes e restaurar o backup.
+Executar primeiro o script backup.sh para fazer o backup de toda a pasta home. O script deve ser executado sem usar root.
+Depois, executar o script install.sh na máquina formatada, para instalar todos os pacotes e restaurar o backup. Deve ser executado como root.
 
