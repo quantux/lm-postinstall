@@ -59,6 +59,13 @@ echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula	boolean	
 echo "ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note" | debconf-set-selections
 apt install -y ttf-mscorefonts-installer
 
+# Recover backup files
+show_message "Recuperando arquivos de backup"
+gpg --decrypt assets/backups/home.tar.gz.gpg > /tmp/home.tar.gz
+tar -zxvf /tmp/home.tar.gz -C /tmp
+rsync -aAXv /tmp/home/ /home/$RUID/
+chown -R $RUID:$RUID /home/$RUID/
+
 # Upgrade
 show_message "Atualizando pacotes"
 apt upgrade -y
@@ -164,23 +171,6 @@ apt install code -y
 show_message "Instalando oh-my-zsh"
 user_do "sh ./assets/oh-my-zsh/oh-my-zsh-install.sh --unattended"
 chsh -s $(which zsh) $(whoami)
-
-# Install oh-my-posh
-show_message "Instalando oh-my-posh"
-wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
-chmod +x /usr/local/bin/oh-my-posh
-user_do "mkdir ~/.poshthemes"
-user_do "wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -O ~/.poshthemes/themes.zip"
-user_do "unzip ~/.poshthemes/themes.zip -d ~/.poshthemes"
-user_do "chmod u+rw ~/.poshthemes/*.omp.*"
-user_do "rm ~/.poshthemes/themes.zip"
-
-# Recover backup files
-show_message "Recuperando arquivos de backup"
-gpg --decrypt assets/backups/home.tar.gz.gpg > /tmp/home.tar.gz
-tar -zxvf /tmp/home.tar.gz -C /tmp
-rsync -aAXv /tmp/home/ /home/$RUID/
-chown -R $RUID:$RUID /home/$RUID/
 
 # Load dconf file
 show_message "Carregando configurações do dconf"
