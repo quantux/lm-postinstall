@@ -172,6 +172,11 @@ show_message "Instalando oh-my-zsh"
 user_do "sh ./assets/oh-my-zsh/oh-my-zsh-install.sh --unattended"
 chsh -s $(which zsh) $(whoami)
 
+# Install oh-my-posh
+show_message "Instalando oh-my-posh"
+wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
+chmod +x /usr/local/bin/oh-my-posh
+
 # Load dconf file
 show_message "Carregando configurações do dconf"
 user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${RUSER_UID}/bus' dconf load / < ./assets/cinnamon-settings/dconf"
