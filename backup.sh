@@ -7,7 +7,7 @@ if [[ $EUID -eq 0 ]]; then
 fi
 
 username=$(whoami)
-rsync -aAXv --info=PROGRESS --exclude=".cache" --exclude=".ecryptfs" --exclude=".local/share/Trash" /home/$username/ assets/backups/home
+rsync -aAXv --progress --exclude-from=ignore-files /home/$username/ assets/backups/home
 tar -cvzf assets/backups/home.tar.gz -C assets/backups home/
 rm -rf assets/backups/home
 gpg --pinentry-mode loopback -c --cipher-algo AES256 assets/backups/home.tar.gz
