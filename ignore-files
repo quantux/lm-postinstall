@@ -11,5 +11,6 @@ Android
 workspace
 .local/share/Trash
 .steam
+.vmware
 .cache
 .ecryptfs
