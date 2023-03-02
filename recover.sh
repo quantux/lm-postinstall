@@ -271,6 +271,11 @@ apt install -y anydesk
 apt-key export CDFFDE29 | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/anydesk.gpg
 apt-key --keyring /etc/apt/trusted.gpg del CDFFDE29
 
+# Disable servers system startup
+systemctl disable apache2
+systemctl disable nginx
+systemctl disable mysql
+
 # Customize Plymouth theme
 show_message "Instalando tema do plymouth"
 git clone https://github.com/adi1090x/plymouth-themes /usr/share/themes/plymouth-themes
