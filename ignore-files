@@ -10,5 +10,6 @@ VirtualBox VMs
 Android
 workspace
 .local/share/Trash
+.steam
 .cache
 .ecryptfs
