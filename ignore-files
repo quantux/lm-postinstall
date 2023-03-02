@@ -12,5 +12,6 @@ workspace
 .local/share/Trash
 .steam
 .vmware
+vmware
 .cache
 .ecryptfs
