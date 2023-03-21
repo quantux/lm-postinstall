@@ -288,6 +288,8 @@ update-initramfs -u
 show_message "Instalando Samba"
 apt install -y samba
 mkdir -p /home/$RUID/Kodi
+mkdir -p /home/$RUID/Kodi/Movies
+mkdir -p /home/$RUID/Kodi/Series
 cp assets/samba/smb.conf /etc/samba/smb.conf
 setfacl -R -m "u:$RUID:rwx" /home/$RUID/Kodi/
 smbpasswd -a $RUID
