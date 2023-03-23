@@ -167,6 +167,12 @@ sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg]
 apt update
 apt install code -y
 
+# Install Discord
+show_message "Instalando Discord"
+wget "https://discord.com/api/download?platform=linux&format=deb" -O /tmp/discord.deb
+dpkg -i /tmp/discord.deb
+apt install -fy
+
 # Install oh-my-zsh
 show_message "Instalando oh-my-zsh"
 user_do "sh ./assets/oh-my-zsh/oh-my-zsh-install.sh --unattended"
