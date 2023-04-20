@@ -7,6 +7,7 @@ if [[ $EUID -eq 0 ]]; then
 fi
 
 username=$(whoami)
+mkdir -p assets/backups
 rsync -aAXv --progress --exclude-from=ignore-files /home/$username/ assets/backups/home
 tar -cvzf assets/backups/home.tar.gz -C assets/backups home/
 rm -rf assets/backups/home
