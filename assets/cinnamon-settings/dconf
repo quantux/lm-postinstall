@@ -21,7 +21,7 @@ autorefresh-hours=2
 hide-systray=true
 hide-window-after-update=true
 install-last-run=1667763660
-refresh-last-run=1679585701
+refresh-last-run=1684354583
 refresh-minutes=10
 show-welcome-page=false
 tracker-grace-period=30
@@ -44,11 +44,11 @@ volume=1.0
 width=1366
 
 [org/cinnamon]
-command-history=['reboot', 'r', 'scrcp', 'scrcpy']
-enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:14:show-desktop@cinnamon.org:1', 'panel1:right:3:systray@cinnamon.org:3', 'panel1:right:4:xapp-status@cinnamon.org:4', 'panel1:right:6:printers@cinnamon.org:6', 'panel1:right:8:keyboard@cinnamon.org:8', 'panel1:right:9:favorites@cinnamon.org:9', 'panel1:right:10:network@cinnamon.org:10', 'panel1:right:11:sound@cinnamon.org:11', 'panel1:right:12:power@cinnamon.org:12', 'panel1:right:13:calendar@cinnamon.org:13', 'panel1:left:2:window-list@cinnamon.org:14', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel2:left:0:window-list@cinnamon.org:17', 'panel2:right:1:calendar@cinnamon.org:18']
+command-history=['reboot', 'scrcp', 'scrcpy', 'r']
+enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:1:systray@cinnamon.org:3', 'panel1:right:2:xapp-status@cinnamon.org:4', 'panel1:right:3:printers@cinnamon.org:6', 'panel1:right:4:keyboard@cinnamon.org:8', 'panel1:right:5:favorites@cinnamon.org:9', 'panel1:right:6:network@cinnamon.org:10', 'panel1:right:7:sound@cinnamon.org:11', 'panel1:right:8:power@cinnamon.org:12', 'panel1:right:9:calendar@cinnamon.org:13', 'panel1:left:2:window-list@cinnamon.org:14', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel2:left:0:window-list@cinnamon.org:17', 'panel2:right:1:calendar@cinnamon.org:18', 'panel1:right:11:clean-show-desktop@filipetorresbr:21']
 enabled-extensions=['transparent-panels@germanfr']
 favorite-apps=['google-chrome.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'cinnamon-settings.desktop', 'mintupdate.desktop']
-next-applet-id=21
+next-applet-id=22
 panel-edit-mode=false
 panel-launchers=['DEPRECATED']
 panel-zone-icon-sizes='[{"panelId":1,"left":0,"center":0,"right":24},{"left":0,"center":0,"right":0,"panelId":2}]'
@@ -78,8 +78,8 @@ exec='gnome-calculator'
 exec='gnome-terminal'
 
 [org/cinnamon/desktop/background]
-picture-options='zoom'
-picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Red Zeppelin_MhG0AIYp4S0.jpeg'
+picture-options='stretched'
+picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Gregory Hayes_LUvDYmenwWk.jpeg'
 
 [org/cinnamon/desktop/background/slideshow]
 delay=15
@@ -94,7 +94,7 @@ icon-theme='la-capitaine'
 toolkit-accessibility=false
 
 [org/cinnamon/desktop/keybindings]
-custom-list=['custom6', 'custom5', 'custom3', 'custom1', 'custom0', '__dummy__', 'custom2', 'custom4']
+custom-list=['custom7', 'custom4', 'custom2', '__dummy__', 'custom0', 'custom1', 'custom3', 'custom5', 'custom6']
 looking-glass-keybinding=@as []
 
 [org/cinnamon/desktop/keybindings/custom-keybindings/custom0]
@@ -131,6 +131,11 @@ name='TickTick'
 binding=['<Super>w']
 command='/opt/google/chrome/google-chrome --profile-directory=Default --app-id=hnpfjngllnobngcgfapefoaidbinmjnm'
 name='Whatsapp'
+
+[org/cinnamon/desktop/keybindings/custom-keybindings/custom7]
+binding=['<Super>g']
+command='/opt/google/chrome/google-chrome --profile-directory=Default --app-id=fdaklkkpfdfonopeakobbnidhpebknjc'
+name='ChatGPT'
 
 [org/cinnamon/desktop/keybindings/media-keys]
 calculator=['<Primary><Alt>c']
@@ -205,7 +210,7 @@ source-currency=''
 source-units='degree'
 target-currency=''
 target-units='radian'
-window-position=(1652, 409)
+window-position=(270, 254)
 word-size=64
 
 [org/gnome/desktop/a11y/applications]
@@ -221,13 +226,13 @@ secondary-click-time=1.2
 
 [org/gnome/desktop/background]
 picture-options='zoom'
-picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Red Zeppelin_MhG0AIYp4S0.jpeg'
+picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Gregory Hayes_LUvDYmenwWk.jpeg'
 
 [org/gnome/desktop/interface]
 toolkit-accessibility=false
 
 [org/gnome/desktop/screensaver]
-picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Red Zeppelin_MhG0AIYp4S0.jpeg'
+picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Gregory Hayes_LUvDYmenwWk.jpeg'
 
 [org/gnome/evolution-data-server]
 migrated=true
@@ -250,6 +255,10 @@ sort-type='descending'
 sidebar-width=200
 window-height=480
 window-width=600
+
+[org/gnome/nm-applet/eap/1f3181f8-7527-467b-b695-619560aae667]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
 
 [org/gnome/nm-applet/eap/3a61de5a-0459-4f5f-8391-040427bf4ca5]
 ignore-ca-cert=false
@@ -274,8 +283,8 @@ use-theme-colors=true
 use-theme-transparency=true
 
 [org/gtk/settings/color-chooser]
-custom-colors=[(0.039215686274509803, 0.019607843137254902, 0.011764705882352943, 1.0), (0.094117647058823528, 0.10588235294117647, 0.11764705882352941, 1.0), (0.71333333333333337, 0.71333333333333337, 0.71333333333333337, 1.0), (0.80333333333333334, 0.78458888888888889, 0.78458888888888889, 1.0), (0.16333333333333333, 0.10507777777777777, 0.10507777777777777, 1.0), (0.16333333333333333, 0.10507777777777778, 0.10507777777777778, 1.0), (0.50333333333333341, 0.50165555555555563, 0.50165555555555563, 1.0), (0.78000000000000003, 0.76960000000000006, 0.76960000000000006, 1.0)]
-selected-color=(true, 0.039215686274509803, 0.019607843137254902, 0.011764705882352943, 1.0)
+custom-colors=[(0.0, 0.0, 0.0, 0.0), (0.039215686274509803, 0.019607843137254902, 0.011764705882352943, 1.0), (0.094117647058823528, 0.10588235294117647, 0.11764705882352941, 1.0), (0.71333333333333337, 0.71333333333333337, 0.71333333333333337, 1.0), (0.80333333333333334, 0.78458888888888889, 0.78458888888888889, 1.0), (0.16333333333333333, 0.10507777777777777, 0.10507777777777777, 1.0), (0.16333333333333333, 0.10507777777777778, 0.10507777777777778, 1.0), (0.50333333333333341, 0.50165555555555563, 0.50165555555555563, 1.0)]
+selected-color=(true, 0.23921568627450981, 0.2196078431372549, 0.27450980392156865, 1.0)
 
 [org/gtk/settings/file-chooser]
 date-format='regular'
@@ -288,7 +297,7 @@ sort-column='name'
 sort-directories-first=true
 sort-order='ascending'
 type-format='category'
-window-position=(92, 113)
+window-position=(1415, 283)
 window-size=(1096, 631)
 
 [org/nemo/desktop]
@@ -301,14 +310,14 @@ volumes-visible=false
 show-hidden-files=false
 
 [org/nemo/window-state]
-geometry='1071x592+1427+296'
+geometry='1071x592+1330+306'
 maximized=false
 sidebar-bookmark-breakpoint=5
 sidebar-width=256
 start-with-sidebar=true
 
 [org/x/editor/plugins]
-active-plugins=['bracketcompletion', 'open-uri-context-menu', 'textsize', 'time', 'spell', 'modelines', 'joinlines', 'filebrowser', 'sort', 'docinfo']
+active-plugins=['open-uri-context-menu', 'joinlines', 'filebrowser', 'time', 'docinfo', 'sort', 'textsize', 'bracketcompletion', 'spell', 'modelines']
 
 [org/x/editor/plugins/filebrowser/on-load]
 root='file:///'
