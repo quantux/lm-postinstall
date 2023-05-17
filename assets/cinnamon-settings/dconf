@@ -2,10 +2,10 @@
 filter-mode='landscape'
 maximized=true
 use-dark-theme=true
-window-height=953
-window-width=1280
-window-x=0
-window-y=0
+window-height=697
+window-width=1366
+window-x=1280
+window-y=256
 
 [com/linuxmint/install]
 flatpak-remotes=['flathub::https://dl.flathub.org/repo/::False']
@@ -79,13 +79,16 @@ exec='gnome-terminal'
 
 [org/cinnamon/desktop/background]
 picture-options='stretched'
-picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Gregory Hayes_LUvDYmenwWk.jpeg'
+picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Nathan Anderson_njDePTtXMyU.jpeg'
 
 [org/cinnamon/desktop/background/slideshow]
 delay=15
 image-source='xml:///usr/share/cinnamon-background-properties/linuxmint-vanessa.xml'
 
 [org/cinnamon/desktop/interface]
+clock-show-date=false
+clock-show-seconds=false
+clock-use-24h=true
 cursor-blink-time=1200
 cursor-size=24
 cursor-theme='Adwaita'
@@ -226,13 +229,14 @@ secondary-click-time=1.2
 
 [org/gnome/desktop/background]
 picture-options='zoom'
-picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Gregory Hayes_LUvDYmenwWk.jpeg'
+picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Nathan Anderson_njDePTtXMyU.jpeg'
 
 [org/gnome/desktop/interface]
+clock-format='24h'
 toolkit-accessibility=false
 
 [org/gnome/desktop/screensaver]
-picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Gregory Hayes_LUvDYmenwWk.jpeg'
+picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Nathan Anderson_njDePTtXMyU.jpeg'
 
 [org/gnome/evolution-data-server]
 migrated=true
