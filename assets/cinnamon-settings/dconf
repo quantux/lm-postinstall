@@ -21,7 +21,7 @@ autorefresh-hours=2
 hide-systray=true
 hide-window-after-update=true
 install-last-run=1667763660
-refresh-last-run=1684354583
+refresh-last-run=1684963397
 refresh-minutes=10
 show-welcome-page=false
 tracker-grace-period=30
@@ -35,20 +35,23 @@ window-width=790
 settings-migrated=true
 
 [io/github/celluloid-player/celluloid/window-state]
-height=768
+height=606
 loop-playlist=false
-maximized=true
+maximized=false
 playlist-width=250
 show-playlist=false
 volume=1.0
-width=1366
+width=768
+
+[org/blueman/general]
+window-properties=[500, 350, 29, 57]
 
 [org/cinnamon]
-command-history=['reboot', 'scrcp', 'scrcpy', 'r']
-enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:1:systray@cinnamon.org:3', 'panel1:right:2:xapp-status@cinnamon.org:4', 'panel1:right:3:printers@cinnamon.org:6', 'panel1:right:4:keyboard@cinnamon.org:8', 'panel1:right:5:favorites@cinnamon.org:9', 'panel1:right:6:network@cinnamon.org:10', 'panel1:right:7:sound@cinnamon.org:11', 'panel1:right:8:power@cinnamon.org:12', 'panel1:right:9:calendar@cinnamon.org:13', 'panel1:left:2:window-list@cinnamon.org:14', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel2:left:0:window-list@cinnamon.org:17', 'panel2:right:1:calendar@cinnamon.org:18', 'panel1:right:11:clean-show-desktop@filipetorresbr:21']
+command-history=['scrcp', 'scrcpy', 'reboot', 'r']
+enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:0:systray@cinnamon.org:3', 'panel1:right:0:xapp-status@cinnamon.org:4', 'panel1:right:2:printers@cinnamon.org:6', 'panel1:right:3:keyboard@cinnamon.org:8', 'panel1:right:4:favorites@cinnamon.org:9', 'panel1:right:5:network@cinnamon.org:10', 'panel1:right:6:sound@cinnamon.org:11', 'panel1:right:7:power@cinnamon.org:12', 'panel1:right:8:calendar@cinnamon.org:13', 'panel1:left:2:window-list@cinnamon.org:14', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel1:right:9:clean-show-desktop@filipetorresbr:21', 'panel2:left:0:window-list@cinnamon.org:22']
 enabled-extensions=['transparent-panels@germanfr']
 favorite-apps=['google-chrome.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'cinnamon-settings.desktop', 'mintupdate.desktop']
-next-applet-id=22
+next-applet-id=23
 panel-edit-mode=false
 panel-launchers=['DEPRECATED']
 panel-zone-icon-sizes='[{"panelId":1,"left":0,"center":0,"right":24},{"left":0,"center":0,"right":0,"panelId":2}]'
@@ -76,10 +79,11 @@ exec='gnome-calculator'
 
 [org/cinnamon/desktop/applications/terminal]
 exec='gnome-terminal'
+exec-arg='--'
 
 [org/cinnamon/desktop/background]
 picture-options='stretched'
-picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Nathan Anderson_njDePTtXMyU.jpeg'
+picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Clint McKoy_RtVpWYvjpOY.jpeg'
 
 [org/cinnamon/desktop/background/slideshow]
 delay=15
@@ -174,6 +178,7 @@ allow-keyboard-shortcuts=false
 allow-media-control=false
 date-format='%A, %e de %B'
 floating-widgets=false
+lock-enabled=true
 show-album-art=false
 show-info-panel=false
 use-custom-format=true
@@ -188,6 +193,12 @@ workspace-names=@as []
 
 [org/cinnamon/settings-daemon/peripherals/keyboard]
 numlock-state='off'
+
+[org/cinnamon/settings-daemon/peripherals/touchscreen]
+orientation-lock=true
+
+[org/cinnamon/settings-daemon/plugins/power]
+lock-on-suspend=true
 
 [org/cinnamon/sounds]
 login-enabled=false
@@ -213,7 +224,7 @@ source-currency=''
 source-units='degree'
 target-currency=''
 target-units='radian'
-window-position=(270, 254)
+window-position=(1600, 379)
 word-size=64
 
 [org/gnome/desktop/a11y/applications]
@@ -229,22 +240,22 @@ secondary-click-time=1.2
 
 [org/gnome/desktop/background]
 picture-options='zoom'
-picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Nathan Anderson_njDePTtXMyU.jpeg'
+picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Clint McKoy_RtVpWYvjpOY.jpeg'
 
 [org/gnome/desktop/interface]
 clock-format='24h'
 toolkit-accessibility=false
 
 [org/gnome/desktop/screensaver]
-picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Nathan Anderson_njDePTtXMyU.jpeg'
+picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Clint McKoy_RtVpWYvjpOY.jpeg'
 
 [org/gnome/evolution-data-server]
 migrated=true
 network-monitor-gio-name=''
 
 [org/gnome/file-roller/dialogs/new]
-default-extension='.zip'
-encrypt-header=false
+default-extension='.7z'
+encrypt-header=true
 expand-options=true
 volume-size=0
 
@@ -260,7 +271,15 @@ sidebar-width=200
 window-height=480
 window-width=600
 
+[org/gnome/nm-applet/eap/05ecfd2f-5776-4914-aa82-05853823d908]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
 [org/gnome/nm-applet/eap/1f3181f8-7527-467b-b695-619560aae667]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
+[org/gnome/nm-applet/eap/363508de-0294-4322-a00b-89310db30c53]
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
@@ -268,7 +287,19 @@ ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
+[org/gnome/nm-applet/eap/9aefacf7-4f84-4314-9f85-feb5078c4aa3]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
 [org/gnome/nm-applet/eap/9d22208a-fbab-4ccd-8635-245b3e8c4c9b]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
+[org/gnome/nm-applet/eap/e2c6dfe3-4731-4405-a666-63639ee7b1b6]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
+[org/gnome/nm-applet/eap/ef668603-d82f-4975-90ba-fcf5669c178d]
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
@@ -296,12 +327,12 @@ location-mode='path-bar'
 show-hidden=false
 show-size-column=true
 show-type-column=true
-sidebar-width=173
+sidebar-width=177
 sort-column='name'
 sort-directories-first=true
 sort-order='ascending'
 type-format='category'
-window-position=(1415, 283)
+window-position=(1419, 307)
 window-size=(1096, 631)
 
 [org/nemo/desktop]
@@ -336,7 +367,7 @@ bottom-panel-size=140
 side-panel-active-page=1541982214
 side-panel-size=200
 size=(1005, 543)
-state=87168
+state=87040
 
 [org/x/reader/default]
 window-ratio=(2.2957983193277309, 0.84798099762470314)
