@@ -129,6 +129,11 @@ wget "https://fonts.google.com/download?family=Noto Sans" -O /tmp/noto_sans.zip
 unzip /tmp/roboto.zip -d /usr/share/fonts/
 unzip /tmp/noto_sans.zip -d /usr/share/fonts/
 
+# Install NerdFront Firacode
+show_message "Instalando fontes NerdFont Firacode"
+wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.1/FiraCode.zip" -O /tmp/firacode.zip
+unzip /tmp/firacode.zip -d /usr/share/fonts/
+
 # Install - Adapta Nokto theme
 show_message "Instalando Adapta Nokto"
 tar -xf ./assets/themes/Adapta-Nokto.tar.xz -C /usr/share/themes
