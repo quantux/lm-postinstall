@@ -18,3 +18,4 @@ vmware
 .cache
 .ecryptfs
 .Genymobile
+.var/app/com.stremio.Stremio/
