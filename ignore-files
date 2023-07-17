@@ -19,3 +19,4 @@ vmware
 .ecryptfs
 .Genymobile
 .var/app/com.stremio.Stremio/
+.wine
