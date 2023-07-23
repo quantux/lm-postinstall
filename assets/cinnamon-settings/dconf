@@ -23,8 +23,8 @@ auto-update-flatpaks=true
 autorefresh-hours=2
 hide-systray=true
 hide-window-after-update=true
-install-last-run=1667763660
-refresh-last-run=1689367689
+install-last-run=1689715889
+refresh-last-run=1690089456
 refresh-minutes=10
 show-welcome-page=false
 tracker-grace-period=30
@@ -53,12 +53,12 @@ window-properties=[500, 350, 29, 57]
 auto-power-on=@mb false
 
 [org/cinnamon]
-command-history=['scrcp', 'scrcpy', 'reboot', 'r']
+command-history=['scrcp', 'reboot', 'r', 'scrcpy']
 device-aliases=['/org/freedesktop/UPower/devices/battery_BAT1:=Sony Corporation ']
-enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:9:systray@cinnamon.org:3', 'panel1:right:9:xapp-status@cinnamon.org:4', 'panel1:right:11:printers@cinnamon.org:6', 'panel1:right:12:keyboard@cinnamon.org:8', 'panel1:right:13:favorites@cinnamon.org:9', 'panel1:right:14:network@cinnamon.org:10', 'panel1:right:15:sound@cinnamon.org:11', 'panel1:right:16:power@cinnamon.org:12', 'panel1:right:17:calendar@cinnamon.org:13', 'panel1:left:2:window-list@cinnamon.org:14', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel1:right:18:clean-show-desktop@filipetorresbr:21', 'panel2:left:0:window-list@cinnamon.org:22']
+enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:10:systray@cinnamon.org:3', 'panel1:right:10:xapp-status@cinnamon.org:4', 'panel1:right:12:printers@cinnamon.org:6', 'panel1:right:13:keyboard@cinnamon.org:8', 'panel1:right:14:favorites@cinnamon.org:9', 'panel1:right:15:network@cinnamon.org:10', 'panel1:right:16:sound@cinnamon.org:11', 'panel1:right:17:power@cinnamon.org:12', 'panel1:right:18:calendar@cinnamon.org:13', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel1:right:19:clean-show-desktop@filipetorresbr:21', 'panel2:right:3:calendar@cinnamon.org:32', 'panel2:left:0:window-list@cinnamon.org:34', 'panel2:right:0:xapp-status@cinnamon.org:35', 'panel1:left:2:window-list@cinnamon.org:36']
 enabled-extensions=['transparent-panels@germanfr']
-favorite-apps=['google-chrome.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'com.stremio.Stremio.desktop:flatpak', 'discord.desktop', 'cinnamon-settings.desktop', 'mintupdate.desktop']
-next-applet-id=32
+favorite-apps=['google-chrome.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'com.stremio.Stremio.desktop:flatpak', 'cinnamon-settings.desktop', 'mintupdate.desktop']
+next-applet-id=37
 panel-edit-mode=false
 panel-launchers=['DEPRECATED']
 panel-zone-icon-sizes='[{"panelId":1,"left":0,"center":0,"right":24},{"left":0,"center":0,"right":0,"panelId":2}]'
@@ -90,7 +90,7 @@ exec-arg='--'
 
 [org/cinnamon/desktop/background]
 picture-options='zoom'
-picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Jacob Kiesow_Mb_Rgr8iD88.jpeg'
+picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Francesco Ungaro_AJG-4LGGcJE.jpeg'
 
 [org/cinnamon/desktop/background/slideshow]
 delay=15
@@ -108,7 +108,7 @@ icon-theme='la-capitaine'
 toolkit-accessibility=true
 
 [org/cinnamon/desktop/keybindings]
-custom-list=['custom7', 'custom4', 'custom2', '__dummy__', 'custom0', 'custom1', 'custom3', 'custom5', 'custom6']
+custom-list=['custom8', 'custom6', 'custom5', 'custom3', 'custom1', 'custom0', '__dummy__', 'custom2', 'custom4', 'custom7']
 looking-glass-keybinding=@as []
 
 [org/cinnamon/desktop/keybindings/custom-keybindings/custom0]
@@ -150,6 +150,11 @@ name='Whatsapp'
 binding=['<Super>b']
 command='/opt/google/chrome/google-chrome --profile-directory=Default --app-id=aifgoeojgolmfjakigkeiaidjmpjbcbi'
 name='Bard'
+
+[org/cinnamon/desktop/keybindings/custom-keybindings/custom8]
+binding=['<Super>g']
+command='/opt/google/chrome/google-chrome --profile-directory=Default --app-id=fdaklkkpfdfonopeakobbnidhpebknjc'
+name='ChatGPT'
 
 [org/cinnamon/desktop/keybindings/media-keys]
 calculator=['<Primary><Alt>c']
@@ -198,6 +203,11 @@ volume-sound-enabled=false
 num-workspaces=2
 workspace-names=@as []
 
+[org/cinnamon/gestures]
+enabled=false
+pinch-percent-threshold=uint32 40
+swipe-percent-threshold=uint32 60
+
 [org/cinnamon/settings-daemon/peripherals/keyboard]
 numlock-state='off'
 
@@ -245,7 +255,7 @@ source-currency=''
 source-units='degree'
 target-currency=''
 target-units='radian'
-window-position=(1561, 363)
+window-position=(1568, 422)
 word-size=64
 
 [org/gnome/desktop/a11y/applications]
@@ -261,14 +271,14 @@ secondary-click-time=1.2
 
 [org/gnome/desktop/background]
 picture-options='zoom'
-picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Jacob Kiesow_Mb_Rgr8iD88.jpeg'
+picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Francesco Ungaro_AJG-4LGGcJE.jpeg'
 
 [org/gnome/desktop/interface]
 clock-format='24h'
 toolkit-accessibility=true
 
 [org/gnome/desktop/screensaver]
-picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Jacob Kiesow_Mb_Rgr8iD88.jpeg'
+picture-uri='file:///home/mths/.var/app/com.github.calo001.fondo/data/backgrounds/Francesco Ungaro_AJG-4LGGcJE.jpeg'
 
 [org/gnome/evolution-data-server]
 migrated=true
@@ -320,7 +330,15 @@ ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
+[org/gnome/nm-applet/eap/9ccbc499-8003-4d9c-95dc-aa52b38f5c69]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
 [org/gnome/nm-applet/eap/9d22208a-fbab-4ccd-8635-245b3e8c4c9b]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
+[org/gnome/nm-applet/eap/9f28779b-df88-4762-ac5d-9a8cac4ab552]
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
@@ -370,7 +388,7 @@ sort-column='name'
 sort-directories-first=true
 sort-order='ascending'
 type-format='category'
-window-position=(1415, 283)
+window-position=(135, 27)
 window-size=(1096, 631)
 
 [org/mate/panel/general]
@@ -398,7 +416,7 @@ position=50
 toplevel-id='bottom'
 
 [org/mate/panel/objects/launcher-firefox]
-launcher-location='/usr/share/applications/firefox.desktop'
+launcher-location='/var/lib/snapd/desktop/applications/firefox_firefox.desktop'
 locked=true
 menu-path='applications:/'
 object-type='launcher'
@@ -474,14 +492,14 @@ volumes-visible=false
 show-hidden-files=false
 
 [org/nemo/window-state]
-geometry='1071x592+1330+306'
+geometry='1071x593+29+29'
 maximized=false
 sidebar-bookmark-breakpoint=5
 sidebar-width=256
 start-with-sidebar=true
 
 [org/x/editor/plugins]
-active-plugins=['spell', 'docinfo', 'bracketcompletion', 'open-uri-context-menu', 'textsize', 'sort', 'filebrowser', 'modelines', 'time', 'joinlines']
+active-plugins=['modelines', 'docinfo', 'bracketcompletion', 'textsize', 'open-uri-context-menu', 'sort', 'time', 'spell', 'joinlines', 'filebrowser']
 
 [org/x/editor/plugins/filebrowser/on-load]
 root='file:///'
@@ -495,8 +513,8 @@ statusbar-visible=true
 bottom-panel-size=140
 side-panel-active-page=1541982214
 side-panel-size=200
-size=(1005, 543)
-state=87168
+size=(1005, 542)
+state=87040
 
 [org/x/reader/default]
 window-ratio=(2.2957983193277309, 0.84798099762470314)
@@ -515,5 +533,7 @@ maximized=true
 [org/x/warpinator/preferences]
 ask-for-send-permission=true
 autostart=false
+connect-id='QUANTUX-877422C20285753B0779'
+group-code='Warpinator'
 no-overwrite=true
 receiving-folder='file:///home/mths/Warpinator'
