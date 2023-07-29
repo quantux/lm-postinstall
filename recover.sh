@@ -193,6 +193,9 @@ chmod +x /usr/local/bin/oh-my-posh
 show_message "Carregando configurações do dconf"
 user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${RUSER_UID}/bus' dconf load / < ./assets/cinnamon-settings/dconf"
 
+# Set Transmission as default magnet link app
+xdg-mime default transmission-gtk.desktop x-scheme-handler/magnet
+
 # Set themes and wallpaper
 show_message "Aplicando Wallpaper"
 user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${RUSER_UID}/bus' gsettings set org.cinnamon.desktop.background picture-uri 'file:///$PWD/assets/wallpapers/default-wallpaper.jpg'"
