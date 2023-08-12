@@ -24,27 +24,27 @@ autorefresh-hours=2
 hide-systray=true
 hide-window-after-update=true
 install-last-run=1689715889
-refresh-last-run=1690089456
+refresh-last-run=1691805572
 refresh-minutes=10
 show-welcome-page=false
 tracker-grace-period=30
 tracker-max-age=15
 tracker-max-days=7
 window-height=570
-window-pane-position=280
+window-pane-position=344
 window-width=790
 
 [io/github/celluloid-player/celluloid]
 settings-migrated=true
 
 [io/github/celluloid-player/celluloid/window-state]
-height=606
+height=390
 loop-playlist=false
 maximized=false
 playlist-width=250
 show-playlist=false
 volume=1.0
-width=1024
+width=640
 
 [org/blueman/general]
 window-properties=[500, 350, 29, 57]
@@ -53,11 +53,12 @@ window-properties=[500, 350, 29, 57]
 auto-power-on=@mb false
 
 [org/cinnamon]
-command-history=['scrcp', 'reboot', 'r', 'scrcpy']
+alttab-switcher-delay=100
+command-history=['scrcp', 'sc', 'r', 'scrcpy', 'reboot', 'discord']
 device-aliases=['/org/freedesktop/UPower/devices/battery_BAT1:=Sony Corporation ']
-enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:10:systray@cinnamon.org:3', 'panel1:right:10:xapp-status@cinnamon.org:4', 'panel1:right:12:printers@cinnamon.org:6', 'panel1:right:13:keyboard@cinnamon.org:8', 'panel1:right:14:favorites@cinnamon.org:9', 'panel1:right:15:network@cinnamon.org:10', 'panel1:right:16:sound@cinnamon.org:11', 'panel1:right:17:power@cinnamon.org:12', 'panel1:right:18:calendar@cinnamon.org:13', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel1:right:19:clean-show-desktop@filipetorresbr:21', 'panel2:right:3:calendar@cinnamon.org:32', 'panel2:left:0:window-list@cinnamon.org:34', 'panel2:right:0:xapp-status@cinnamon.org:35', 'panel1:left:2:window-list@cinnamon.org:36']
+enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:10:systray@cinnamon.org:3', 'panel1:right:10:xapp-status@cinnamon.org:4', 'panel1:right:12:printers@cinnamon.org:6', 'panel1:right:13:keyboard@cinnamon.org:8', 'panel1:right:14:favorites@cinnamon.org:9', 'panel1:right:15:network@cinnamon.org:10', 'panel1:right:16:sound@cinnamon.org:11', 'panel1:right:17:power@cinnamon.org:12', 'panel1:right:18:calendar@cinnamon.org:13', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel1:right:19:clean-show-desktop@filipetorresbr:21', 'panel2:right:1:calendar@cinnamon.org:32', 'panel2:left:0:window-list@cinnamon.org:34', 'panel1:left:2:window-list@cinnamon.org:36']
 enabled-extensions=['transparent-panels@germanfr']
-favorite-apps=['google-chrome.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'com.stremio.Stremio.desktop:flatpak', 'cinnamon-settings.desktop', 'mintupdate.desktop']
+favorite-apps=['google-chrome.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'chrome-ldcemkdbnfolbdiajoheponefpdapcgl-Default.desktop', 'chrome-emkhkogmeeanhammkhmeochbjneodnpj-Default.desktop', 'chrome-jdfcgiombcjglahnigjmkpdfchmeodoc-Default.desktop']
 next-applet-id=37
 panel-edit-mode=false
 panel-launchers=['DEPRECATED']
@@ -108,7 +109,7 @@ icon-theme='la-capitaine'
 toolkit-accessibility=true
 
 [org/cinnamon/desktop/keybindings]
-custom-list=['custom8', 'custom6', 'custom5', 'custom3', 'custom1', 'custom0', '__dummy__', 'custom2', 'custom4', 'custom7']
+custom-list=['custom9', 'custom7', 'custom4', 'custom2', '__dummy__', 'custom0', 'custom1', 'custom3', 'custom5', 'custom6', 'custom8']
 looking-glass-keybinding=@as []
 
 [org/cinnamon/desktop/keybindings/custom-keybindings/custom0]
@@ -156,6 +157,11 @@ binding=['<Super>g']
 command='/opt/google/chrome/google-chrome --profile-directory=Default --app-id=fdaklkkpfdfonopeakobbnidhpebknjc'
 name='ChatGPT'
 
+[org/cinnamon/desktop/keybindings/custom-keybindings/custom9]
+binding=['<Primary><Alt>d']
+command='discord'
+name='Discord'
+
 [org/cinnamon/desktop/keybindings/media-keys]
 calculator=['<Primary><Alt>c']
 logout=@as []
@@ -200,6 +206,7 @@ event-sounds=false
 volume-sound-enabled=false
 
 [org/cinnamon/desktop/wm/preferences]
+min-window-opacity=30
 num-workspaces=2
 workspace-names=@as []
 
@@ -207,6 +214,9 @@ workspace-names=@as []
 enabled=false
 pinch-percent-threshold=uint32 40
 swipe-percent-threshold=uint32 60
+
+[org/cinnamon/muffin]
+draggable-border-width=10
 
 [org/cinnamon/settings-daemon/peripherals/keyboard]
 numlock-state='off'
@@ -255,7 +265,7 @@ source-currency=''
 source-units='degree'
 target-currency=''
 target-units='radian'
-window-position=(1568, 422)
+window-position=(376, 212)
 word-size=64
 
 [org/gnome/desktop/a11y/applications]
@@ -285,8 +295,8 @@ migrated=true
 network-monitor-gio-name=''
 
 [org/gnome/file-roller/dialogs/new]
-default-extension='.rar'
-encrypt-header=false
+default-extension='.7z'
+encrypt-header=true
 expand-options=true
 volume-size=104857
 
@@ -319,6 +329,10 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
 [org/gnome/nm-applet/eap/3a61de5a-0459-4f5f-8391-040427bf4ca5]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
+[org/gnome/nm-applet/eap/4d22c79c-357a-46b1-bb63-44183b466ddf]
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
@@ -388,8 +402,8 @@ sort-column='name'
 sort-directories-first=true
 sort-order='ascending'
 type-format='category'
-window-position=(135, 27)
-window-size=(1096, 631)
+window-position=(106, 129)
+window-size=(1069, 582)
 
 [org/mate/panel/general]
 object-id-list=['menu-bar', 'show-desktop', 'separator', 'launcher-firefox', 'launcher-terminal', 'launcher-caja', 'window-list', 'notification-area', 'xapp-status', 'clock']
@@ -492,19 +506,19 @@ volumes-visible=false
 show-hidden-files=false
 
 [org/nemo/window-state]
-geometry='1071x593+29+29'
+geometry='1071x593+1330+306'
 maximized=false
 sidebar-bookmark-breakpoint=5
 sidebar-width=256
 start-with-sidebar=true
 
 [org/x/editor/plugins]
-active-plugins=['modelines', 'docinfo', 'bracketcompletion', 'textsize', 'open-uri-context-menu', 'sort', 'time', 'spell', 'joinlines', 'filebrowser']
+active-plugins=['textsize', 'time', 'open-uri-context-menu', 'sort', 'filebrowser', 'joinlines', 'spell', 'modelines', 'docinfo', 'bracketcompletion']
 
 [org/x/editor/plugins/filebrowser/on-load]
 root='file:///'
 tree-view=true
-virtual-root='file:///home/mths/%C3%81rea%20de%20Trabalho'
+virtual-root='file:///home/mths/Desktop'
 
 [org/x/editor/preferences/ui]
 statusbar-visible=true
@@ -513,11 +527,11 @@ statusbar-visible=true
 bottom-panel-size=140
 side-panel-active-page=1541982214
 side-panel-size=200
-size=(1005, 542)
+size=(1005, 543)
 state=87040
 
 [org/x/reader/default]
-window-ratio=(2.2957983193277309, 0.84798099762470314)
+window-ratio=(2.1496704634112804, 1.1524568976724301)
 
 [org/x/viewer/ui]
 statusbar=true
@@ -533,7 +547,7 @@ maximized=true
 [org/x/warpinator/preferences]
 ask-for-send-permission=true
 autostart=false
-connect-id='QUANTUX-877422C20285753B0779'
+connect-id='QUANTUX-C3A10A1F9D75577BD4E6'
 group-code='Warpinator'
 no-overwrite=true
 receiving-folder='file:///home/mths/Warpinator'
