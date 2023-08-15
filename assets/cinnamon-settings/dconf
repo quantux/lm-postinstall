@@ -24,7 +24,7 @@ autorefresh-hours=2
 hide-systray=true
 hide-window-after-update=true
 install-last-run=1689715889
-refresh-last-run=1691805572
+refresh-last-run=1692116705
 refresh-minutes=10
 show-welcome-page=false
 tracker-grace-period=30
@@ -54,7 +54,7 @@ auto-power-on=@mb false
 
 [org/cinnamon]
 alttab-switcher-delay=100
-command-history=['scrcp', 'sc', 'r', 'scrcpy', 'reboot', 'discord']
+command-history=['scrcp', 'sc', 'r', 'scrcpy', 'discord', 'reboot']
 device-aliases=['/org/freedesktop/UPower/devices/battery_BAT1:=Sony Corporation ']
 enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:10:systray@cinnamon.org:3', 'panel1:right:10:xapp-status@cinnamon.org:4', 'panel1:right:12:printers@cinnamon.org:6', 'panel1:right:13:keyboard@cinnamon.org:8', 'panel1:right:14:favorites@cinnamon.org:9', 'panel1:right:15:network@cinnamon.org:10', 'panel1:right:16:sound@cinnamon.org:11', 'panel1:right:17:power@cinnamon.org:12', 'panel1:right:18:calendar@cinnamon.org:13', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel1:right:19:clean-show-desktop@filipetorresbr:21', 'panel2:right:1:calendar@cinnamon.org:32', 'panel2:left:0:window-list@cinnamon.org:34', 'panel1:left:2:window-list@cinnamon.org:36']
 enabled-extensions=['transparent-panels@germanfr']
@@ -265,7 +265,7 @@ source-currency=''
 source-units='degree'
 target-currency=''
 target-units='radian'
-window-position=(376, 212)
+window-position=(286, 199)
 word-size=64
 
 [org/gnome/desktop/a11y/applications]
@@ -372,6 +372,11 @@ ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
+[org/gnome/power-manager]
+info-history-type='charge'
+info-last-device='/org/freedesktop/UPower/devices/line_power_ADP1'
+info-stats-type='discharge-accuracy'
+
 [org/gnome/terminal/legacy]
 default-show-menubar=false
 
@@ -402,7 +407,7 @@ sort-column='name'
 sort-directories-first=true
 sort-order='ascending'
 type-format='category'
-window-position=(106, 129)
+window-position=(149, 44)
 window-size=(1069, 582)
 
 [org/mate/panel/general]
@@ -528,7 +533,7 @@ bottom-panel-size=140
 side-panel-active-page=1541982214
 side-panel-size=200
 size=(1005, 543)
-state=87040
+state=87168
 
 [org/x/reader/default]
 window-ratio=(2.1496704634112804, 1.1524568976724301)
