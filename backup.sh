@@ -24,4 +24,5 @@ done
 
 # Encrypt using gpg
 echo $password2 | gpg --batch --yes --passphrase-fd 0 --pinentry-mode loopback -c --cipher-algo AES256 assets/backups/home.tar.gz
+chown $RUID:$RUID assets/backups/home.tar.gz.gpg
 rm -rf assets/backups/home.tar.gz
