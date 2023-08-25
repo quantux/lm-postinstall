@@ -1,14 +1,13 @@
 #!/bin/bash
 
-# Prevent script from running as root
-if [[ $EUID -eq 0 ]]; then
-  echo "This script must NOT be run as root" 1>&2
-  exit 1
-fi
+# Checks for root privileges
+[ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
 
-username=$(whoami)
-mkdir -p assets/backups
-rsync -aAXv --progress --exclude-from=ignore-files /home/$username/ assets/backups/home
+# Get current regular user (not sudo user)
+RUID=$(who | awk 'FNR == 1 {print $1}')
+RUSER_UID=$(id -u ${RUID})
+
+rsync -aAXv --delete --progress --exclude-from=ignore-files /home/$RUID/ assets/backups/home
 tar -cvzf assets/backups/home.tar.gz -C assets/backups home/
 rm -rf assets/backups/home
 
