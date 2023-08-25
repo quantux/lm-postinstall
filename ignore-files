@@ -19,3 +19,5 @@ vmware
 .Genymobile
 .var/app/com.stremio.Stremio/
 .wine
+.dropbox-dist/
+.dropbox
