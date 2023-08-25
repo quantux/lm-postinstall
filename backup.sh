@@ -15,7 +15,7 @@ rm -rf assets/backups/home
 while true; do
   read -s -p "Password: " password
   echo
-  read -s -p "Password (again): " password2
+  read -s -p "Password (confirmation): " password2
   echo
   [ "$password" = "$password2" ] && break
   echo "Please try again"
