@@ -99,6 +99,7 @@ show_message "Instalando pacotes flatpak"
 flatpak install -y --noninteractive flathub com.github.calo001.fondo
 flatpak install -y --noninteractive flathub com.github.tchx84.Flatseal
 flatpak install -y --noninteractive flathub org.openshot.OpenShot
+flatpak install -y --noninteractive com.bitwarden.desktop
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
@@ -216,10 +217,6 @@ show_message "Instalando snapd"
 rm /etc/apt/preferences.d/nosnap.pref
 apt update
 apt install -y snapd
-
-# Install bitwarden
-show_message "Instalando bitwarden"
-snap install bitwarden
 
 # Allow games run in fullscreen mode
 echo "SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0" >> /etc/environment
