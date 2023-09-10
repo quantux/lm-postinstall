@@ -8,6 +8,7 @@ RUID=$(who | awk 'FNR == 1 {print $1}')
 RUSER_UID=$(id -u ${RUID})
 
 # Backup using rsync
+mkdir -p assets/backups/home
 rsync -aAXv --progress --exclude-from=ignore-files /home/$RUID/ assets/backups/home
 tar -cvzf assets/backups/home.tar.gz -C assets/backups home/
 rm -rf assets/backups/home
