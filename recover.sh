@@ -301,17 +301,6 @@ update-alternatives --install /usr/share/plymouth/themes/default.plymouth defaul
 sudo update-alternatives --config default.plymouth
 update-initramfs -u
 
-# Install samba
-show_message "Instalando Samba"
-apt install -y samba
-mkdir -p /home/$RUID/Kodi
-mkdir -p /home/$RUID/Kodi/Movies
-mkdir -p /home/$RUID/Kodi/Series
-cp assets/samba/smb.conf /etc/samba/smb.conf
-smbpasswd -a $RUID
-setfacl -R -m "u:$RUID:rwx" /home/$RUID/Kodi/
-systemctl restart smbd
-
 # Define zsh como shell padrão
 show_message "Definir zsh como shell padrão"
 user_do "chsh -s $(which zsh)"
