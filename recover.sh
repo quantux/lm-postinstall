@@ -100,6 +100,7 @@ flatpak install -y --noninteractive flathub com.github.calo001.fondo
 flatpak install -y --noninteractive flathub com.github.tchx84.Flatseal
 flatpak install -y --noninteractive flathub org.openshot.OpenShot
 flatpak install -y --noninteractive com.bitwarden.desktop
+flatpak install -y --noninteractive flathub org.jellyfin.JellyfinServer
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
