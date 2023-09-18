@@ -101,6 +101,7 @@ flatpak install -y --noninteractive flathub com.github.tchx84.Flatseal
 flatpak install -y --noninteractive flathub org.openshot.OpenShot
 flatpak install -y --noninteractive com.bitwarden.desktop
 flatpak install -y --noninteractive flathub org.jellyfin.JellyfinServer
+flatpak install -y --noninteractive com.discordapp.Discord
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
@@ -174,12 +175,6 @@ install -D -o root -g root -m 644 /tmp/packages.microsoft.gpg /etc/apt/keyrings/
 sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
 apt update
 apt install code -y
-
-# Install Discord
-show_message "Instalando Discord"
-wget "https://discord.com/api/download?platform=linux&format=deb" -O /tmp/discord.deb
-dpkg -i /tmp/discord.deb
-apt install -fy
 
 # Install oh-my-zsh
 show_message "Instalando oh-my-zsh"
