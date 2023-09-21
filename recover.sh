@@ -102,6 +102,7 @@ flatpak install -y --noninteractive flathub org.openshot.OpenShot
 flatpak install -y --noninteractive com.bitwarden.desktop
 flatpak install -y --noninteractive flathub org.jellyfin.JellyfinServer
 flatpak install -y --noninteractive com.discordapp.Discord
+flatpak install -y --noninteractive flathub com.spotify.Client
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
