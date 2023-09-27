@@ -110,8 +110,8 @@ flatpak update -y
 
 # Systemd settings - rclone
 mkdir -p /home/$RUID/GDrive
-user_do "systemctl --user start rclone"
-user_do "systemctl --user enable rclone"
+user_do "systemctl --user start google-drive-ocamlfuse.service"
+user_do "systemctl --user enable google-drive-ocamlfuse.service"
 
 # Install Chrome
 show_message "Instalando Google Chrome"
