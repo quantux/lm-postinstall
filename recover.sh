@@ -76,7 +76,7 @@ dpkg --add-architecture i386
 
 # Install apt packages
 show_message "Instalando pacotes"
-apt install -y build-essential zsh tmux git curl wget gpg ca-certificates gnupg lsb-release debconf-utils apt-transport-https preload blender firefox-locale-pt thunderbird-locale-pt vim gedit gimp flameshot fonts-firacode blender cheese sublime-text screenfetch python2 python3 python3-gpg python3-pip python-setuptools inkscape virtualbox virtualbox-qt vlc filezilla steam gparted pinta nmap traceroute ncdu vlc p7zip-full okular unrar rar bleachbit ubuntu-restricted-extras tlp dkms gnome-system-tools tp-smapi-dkms acpi-call-dkms gimp-help-pt fonts-powerline calibre gnome-boxes audacity kazam htop neofetch python3-setuptools scrcpy whois gnupg2 software-properties-common libncurses5 libncurses5-dev libgmp-dev libmysqlclient-dev remmina tree obs-studio pavucontrol gir1.2-gmenu-3.0 jstest-gtk speedtest-cli pv dropbox clang cmake ninja-build pkg-config libxcb-cursor0 libyaml-dev libgtk-3-dev sox liblzma-dev ffmpeg xclip tldr plymouth wine rpi-imager handbrake handbrake-cli dotnet-sdk-7.0 dotnet-runtime-7.0 jq hardinfo
+apt install -y build-essential zsh tmux git curl wget rclone gpg ca-certificates gnupg lsb-release debconf-utils apt-transport-https preload blender firefox-locale-pt thunderbird-locale-pt vim gedit gimp flameshot fonts-firacode blender cheese sublime-text screenfetch python2 python3 python3-gpg python3-pip python-setuptools inkscape virtualbox virtualbox-qt vlc filezilla steam gparted pinta nmap traceroute ncdu vlc p7zip-full okular unrar rar bleachbit ubuntu-restricted-extras tlp dkms gnome-system-tools tp-smapi-dkms acpi-call-dkms gimp-help-pt fonts-powerline calibre gnome-boxes audacity kazam htop neofetch python3-setuptools scrcpy whois gnupg2 software-properties-common libncurses5 libncurses5-dev libgmp-dev libmysqlclient-dev remmina tree obs-studio pavucontrol gir1.2-gmenu-3.0 jstest-gtk speedtest-cli pv dropbox clang cmake ninja-build pkg-config libxcb-cursor0 libyaml-dev libgtk-3-dev sox liblzma-dev ffmpeg xclip tldr plymouth wine rpi-imager handbrake handbrake-cli dotnet-sdk-7.0 dotnet-runtime-7.0 jq hardinfo
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
@@ -107,6 +107,12 @@ flatpak install -y --noninteractive flathub com.spotify.Client
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
 flatpak update -y
+
+# Systemd settings - rclone
+mkdir -p /home/$RUID/GDrive
+cp ./assets/systemd/rclone.service /etc/systemd/system/rclone.service
+systemctl start rclone
+systemctl enable rclone
 
 # Install Chrome
 show_message "Instalando Google Chrome"
