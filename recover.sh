@@ -108,11 +108,6 @@ flatpak install -y --noninteractive flathub com.spotify.Client
 show_message "Atualizando pacotes flatpak"
 flatpak update -y
 
-# Systemd settings - rclone
-mkdir -p /home/$RUID/GDrive
-user_do "systemctl --user start google-drive-ocamlfuse.service"
-user_do "systemctl --user enable google-drive-ocamlfuse.service"
-
 # Install Chrome
 show_message "Instalando Google Chrome"
 wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" -O /tmp/google-chrome.deb
