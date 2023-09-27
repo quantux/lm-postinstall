@@ -7,6 +7,10 @@
 RUID=$(who | awk 'FNR == 1 {print $1}')
 RUSER_UID=$(id -u ${RUID})
 
+user_do() {
+    sudo -u ${RUID} /bin/bash -c "$1"
+}
+
 # asks for password confirmation
 while true; do
   read -s -p "GPG Password: " password
@@ -29,4 +33,4 @@ chown $RUID:$RUID assets/backups/home.tar.gz.gpg
 rm -rf assets/backups/home.tar.gz
 
 # Upload to google drive
-rclone sync -P ./assets/backups/home.tar.gz.gpg /home/$RUID/GDrive/Backups
+user_do "rclone sync -P ./assets/backups/home.tar.gz.gpg /home/$RUID/GDrive/Backups"
