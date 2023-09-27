@@ -34,3 +34,5 @@ rm -rf assets/backups/home.tar.gz
 
 # Upload to google drive
 user_do "rclone sync -P ./assets/backups/home.tar.gz.gpg /home/$RUID/GDrive/Backups"
+
+rm -rf assets/backups/home.tar.gz.gpg
