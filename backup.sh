@@ -29,4 +29,4 @@ chown $RUID:$RUID assets/backups/home.tar.gz.gpg
 rm -rf assets/backups/home.tar.gz
 
 # Upload to google drive
-rclone sync -P ./assets/backups/home.tar.gz.gpg /home/$RUID/GDrive
+rclone sync -P ./assets/backups/home.tar.gz.gpg /home/$RUID/GDrive/Backups
