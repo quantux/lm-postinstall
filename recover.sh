@@ -110,9 +110,8 @@ flatpak update -y
 
 # Systemd settings - rclone
 mkdir -p /home/$RUID/GDrive
-cp ./assets/systemd/rclone.service /etc/systemd/system/rclone.service
-systemctl start rclone
-systemctl enable rclone
+user_do "systemctl --user start rclone"
+user_do "systemctl --user enable rclone"
 
 # Install Chrome
 show_message "Instalando Google Chrome"
