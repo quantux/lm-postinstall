@@ -33,6 +33,6 @@ chown $RUID:$RUID assets/backups/home.tar.gz.gpg
 rm -rf assets/backups/home.tar.gz
 
 # Upload to google drive
-user_do "rclone copy -P ./assets/backups/home.tar.gz.gpg /home/$RUID/GDrive/Backups"
+rsync -auv --progress --partial --delete assets/backups/home.tar.gz.gpg /home/$RUID/GDrive/Backups/
 
 rm -rf assets/backups/home.tar.gz.gpg
