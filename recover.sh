@@ -34,10 +34,10 @@ timedatectl set-local-rtc 1
 # Set mirrors
 show_message "Atualizando mirrors"
 rm /etc/apt/sources.list.d/official-package-repositories.list
-mirrors="deb https://mint.itsbrasil.net/packages $LINUXMINT_CODENAME main upstream import backport \n\n\
-deb http://ubuntu-archive.locaweb.com.br/ubuntu $UBUNTU_CODENAME main restricted universe multiverse\n\
-deb http://ubuntu-archive.locaweb.com.br/ubuntu $UBUNTU_CODENAME-updates main restricted universe multiverse\n\
-deb http://ubuntu-archive.locaweb.com.br/ubuntu $UBUNTU_CODENAME-backports main restricted universe multiverse\n\n\
+mirrors="deb https://mirror.ufscar.br/mint-archive $LINUXMINT_CODENAME main upstream import backport \n\n\
+deb http://sft.if.usp.br/ubuntu $UBUNTU_CODENAME main restricted universe multiverse\n\
+deb http://sft.if.usp.br/ubuntu $UBUNTU_CODENAME-updates main restricted universe multiverse\n\
+deb http://sft.if.usp.br/ubuntu $UBUNTU_CODENAME-backports main restricted universe multiverse\n\n\
 deb http://security.ubuntu.com/ubuntu/ $UBUNTU_CODENAME-security main restricted universe multiverse"
 echo -e $mirrors > /etc/apt/sources.list.d/official-package-repositories.list
 
