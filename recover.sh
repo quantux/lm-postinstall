@@ -100,7 +100,6 @@ flatpak install -y --noninteractive flathub com.github.calo001.fondo
 flatpak install -y --noninteractive flathub com.github.tchx84.Flatseal
 flatpak install -y --noninteractive flathub org.openshot.OpenShot
 flatpak install -y --noninteractive com.bitwarden.desktop
-flatpak install -y --noninteractive flathub org.jellyfin.JellyfinServer
 flatpak install -y --noninteractive com.discordapp.Discord
 flatpak install -y --noninteractive flathub com.spotify.Client
 flatpak install -y --noninteractive flathub org.librehunt.Organizer
