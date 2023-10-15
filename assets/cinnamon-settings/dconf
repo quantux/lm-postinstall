@@ -23,8 +23,8 @@ auto-update-flatpaks=true
 autorefresh-hours=2
 hide-systray=true
 hide-window-after-update=true
-install-last-run=1689715889
-refresh-last-run=1692325274
+install-last-run=1696903317
+refresh-last-run=1697409872
 refresh-minutes=10
 show-welcome-page=false
 tracker-grace-period=30
@@ -42,13 +42,13 @@ version='1.5.26'
 settings-migrated=true
 
 [io/github/celluloid-player/celluloid/window-state]
-height=390
+height=768
 loop-playlist=false
 maximized=false
 playlist-width=250
 show-playlist=false
 volume=1.0
-width=640
+width=1366
 
 [org/blueman/general]
 window-properties=[500, 350, 29, 57]
@@ -62,7 +62,7 @@ command-history=['scrcp', 'sc', 'r', 'scrcpy', 'discord', 'gnome-control-center'
 device-aliases=['/org/freedesktop/UPower/devices/battery_BAT1:=Sony Corporation ']
 enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:10:systray@cinnamon.org:3', 'panel1:right:10:xapp-status@cinnamon.org:4', 'panel1:right:12:printers@cinnamon.org:6', 'panel1:right:13:keyboard@cinnamon.org:8', 'panel1:right:14:favorites@cinnamon.org:9', 'panel1:right:15:network@cinnamon.org:10', 'panel1:right:16:sound@cinnamon.org:11', 'panel1:right:17:power@cinnamon.org:12', 'panel1:right:18:calendar@cinnamon.org:13', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel1:right:19:clean-show-desktop@filipetorresbr:21', 'panel2:right:1:calendar@cinnamon.org:32', 'panel2:left:0:window-list@cinnamon.org:34', 'panel1:left:2:window-list@cinnamon.org:36']
 enabled-extensions=['transparent-panels@germanfr']
-favorite-apps=['google-chrome.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'chrome-ldcemkdbnfolbdiajoheponefpdapcgl-Default.desktop', 'chrome-emkhkogmeeanhammkhmeochbjneodnpj-Default.desktop', 'chrome-jdfcgiombcjglahnigjmkpdfchmeodoc-Default.desktop']
+favorite-apps=['google-chrome.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'Postman.desktop', 'chrome-ldcemkdbnfolbdiajoheponefpdapcgl-Default.desktop', 'com.stremio.Stremio.desktop:flatpak', 'com.discordapp.Discord.desktop:flatpak', 'chrome-emkhkogmeeanhammkhmeochbjneodnpj-Default.desktop', 'chrome-jdfcgiombcjglahnigjmkpdfchmeodoc-Default.desktop']
 next-applet-id=37
 panel-edit-mode=false
 panel-launchers=['DEPRECATED']
@@ -211,7 +211,7 @@ volume-sound-enabled=false
 
 [org/cinnamon/desktop/wm/preferences]
 min-window-opacity=30
-num-workspaces=3
+num-workspaces=2
 workspace-names=@as []
 
 [org/cinnamon/gestures]
@@ -269,7 +269,7 @@ source-currency=''
 source-units='degree'
 target-currency=''
 target-units='radian'
-window-position=(686, 212)
+window-position=(423, 212)
 word-size=64
 
 [org/gnome/control-center]
@@ -319,6 +319,9 @@ sidebar-width=200
 window-height=480
 window-width=600
 
+[org/gnome/nm-applet]
+disable-disconnected-notifications=true
+
 [org/gnome/nm-applet/eap/0127bdf5-c44b-45bc-ba50-d282ab34740f]
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
@@ -335,6 +338,10 @@ ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
+[org/gnome/nm-applet/eap/3865d607-c195-4b25-8fd5-f1c9d69fdfd2]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
 [org/gnome/nm-applet/eap/3a61de5a-0459-4f5f-8391-040427bf4ca5]
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
@@ -344,6 +351,10 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
 [org/gnome/nm-applet/eap/54618c3a-2b84-49c9-8a2a-46873519e2d9]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
+[org/gnome/nm-applet/eap/7e51ef83-7086-4014-a2dc-3f97c8b1cd83]
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
@@ -518,14 +529,14 @@ volumes-visible=false
 show-hidden-files=false
 
 [org/nemo/window-state]
-geometry='1071x593+1427+296'
+geometry='1071x593+50+50'
 maximized=false
 sidebar-bookmark-breakpoint=5
 sidebar-width=256
 start-with-sidebar=true
 
 [org/x/editor/plugins]
-active-plugins=['textsize', 'time', 'open-uri-context-menu', 'sort', 'filebrowser', 'joinlines', 'spell', 'modelines', 'docinfo', 'bracketcompletion']
+active-plugins=['filebrowser', 'time', 'textsize', 'bracketcompletion', 'sort', 'open-uri-context-menu', 'joinlines', 'spell', 'docinfo', 'modelines']
 
 [org/x/editor/plugins/filebrowser/on-load]
 root='file:///'
@@ -542,8 +553,11 @@ side-panel-size=200
 size=(1005, 543)
 state=87040
 
+[org/x/reader]
+document-directory=@ms 'file:///home/mths/Desktop/Faturas'
+
 [org/x/reader/default]
-window-ratio=(2.0915032679738563, 1.2247474747474747)
+window-ratio=(2.2957983193277309, 0.84898929845422122)
 
 [org/x/viewer/ui]
 statusbar=true
