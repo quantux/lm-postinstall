@@ -24,7 +24,7 @@ autorefresh-hours=2
 hide-systray=true
 hide-window-after-update=true
 install-last-run=1696903317
-refresh-last-run=1697409872
+refresh-last-run=1698674689
 refresh-minutes=10
 show-welcome-page=false
 tracker-grace-period=30
@@ -44,8 +44,9 @@ settings-migrated=true
 [io/github/celluloid-player/celluloid/window-state]
 height=768
 loop-playlist=false
-maximized=false
+maximized=true
 playlist-width=250
+show-controls=true
 show-playlist=false
 volume=1.0
 width=1366
@@ -58,11 +59,11 @@ auto-power-on=@mb false
 
 [org/cinnamon]
 alttab-switcher-delay=100
-command-history=['scrcp', 'sc', 'r', 'scrcpy', 'discord', 'gnome-control-center', 'reboot']
+command-history=['scrcp', 'sc', 'scrcpy', 'discord', 'gnome-control-center', 'reboot', 'r']
 device-aliases=['/org/freedesktop/UPower/devices/battery_BAT1:=Sony Corporation ']
 enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:10:systray@cinnamon.org:3', 'panel1:right:10:xapp-status@cinnamon.org:4', 'panel1:right:12:printers@cinnamon.org:6', 'panel1:right:13:keyboard@cinnamon.org:8', 'panel1:right:14:favorites@cinnamon.org:9', 'panel1:right:15:network@cinnamon.org:10', 'panel1:right:16:sound@cinnamon.org:11', 'panel1:right:17:power@cinnamon.org:12', 'panel1:right:18:calendar@cinnamon.org:13', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel1:right:19:clean-show-desktop@filipetorresbr:21', 'panel2:right:1:calendar@cinnamon.org:32', 'panel2:left:0:window-list@cinnamon.org:34', 'panel1:left:2:window-list@cinnamon.org:36']
 enabled-extensions=['transparent-panels@germanfr']
-favorite-apps=['google-chrome.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'Postman.desktop', 'chrome-ldcemkdbnfolbdiajoheponefpdapcgl-Default.desktop', 'com.stremio.Stremio.desktop:flatpak', 'com.discordapp.Discord.desktop:flatpak', 'chrome-emkhkogmeeanhammkhmeochbjneodnpj-Default.desktop', 'chrome-jdfcgiombcjglahnigjmkpdfchmeodoc-Default.desktop']
+favorite-apps=['brave-browser.desktop', 'google-chrome.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'Postman.desktop', 'brave-jdfcgiombcjglahnigjmkpdfchmeodoc-Default.desktop', 'com.stremio.Stremio.desktop:flatpak', 'com.discordapp.Discord.desktop:flatpak']
 next-applet-id=37
 panel-edit-mode=false
 panel-launchers=['DEPRECATED']
@@ -113,7 +114,7 @@ icon-theme='la-capitaine'
 toolkit-accessibility=true
 
 [org/cinnamon/desktop/keybindings]
-custom-list=['custom9', 'custom7', 'custom4', 'custom2', '__dummy__', 'custom0', 'custom1', 'custom3', 'custom5', 'custom6', 'custom8']
+custom-list=['custom9', 'custom4', 'custom2', '__dummy__', 'custom0', 'custom3', 'custom5', 'custom6', 'custom8', 'custom10', 'custom1', 'custom7']
 looking-glass-keybinding=@as []
 
 [org/cinnamon/desktop/keybindings/custom-keybindings/custom0]
@@ -122,9 +123,14 @@ command='/opt/google/chrome/google-chrome --profile-directory=Default --app-id=j
 name='Notion'
 
 [org/cinnamon/desktop/keybindings/custom-keybindings/custom1]
-binding=['<Super>m']
-command='/opt/google/chrome/google-chrome --profile-directory=Default --app-id=emkhkogmeeanhammkhmeochbjneodnpj'
-name='Mindmeister'
+binding=@as []
+command='/opt/google/chrome/google-chrome --profile-directory=Default --app-id=ldcemkdbnfolbdiajoheponefpdapcgl'
+name='Figma'
+
+[org/cinnamon/desktop/keybindings/custom-keybindings/custom10]
+binding=['<Primary><Alt>b']
+command='brave-browser'
+name='Brave'
 
 [org/cinnamon/desktop/keybindings/custom-keybindings/custom2]
 binding=['<Primary><Alt>e']
@@ -152,13 +158,13 @@ command='/opt/google/chrome/google-chrome --profile-directory=Default --app-id=h
 name='Whatsapp'
 
 [org/cinnamon/desktop/keybindings/custom-keybindings/custom7]
-binding=['<Super>b']
-command='/opt/google/chrome/google-chrome --profile-directory=Default --app-id=aifgoeojgolmfjakigkeiaidjmpjbcbi'
-name='Bard'
+binding=@as []
+command='/opt/google/chrome/google-chrome --profile-directory=Default --app-id=mochbphfjephgpgnjclbemdeakfkjmnl'
+name='Origamid'
 
 [org/cinnamon/desktop/keybindings/custom-keybindings/custom8]
 binding=['<Super>g']
-command='/opt/google/chrome/google-chrome --profile-directory=Default --app-id=fdaklkkpfdfonopeakobbnidhpebknjc'
+command='/opt/google/chrome/google-chrome --profile-directory=Default --app-id=jckaldkomadaenmmgladeopgmfbahfjm'
 name='ChatGPT'
 
 [org/cinnamon/desktop/keybindings/custom-keybindings/custom9]
@@ -226,7 +232,7 @@ draggable-border-width=10
 numlock-state='off'
 
 [org/cinnamon/settings-daemon/peripherals/touchscreen]
-orientation-lock=true
+orientation-lock=false
 
 [org/cinnamon/settings-daemon/plugins/power]
 button-power='nothing'
@@ -269,7 +275,7 @@ source-currency=''
 source-units='degree'
 target-currency=''
 target-units='radian'
-window-position=(423, 212)
+window-position=(686, 212)
 word-size=64
 
 [org/gnome/control-center]
@@ -323,6 +329,10 @@ window-width=600
 disable-disconnected-notifications=true
 
 [org/gnome/nm-applet/eap/0127bdf5-c44b-45bc-ba50-d282ab34740f]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
+[org/gnome/nm-applet/eap/059a72d8-53d9-43f8-b479-82995d8ca190]
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
@@ -417,7 +427,7 @@ selected-color=(true, 0.29662222222222229, 0.38452858837485165, 0.94666666666666
 [org/gtk/settings/file-chooser]
 date-format='regular'
 location-mode='path-bar'
-show-hidden=true
+show-hidden=false
 show-size-column=true
 show-type-column=true
 sidebar-width=177
@@ -425,7 +435,7 @@ sort-column='name'
 sort-directories-first=true
 sort-order='ascending'
 type-format='category'
-window-position=(149, 44)
+window-position=(1429, 300)
 window-size=(1069, 582)
 
 [org/mate/panel/general]
@@ -529,7 +539,7 @@ volumes-visible=false
 show-hidden-files=false
 
 [org/nemo/window-state]
-geometry='1071x593+50+50'
+geometry='1071x589+1381+357'
 maximized=false
 sidebar-bookmark-breakpoint=5
 sidebar-width=256
@@ -557,7 +567,7 @@ state=87040
 document-directory=@ms 'file:///home/mths/Desktop/Faturas'
 
 [org/x/reader/default]
-window-ratio=(2.2957983193277309, 0.84898929845422122)
+window-ratio=(2.2959528234471445, 0.84806159369207512)
 
 [org/x/viewer/ui]
 statusbar=true

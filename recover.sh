@@ -201,7 +201,7 @@ user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${RUSER_UID}/bus' gsettin
 # Install grub themes
 show_message "Instalando grub themes"
 git clone https://github.com/vinceliuice/grub2-themes assets/grub2-themes
-./assets/grub2-themes/install.sh -b -t tela
+./assets/grub2-themes/install.sh -b -t vimix
 
 # Install grub-customizer
 show_message "Instalando grub-customizer"
