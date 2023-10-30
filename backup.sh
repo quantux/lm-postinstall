@@ -34,6 +34,8 @@ done
 # Backup using rsync
 mkdir -p assets/backups/home
 rsync -aAXv --progress --exclude-from=ignore-files /home/$RUID/ assets/backups/home
+
+echo "Archiving with tar..."
 tar -cvzf assets/backups/home.tar.gz -C assets/backups home/
 rm -rf assets/backups/home
 
