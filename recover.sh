@@ -104,6 +104,7 @@ flatpak install -y --noninteractive com.discordapp.Discord
 flatpak install -y --noninteractive flathub com.spotify.Client
 flatpak install -y --noninteractive flathub org.librehunt.Organizer
 flatpak install -y --noninteractive flathub com.stremio.Stremio
+flatpak install -y --noninteractive flathub net.xmind.XMind
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
