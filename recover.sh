@@ -292,6 +292,9 @@ show_message "Instalando Homebrew e NeoVim"
 user_do "sh ./assets/homebrew/install.sh --unattended"
 user_do "brew install neovim"
 
+# install github cli
+user_do "brew install gh"
+
 # Customize Plymouth theme
 show_message "Instalando tema do plymouth"
 git clone https://github.com/adi1090x/plymouth-themes /usr/share/themes/plymouth-themes
