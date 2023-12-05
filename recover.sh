@@ -217,6 +217,9 @@ rm /etc/apt/preferences.d/nosnap.pref
 apt update
 apt install -y snapd
 
+# Snap packages
+snap install beekeeper-studio
+
 # Allow games run in fullscreen mode
 echo "SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0" >> /etc/environment
 
