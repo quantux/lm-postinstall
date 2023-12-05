@@ -24,7 +24,7 @@ autorefresh-hours=2
 hide-systray=true
 hide-window-after-update=true
 install-last-run=1696903317
-refresh-last-run=1698674689
+refresh-last-run=1701738495
 refresh-minutes=10
 show-welcome-page=false
 tracker-grace-period=30
@@ -42,9 +42,9 @@ version='1.5.26'
 settings-migrated=true
 
 [io/github/celluloid-player/celluloid/window-state]
-height=768
+height=700
 loop-playlist=false
-maximized=true
+maximized=false
 playlist-width=250
 show-controls=true
 show-playlist=false
@@ -52,19 +52,22 @@ volume=1.0
 width=1366
 
 [org/blueman/general]
-window-properties=[500, 350, 29, 57]
+window-properties=[584, 350, 1680, 481]
 
 [org/blueman/plugins/powermanager]
-auto-power-on=@mb false
+auto-power-on=@mb true
+
+[org/blueman/plugins/recentconns]
+recent-connections=[{'adapter': '9C:2A:70:8A:49:6E', 'address': '74:2A:8A:CA:69:8B', 'alias': 'JBL TUNE520BT', 'icon': 'audio-headphones', 'name': 'Perfis de entrada e de áudio', 'uuid': '00000000-0000-0000-0000-000000000000', 'time': '1701779435.9958172', 'device': '/org/bluez/hci0/dev_74_2A_8A_CA_69_8B'}, {'adapter': '9C:2A:70:8A:49:6E', 'address': 'EA:FC:A5:64:8B:CA', 'alias': 'JBL TUNE520BT-LE', 'icon': 'blueman', 'name': 'Perfis de entrada e de áudio', 'uuid': '00000000-0000-0000-0000-000000000000', 'time': '1700606185.1784766', 'device': '/org/bluez/hci0/dev_EA_FC_A5_64_8B_CA'}]
 
 [org/cinnamon]
 alttab-switcher-delay=100
-command-history=['scrcp', 'sc', 'scrcpy', 'discord', 'gnome-control-center', 'reboot', 'r']
+command-history=['scrcp', 'sc', 'scrcpy', 'discord', 'gnome-control-center', 'Backups/Backups/Old files/Arquivos antigos/Gabi/SFotos 3/IMG-20201213-WA0002.jpg', 'r', 'reboot']
 device-aliases=['/org/freedesktop/UPower/devices/battery_BAT1:=Sony Corporation ']
-enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:10:systray@cinnamon.org:3', 'panel1:right:10:xapp-status@cinnamon.org:4', 'panel1:right:12:printers@cinnamon.org:6', 'panel1:right:13:keyboard@cinnamon.org:8', 'panel1:right:14:favorites@cinnamon.org:9', 'panel1:right:15:network@cinnamon.org:10', 'panel1:right:16:sound@cinnamon.org:11', 'panel1:right:17:power@cinnamon.org:12', 'panel1:right:18:calendar@cinnamon.org:13', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel1:right:19:clean-show-desktop@filipetorresbr:21', 'panel2:right:1:calendar@cinnamon.org:32', 'panel2:left:0:window-list@cinnamon.org:34', 'panel1:left:2:window-list@cinnamon.org:36']
+enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:right:13:systray@cinnamon.org:3', 'panel1:right:13:xapp-status@cinnamon.org:4', 'panel1:right:15:printers@cinnamon.org:6', 'panel1:right:16:keyboard@cinnamon.org:8', 'panel1:right:17:favorites@cinnamon.org:9', 'panel1:right:18:network@cinnamon.org:10', 'panel1:right:19:sound@cinnamon.org:11', 'panel1:right:20:power@cinnamon.org:12', 'panel1:right:21:calendar@cinnamon.org:13', 'panel1:left:1:panel-launchers@cinnamon.org:15', 'panel1:right:22:clean-show-desktop@filipetorresbr:21', 'panel2:right:1:calendar@cinnamon.org:32', 'panel2:left:0:window-list@cinnamon.org:34', 'panel1:left:2:window-list@cinnamon.org:36']
 enabled-extensions=['transparent-panels@germanfr']
-favorite-apps=['brave-browser.desktop', 'google-chrome.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'Postman.desktop', 'brave-jdfcgiombcjglahnigjmkpdfchmeodoc-Default.desktop', 'com.stremio.Stremio.desktop:flatpak', 'com.discordapp.Discord.desktop:flatpak']
-next-applet-id=37
+favorite-apps=['google-chrome.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop', 'net.xmind.XMind.desktop:flatpak', 'com.stremio.Stremio.desktop:flatpak', 'Postman.desktop', 'com.discordapp.Discord.desktop:flatpak']
+next-applet-id=40
 panel-edit-mode=false
 panel-launchers=['DEPRECATED']
 panel-zone-icon-sizes='[{"panelId":1,"left":0,"center":0,"right":24},{"left":0,"center":0,"right":0,"panelId":2}]'
@@ -114,7 +117,7 @@ icon-theme='la-capitaine'
 toolkit-accessibility=true
 
 [org/cinnamon/desktop/keybindings]
-custom-list=['custom9', 'custom4', 'custom2', '__dummy__', 'custom0', 'custom3', 'custom5', 'custom6', 'custom8', 'custom10', 'custom1', 'custom7']
+custom-list=['custom9', 'custom4', 'custom2', '__dummy__', 'custom0', 'custom3', 'custom5', 'custom6', 'custom8', 'custom10', 'custom1', 'custom7', 'custom11']
 looking-glass-keybinding=@as []
 
 [org/cinnamon/desktop/keybindings/custom-keybindings/custom0]
@@ -201,6 +204,9 @@ natural-scroll=false
 speed=0.0
 tap-to-click=true
 
+[org/cinnamon/desktop/privacy]
+remember-recent-files=false
+
 [org/cinnamon/desktop/screensaver]
 allow-keyboard-shortcuts=false
 allow-media-control=false
@@ -272,10 +278,10 @@ number-format='automatic'
 show-thousands=false
 show-zeroes=false
 source-currency=''
-source-units='degree'
+source-units='bit'
 target-currency=''
-target-units='radian'
-window-position=(686, 212)
+target-units='megabit'
+window-position=(1872, 388)
 word-size=64
 
 [org/gnome/control-center]
@@ -384,6 +390,14 @@ ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
+[org/gnome/nm-applet/eap/a1949947-325f-48b1-849e-9c3f5a5a6ef4]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
+[org/gnome/nm-applet/eap/b3165b27-8076-42b9-9629-9184d580bc62]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
 [org/gnome/nm-applet/eap/e2c6dfe3-4731-4405-a666-63639ee7b1b6]
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
@@ -393,6 +407,10 @@ ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
 [org/gnome/nm-applet/eap/f1aed82b-b826-4da7-b8c7-fa283bd40d40]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
+[org/gnome/nm-applet/eap/f4b04390-735f-45df-85de-dec1ac0ec5ce]
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
@@ -433,9 +451,9 @@ show-type-column=true
 sidebar-width=177
 sort-column='name'
 sort-directories-first=true
-sort-order='ascending'
+sort-order='descending'
 type-format='category'
-window-position=(1429, 300)
+window-position=(0, 0)
 window-size=(1069, 582)
 
 [org/mate/panel/general]
@@ -539,19 +557,22 @@ volumes-visible=false
 show-hidden-files=false
 
 [org/nemo/window-state]
-geometry='1071x589+1381+357'
+geometry='1076x589+1424+297'
 maximized=false
 sidebar-bookmark-breakpoint=5
-sidebar-width=256
+sidebar-width=249
 start-with-sidebar=true
 
+[org/x/apps/favorites]
+list=['file:///home/mths/Dropbox/Fam%C3%ADlia/Matheus/MindMaps::inode/directory']
+
 [org/x/editor/plugins]
-active-plugins=['filebrowser', 'time', 'textsize', 'bracketcompletion', 'sort', 'open-uri-context-menu', 'joinlines', 'spell', 'docinfo', 'modelines']
+active-plugins=['bracketcompletion', 'modelines', 'textsize', 'joinlines', 'open-uri-context-menu', 'time', 'spell', 'filebrowser', 'sort', 'docinfo']
 
 [org/x/editor/plugins/filebrowser/on-load]
 root='file:///'
 tree-view=true
-virtual-root='file:///home/mths/Desktop'
+virtual-root='file:///home/mths/Downloads'
 
 [org/x/editor/preferences/ui]
 statusbar-visible=true
@@ -561,13 +582,18 @@ bottom-panel-size=140
 side-panel-active-page=1541982214
 side-panel-size=200
 size=(1005, 543)
-state=87040
+state=87168
 
 [org/x/reader]
 document-directory=@ms 'file:///home/mths/Desktop/Faturas'
 
 [org/x/reader/default]
-window-ratio=(2.2959528234471445, 0.84806159369207512)
+window-ratio=(2.2957983193277309, 0.84798099762470314)
+
+[org/x/thingy]
+height=688
+maximized=false
+width=1046
 
 [org/x/viewer/ui]
 statusbar=true
