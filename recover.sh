@@ -31,6 +31,16 @@ user_zsh_do() {
 # Fix clock time for windows dualboot
 timedatectl set-local-rtc 1
 
+# asks for gpg password confirmation
+while true; do
+  read -s -p "GPG Password: " password
+  echo
+  read -s -p "Password confirmation: " password2
+  echo
+  [ "$password" = "$password2" ] && break
+  echo "Please try again"
+done
+
 # Set mirrors
 show_message "Atualizando mirrors"
 rm /etc/apt/sources.list.d/official-package-repositories.list
@@ -61,10 +71,13 @@ apt install -y ttf-mscorefonts-installer
 
 # Recover backup files
 show_message "Recuperando arquivos de backup"
-gpg --decrypt assets/backups/home.tar.gz.gpg > /tmp/home.tar.gz
+echo $password2 | gpg --batch --yes --passphrase-fd 0 --decrypt assets/backups/home.tar.gz.gpg > /tmp/home.tar.gz
 tar -zxvf /tmp/home.tar.gz -C /tmp
 rsync -aAXv /tmp/home/ /home/$RUID/
 chown -R $RUID:$RUID /home/$RUID/
+
+# Recover dconf
+echo $password2 | gpg --batch --yes --passphrase-fd 0 --decrypt assets/cinnamon-settings/dconf/dconf.gpg > /tmp/dconf
 
 # Upgrade
 show_message "Atualizando pacotes"
@@ -191,7 +204,7 @@ chmod +x /usr/local/bin/oh-my-posh
 
 # Load dconf file
 show_message "Carregando configurações do dconf"
-user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${RUSER_UID}/bus' dconf load / < ./assets/cinnamon-settings/dconf"
+user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${RUSER_UID}/bus' dconf load / < /tmp/dconf"
 
 # Set Transmission as default magnet link app
 xdg-mime default transmission-gtk.desktop x-scheme-handler/magnet
