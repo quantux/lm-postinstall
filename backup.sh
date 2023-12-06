@@ -31,6 +31,12 @@ while true; do
   echo "Please try again"
 done
 
+# Dconf backup & encrypt
+user_do "dconf dump / > assets/cinnamon-settings/dconf/dconf"
+echo $password2 | gpg --batch --yes --passphrase-fd 0 --pinentry-mode loopback -c --cipher-algo AES256 assets/cinnamon-settings/dconf/dconf
+chown $RUID:$RUID assets/cinnamon-settings/dconf/dconf.gpg
+rm -rf assets/cinnamon-settings/dconf/dconf
+
 # Backup using rsync
 mkdir -p assets/backups/home
 rsync -aAXv --progress --exclude-from=ignore-files /home/$RUID/ assets/backups/home
