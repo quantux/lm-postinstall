@@ -214,10 +214,16 @@ xdg-mime default transmission-gtk.desktop x-scheme-handler/magnet
 show_message "Aplicando Wallpaper"
 user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${RUSER_UID}/bus' gsettings set org.cinnamon.desktop.background picture-uri 'file:///$PWD/assets/wallpapers/default-wallpaper.jpg'"
 
-# Install grub themes
+# Install grub2-themes
 show_message "Instalando grub themes"
-git clone https://github.com/vinceliuice/grub2-themes assets/grub2-themes
-./assets/grub2-themes/install.sh -b -t vimix
+git clone https://github.com/vinceliuice/grub2-themes assets/grub-themes/grub2-themes
+# ./assets/grub2-themes/install.sh -b -t vimix
+
+# Install minimal-grub-theme
+git clone https://github.com/tomdewildt/minimal-grub-theme assets/grub-themes/minimal-grub-theme
+cd assets/grub-themes/minimal-grub-theme
+make install
+cd
 
 # Install grub-customizer
 show_message "Instalando grub-customizer"
@@ -312,12 +318,18 @@ user_do "brew install neovim"
 # install github cli
 user_do "brew install gh"
 
-# Customize Plymouth theme
+# Install hexagon plymouth-theme
 show_message "Instalando tema do plymouth"
 git clone https://github.com/adi1090x/plymouth-themes /usr/share/themes/plymouth-themes
 cp -r /usr/share/themes/plymouth-themes/pack_2/hexagon_alt /usr/share/plymouth/themes/
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/hexagon_alt/hexagon_alt.plymouth 100
-sudo update-alternatives --config default.plymouth
+# update-alternatives --set default.plymouth /usr/share/plymouth/themes/hexagon_alt/hexagon_alt.plymouth
+# update-initramfs -u
+
+# Install logo-mac-style plymouth-theme
+cp -r assets/plymouth-themes/logo-mac-style /usr/share/plymouth/themes/logo-mac-style
+update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/logo-mac-style/logo-mac-style.plymouth 100
+update-alternatives --set default.plymouth /usr/share/plymouth/themes/logo-mac-style/logo-mac-style.plymouth
 update-initramfs -u
 
 # Define zsh como shell padrão
