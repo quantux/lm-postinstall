@@ -15,6 +15,9 @@ RUSER_UID=$(id -u ${RUID})
 LINUXMINT_CODENAME=$(lsb_release -cs)
 UBUNTU_CODENAME=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME= | cut -f2 -d "=")
 
+# Base project dir
+BASE_DIR = $(pwd)
+
 show_message() {
     clear
     printf "${LightColor}$1${NC}\n\n"
@@ -223,7 +226,7 @@ git clone https://github.com/vinceliuice/grub2-themes assets/grub-themes/grub2-t
 git clone https://github.com/tomdewildt/minimal-grub-theme assets/grub-themes/minimal-grub-theme
 cd assets/grub-themes/minimal-grub-theme
 make install
-cd
+cd $BASE_DIR
 
 # Install grub-customizer
 show_message "Instalando grub-customizer"
