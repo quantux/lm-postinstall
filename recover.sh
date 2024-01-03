@@ -16,7 +16,7 @@ LINUXMINT_CODENAME=$(lsb_release -cs)
 UBUNTU_CODENAME=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME= | cut -f2 -d "=")
 
 # Base project dir
-BASE_DIR = $(pwd)
+BASE_DIR=$(pwd)
 
 show_message() {
     clear
