@@ -8,8 +8,8 @@ LightColor='\033[1;32m'
 NC='\033[0m'
 
 # Get current regular user (not sudo user)
-RUID=$(who | awk 'FNR == 1 {print $1}')
-RUSER_UID=$(id -u ${RUID})
+REGULAR_USER_NAME=$(who am i | awk '{print $1}')
+REGULAR_UID=$(id -u ${REGULAR_USER_NAME})
 
 # Distro codenames
 LINUXMINT_CODENAME=$(lsb_release -cs)
@@ -23,12 +23,14 @@ show_message() {
     printf "${LightColor}$1${NC}\n\n"
 }
 
-user_do() {
-    sudo -u ${RUID} /bin/bash -c "$1"
+user_bash_do() {
+    # sudo -u ${REGULAR_USER_NAME} /bin/bash -c "$1"
+    su - ${REGULAR_USER_NAME} -c "$1"
 }
 
 user_zsh_do() {
-    sudo -u ${RUID} /bin/zsh -c "source ~/.zshrc; $1"
+    # sudo -u ${REGULAR_USER_NAME} /bin/zsh -c "source ~/.zshrc; $1"
+    su - ${REGULAR_USER_NAME} -c "/bin/zsh --login -c '$1'"
 }
 
 # Fix clock time for windows dualboot
@@ -46,7 +48,6 @@ done
 
 # Set mirrors
 show_message "Atualizando mirrors"
-rm /etc/apt/sources.list.d/official-package-repositories.list
 mirrors="deb https://mirror.ufscar.br/mint-archive $LINUXMINT_CODENAME main upstream import backport \n\n\
 deb http://sft.if.usp.br/ubuntu $UBUNTU_CODENAME main restricted universe multiverse\n\
 deb http://sft.if.usp.br/ubuntu $UBUNTU_CODENAME-updates main restricted universe multiverse\n\
@@ -58,13 +59,16 @@ echo -e $mirrors > /etc/apt/sources.list.d/official-package-repositories.list
 show_message "Atualizando repositórios"
 apt update
 
-# Update tldr
-user_do "tldr --update"
-
 # Instalando libdvd-pkg (único que pede confirmação)
-show_message "Instalando libdvd-pkg"
+# show_message "Instalando libdvd-pkg"
+# apt -y install libdvd-pkg
+# dpkg-reconfigure libdvd-pkg
+
+# Instalando libdvd-pkg
+# show_message "Instalando libdvd-pkg"
+export DEBIAN_FRONTEND=noninteractive
 apt -y install libdvd-pkg
-dpkg-reconfigure libdvd-pkg
+dpkg-reconfigure -f noninteractive libdvd-pkg
 
 # Install ttf-mscorefonts-installer
 show_message "Instalando ttf-mscorefonts-installer"
@@ -76,11 +80,14 @@ apt install -y ttf-mscorefonts-installer
 show_message "Recuperando arquivos de backup"
 echo $password2 | gpg --batch --yes --passphrase-fd 0 --decrypt assets/backups/home.tar.gz.gpg > /tmp/home.tar.gz
 tar -zxvf /tmp/home.tar.gz -C /tmp
-rsync -aAXv /tmp/home/ /home/$RUID/
-chown -R $RUID:$RUID /home/$RUID/
+rsync -aAXv /tmp/home/ /home/$REGULAR_USER_NAME/
+chown -R $REGULAR_USER_NAME:$REGULAR_USER_NAME /home/$REGULAR_USER_NAME/
 
 # Recover dconf
 echo $password2 | gpg --batch --yes --passphrase-fd 0 --decrypt assets/cinnamon-settings/dconf/dconf.gpg > /tmp/dconf
+
+# Update tldr
+user_bash_do "tldr --update"
 
 # Upgrade
 show_message "Atualizando pacotes"
@@ -92,14 +99,80 @@ dpkg --add-architecture i386
 
 # Install apt packages
 show_message "Instalando pacotes"
-apt install -y build-essential zsh tmux git curl wget gpg ca-certificates gnupg lsb-release debconf-utils apt-transport-https preload blender firefox-locale-pt thunderbird-locale-pt vim gedit gimp flameshot fonts-firacode blender cheese sublime-text screenfetch python2 python3 python3-gpg python3-pip python-setuptools inkscape virtualbox virtualbox-qt vlc filezilla steam gparted pinta nmap traceroute ncdu vlc p7zip-full okular unrar rar bleachbit ubuntu-restricted-extras tlp dkms gnome-system-tools tp-smapi-dkms acpi-call-dkms gimp-help-pt fonts-powerline calibre gnome-boxes audacity kazam htop neofetch python3-setuptools scrcpy whois gnupg2 software-properties-common libncurses5 libncurses5-dev libgmp-dev libmysqlclient-dev remmina tree pavucontrol gir1.2-gmenu-3.0 jstest-gtk speedtest-cli pv dropbox clang cmake ninja-build pkg-config libxcb-cursor0 libyaml-dev libgtk-3-dev sox liblzma-dev ffmpeg xclip tldr plymouth wine rpi-imager handbrake handbrake-cli dotnet-sdk-7.0 dotnet-runtime-7.0 jq hardinfo pdftk qpdf exiftool fdupes mame-tools
+apt install -y \
+  build-essential \
+  git \
+  curl \
+  wget \
+  gpg \
+  ca-certificates \
+  gnupg \
+  lsb-release \
+  debconf-utils \
+  apt-transport-https \
+  python3 \
+  python3-gpg \
+  python3-pip \
+  clang \
+  cmake \
+  ninja-build \
+  pkg-config \
+  libncurses5-dev \
+  libgmp-dev \
+  libmysqlclient-dev \
+  libyaml-dev \
+  libgtk-3-dev \
+  liblzma-dev \
+  zsh \
+  tmux \
+  vim \
+  gedit \
+  fonts-firacode \
+  fonts-powerline \
+  gparted \
+  sox \
+  ffmpeg \
+  htop \
+  neofetch \
+  screenfetch \
+  pv \
+  ncdu \
+  tree \
+  speedtest-cli \
+  whois \
+  tlp \
+  pavucontrol \
+  acpi-call-dkms \
+  dkms \
+  gnome-system-tools \
+  gnome-boxes \
+  hardinfo \
+  p7zip-full \
+  unrar \
+  rar \
+  qpdf \
+  exiftool \
+  fdupes \
+  nmap \
+  traceroute \
+  jq \
+  python3-setuptools \
+  gnome-system-tools \
+  ubuntu-restricted-extras \
+  software-properties-common \
+  libxcb-cursor0 \
+  plymouth \
+  wine \
+  jstest-gtk \
+  scrcpy \
+  libncurses5-dev
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
 yes Y | apt install -y virtualbox-guest-x11
 
 # Add user to vbox group
-usermod -aG vboxusers $RUID
+usermod -aG vboxusers $REGULAR_USER_NAME
 
 # Instalando wireshark
 show_message "Instalando wireshark"
@@ -112,16 +185,39 @@ pip3 install pylint
 
 # Install flatpak packages
 show_message "Instalando pacotes flatpak"
-flatpak install -y --noninteractive flathub com.github.calo001.fondo
-flatpak install -y --noninteractive flathub com.github.tchx84.Flatseal
-flatpak install -y --noninteractive flathub org.openshot.OpenShot
-flatpak install -y --noninteractive com.bitwarden.desktop
-flatpak install -y --noninteractive com.discordapp.Discord
-flatpak install -y --noninteractive flathub com.spotify.Client
-flatpak install -y --noninteractive flathub org.librehunt.Organizer
-flatpak install -y --noninteractive flathub com.stremio.Stremio
-flatpak install -y --noninteractive flathub net.xmind.XMind
-flatpak install -y --noninteractive flathub com.obsproject.Studio
+flatpak install -y --noninteractive flathub \
+  com.github.calo001.fondo \
+  com.github.tchx84.Flatseal \
+  org.openshot.OpenShot \
+  com.bitwarden.desktop \
+  com.discordapp.Discord \
+  com.spotify.Client \
+  org.librehunt.Organizer \
+  com.stremio.Stremio \
+  net.xmind.XMind \
+  com.obsproject.Studio \
+  com.visualstudio.code \
+  com.microsoft.Edge \
+  rest.insomnia.Insomnia \
+  com.getpostman.Postman \
+  io.beekeeperstudio.Studio \
+  com.google.AndroidStudio \
+  com.anydesk.Anydesk \
+  io.neovim.nvim \
+  com.sublimetext.three \
+  org.gimp.GIMP \
+  org.inkscape.Inkscape \
+  org.blender.Blender \
+  org.mozilla.firefox \
+  org.mozilla.Thunderbird \
+  org.videolan.VLC \
+  org.filezillaproject.Filezilla \
+  com.valvesoftware.Steam \
+  org.audacityteam.Audacity \
+  org.gnome.Cheese \
+  org.raspberrypi.rpi-imager \
+  org.remmina.Remmina \
+  com.dropbox.Client
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
@@ -132,18 +228,6 @@ show_message "Instalando Google Chrome"
 wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" -O /tmp/google-chrome.deb
 dpkg -i /tmp/google-chrome.deb
 apt install -fy
-
-# Install Microsoft Edge
-show_message "Instalando Microsoft Edge"
-curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
-sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-dev.list'
-sudo rm microsoft.gpg
-apt update
-apt install -y microsoft-edge-stable
-
-# Remove dev apt list
-rm /etc/apt/sources.list.d/microsoft-edge-dev.list
 
 # Install - Adapta Nokto Fonts
 show_message "Instalando fontes Roboto e Noto Sans"
@@ -178,7 +262,7 @@ show_message "Instalando fontes para o WPS Office"
 git clone https://github.com/udoyen/wps-fonts.git /tmp/wps-fonts
 mv /tmp/wps-fonts/wps /usr/share/fonts/
 
-# Set virtualbox to use dark theme
+# Set virtualbox dark theme
 show_message "Copiando arquivo de tema para o Virtualbox"
 cp ./assets/programs-settings/virtualbox.desktop /usr/share/applications/virtualbox.desktop
 
@@ -188,45 +272,33 @@ wget "https://download.teamviewer.com/download/linux/teamviewer_amd64.deb" -O /t
 dpkg -i /tmp/teamviewer.deb
 apt install -fy
 
-# Install VSCode
-show_message "Instalando VSCode"
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/packages.microsoft.gpg
-install -D -o root -g root -m 644 /tmp/packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-apt update
-apt install code -y
-
 # Install oh-my-zsh
-show_message "Instalando oh-my-zsh"
-user_do "sh ./assets/oh-my-zsh/oh-my-zsh-install.sh --unattended"
-chsh -s $(which zsh) $(whoami)
+# show_message "Instalando oh-my-zsh"
+# user_bash_do "sh ./assets/oh-my-zsh/oh-my-zsh-install.sh --unattended"
+# chsh -s $(which zsh) $(whoami)
 
 # Install oh-my-posh
-show_message "Instalando oh-my-posh"
-wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
-chmod +x /usr/local/bin/oh-my-posh
+# show_message "Instalando oh-my-posh"
+# wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
+# chmod +x /usr/local/bin/oh-my-posh
 
 # Load dconf file
 show_message "Carregando configurações do dconf"
-user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${RUSER_UID}/bus' dconf load / < /tmp/dconf"
+user_bash_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${REGULAR_UID}/bus' dconf load / < /tmp/dconf"
 
 # Set Transmission as default magnet link app
 xdg-mime default transmission-gtk.desktop x-scheme-handler/magnet
 
-# Set themes and wallpaper
-show_message "Aplicando Wallpaper"
-user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${RUSER_UID}/bus' gsettings set org.cinnamon.desktop.background picture-uri 'file:///$PWD/assets/wallpapers/default-wallpaper.jpg'"
-
 # Install grub2-themes
-show_message "Instalando grub themes"
-git clone https://github.com/vinceliuice/grub2-themes assets/grub-themes/grub2-themes
+# show_message "Instalando grub themes"
+# git clone https://github.com/vinceliuice/grub2-themes assets/grub-themes/grub2-themes
 # ./assets/grub2-themes/install.sh -b -t vimix
 
 # Install minimal-grub-theme
-git clone https://github.com/tomdewildt/minimal-grub-theme assets/grub-themes/minimal-grub-theme
-cd assets/grub-themes/minimal-grub-theme
-make install
-cd $BASE_DIR
+# git clone https://github.com/tomdewildt/minimal-grub-theme assets/grub-themes/minimal-grub-theme
+# cd assets/grub-themes/minimal-grub-theme
+# make install
+# cd $BASE_DIR
 
 # Install grub-customizer
 show_message "Instalando grub-customizer"
@@ -235,45 +307,15 @@ apt update
 apt install -y grub-customizer
 
 # Install snapd
-show_message "Instalando snapd"
-rm /etc/apt/preferences.d/nosnap.pref
-apt update
-apt install -y snapd
-
-# Snap packages
-snap install beekeeper-studio
+# show_message "Instalando snapd"
+# rm /etc/apt/preferences.d/nosnap.pref
+# apt update
+# apt install -y snapd
 
 # Allow games run in fullscreen mode
 echo "SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0" >> /etc/environment
 
 # ---- Programming things
-# Install apache, nginx, openssh
-show_message "Instalando servidores"
-apt install apache2 nginx openssh-server -y
-
-# Install PHP
-show_message "Instalando PHP"
-apt install -y php php-common php-bcmath php-json php-mbstring php-tokenizer php-xml libapache2-mod-php php-xmlrpc php-soap php-gd php-mysql php-cli php-curl php-zip php-pear php-dev libcurl3-openssl-dev
-
-# Install MySQL
-show_message "Instalando MySQL"
-apt install -y mysql-server
-mysql -u root --execute="ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY ''; FLUSH PRIVILEGES;"
-
-# Instalar Composer
-show_message "Instalando Composer"
-curl -sS https://getcomposer.org/installer | php
-mv composer.phar /usr/local/bin/composer
-chmod +x /usr/local/bin/composer
-user_do "composer global require laravel/installer"
-
-# Instalar Android Studio
-show_message "Instalando Android Studio"
-apt install -y libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1 libbz2-1.0:i386
-android_studio_url=$(curl -s 'https://developer.android.com/studio/index.html' | grep -Po '(?<=href=")[^"]*(?=")' - | grep -m1 .tar.gz)
-wget $android_studio_url -O /tmp/android-studio.tar.gz
-tar -xvf /tmp/android-studio.tar.gz -C /usr/share/
-
 # Instalar docker
 show_message "Instalando Docker"
 mkdir -p /etc/apt/keyrings
@@ -284,60 +326,61 @@ apt update
 apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 docker run hello-world
 groupadd docker
-usermod -aG docker $RUID
+usermod -aG docker $REGULAR_USER_NAME
 
-# Instalar Insomnia
-show_message "Instalando Insomnia"
-echo "deb [trusted=yes arch=amd64] https://download.konghq.com/insomnia-ubuntu/ default all" | sudo tee -a /etc/apt/sources.list.d/insomnia.list
-apt update
-apt install -y insomnia
+# Criar uma rede Docker para comunicação entre os contêineres
+docker network create web-network
 
-# Install Postman
-show_message "Instalando Postman"
-wget https://dl.pstmn.io/download/latest/linux64 -O /tmp/Postman.tar.gz
-tar -zxvf /tmp/Postman.tar.gz -C /usr/share/
+# Configurar um contêiner com Apache (não executar)
+show_message "Instalando Apache"
+docker create \
+  --name apache \
+  --network web-network \
+  -v /var/www/html:/var/www/html \
+  -p 80:80 \
+  httpd:latest
 
-# Install anydesk
-show_message "Instalando anydesk"
-wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add -
-echo "deb http://deb.anydesk.com/ all main" > /etc/apt/sources.list.d/anydesk-stable.list
-apt update
-apt install -y anydesk
+# Configurar um contêiner com Nginx
+show_message "Instalando Nginx"
+docker create \
+  --name nginx \
+  --network web-network \
+  -v /var/www/html:/usr/share/nginx/html \
+  -p 8080:80 \
+  nginx:latest
 
-# Remove anydesk legacy trusted gpg key
-apt-key export CDFFDE29 | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/anydesk.gpg
-apt-key --keyring /etc/apt/trusted.gpg del CDFFDE29
+# Configurar um contêiner com PHP
+show_message "Instalando PHP"
+docker create \
+  --name php \
+  --network web-network \
+  -v /var/www/html:/var/www/html \
+  php:8.2-fpm
 
-# Disable servers system startup
-systemctl disable apache2
-systemctl disable nginx
-systemctl disable mysql
+# Install composer
+show_message "Instalando PHP composer"
+docker pull composer:latest
 
-# Install Homebrew and NeoVim
-show_message "Instalando Homebrew e NeoVim"
-user_do "sh ./assets/homebrew/install.sh --unattended"
-user_do "brew install neovim"
+# Configurar um contêiner com MySQL
+show_message "Instalando MySQL"
+docker create \
+  --name mysql \
+  --network web-network \
+  -e MYSQL_ROOT_PASSWORD=root \
+  -e MYSQL_DATABASE=default_db \
+  -e MYSQL_USER=user \
+  -e MYSQL_PASSWORD=secret \
+  -p 3306:3306 \
+  mysql:8.0
 
-# install github cli
-user_do "brew install gh"
-
-# Install hexagon plymouth-theme
-show_message "Instalando tema do plymouth"
-git clone https://github.com/adi1090x/plymouth-themes /usr/share/themes/plymouth-themes
-cp -r /usr/share/themes/plymouth-themes/pack_2/hexagon_alt /usr/share/plymouth/themes/
-update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/hexagon_alt/hexagon_alt.plymouth 100
-# update-alternatives --set default.plymouth /usr/share/plymouth/themes/hexagon_alt/hexagon_alt.plymouth
-# update-initramfs -u
-
-# Install logo-mac-style plymouth-theme
-cp -r assets/plymouth-themes/logo-mac-style /usr/share/plymouth/themes/logo-mac-style
-update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/logo-mac-style/logo-mac-style.plymouth 100
-update-alternatives --set default.plymouth /usr/share/plymouth/themes/logo-mac-style/logo-mac-style.plymouth
-update-initramfs -u
+# Install Homebrew and Github CLI
+show_message "Instalando Homebrew e Github CLI"
+user_bash_do "sh ./assets/homebrew/install.sh --unattended"
+user_bash_do "brew install gh"
 
 # Define zsh como shell padrão
 show_message "Definir zsh como shell padrão"
-user_do "chsh -s $(which zsh)"
+user_bash_do "chsh -s $(which zsh)"
 
 # Reiniciar
 show_message ""
