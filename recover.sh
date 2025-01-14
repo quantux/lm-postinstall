@@ -58,7 +58,7 @@ show_message "Atualizando repositórios"
 apt-get update
 
 # Instalando libdvd-pkg
-# show_message "Instalando libdvd-pkg"
+show_message "Instalando libdvd-pkg"
 export DEBIAN_FRONTEND=noninteractive
 apt-get -y install libdvd-pkg
 dpkg-reconfigure -f noninteractive libdvd-pkg
