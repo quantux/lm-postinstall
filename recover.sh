@@ -280,6 +280,12 @@ apt-get install -y grub-customizer
 # Allow games run in fullscreen mode
 echo "SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0" >> /etc/environment
 
+# Install logo-mac-style plymouth-theme
+cp -r assets/plymouth-themes/logo-mac-style /usr/share/plymouth/themes/logo-mac-style
+update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/logo-mac-style/logo-mac-style.plymouth 100
+update-alternatives --set default.plymouth /usr/share/plymouth/themes/logo-mac-style/logo-mac-style.plymouth
+update-initramfs -u
+
 # ---- Programming things
 # Instalar docker
 show_message "Instalando Docker"
