@@ -199,16 +199,11 @@ flatpak install -y --noninteractive flathub \
   org.remmina.Remmina \
   com.dropbox.Client \
   org.wireshark.Wireshark
+  com.google.Chrome
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
 flatpak update -y
-
-# Install Chrome
-show_message "Instalando Google Chrome"
-wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" -O /tmp/google-chrome.deb
-dpkg -i /tmp/google-chrome.deb
-apt-get install -fy
 
 # Install - Adapta Nokto Fonts
 show_message "Instalando fontes Roboto e Noto Sans"
