@@ -7,7 +7,7 @@
 LightColor='\033[1;32m'
 NC='\033[0m'
 
-# Get current regular user (not sudo user)
+# Get regular user and id
 REGULAR_USER_NAME=$(who am i | awk '{print $1}')
 REGULAR_UID=$(id -u ${REGULAR_USER_NAME})
 
@@ -24,12 +24,10 @@ show_message() {
 }
 
 user_bash_do() {
-    # sudo -u ${REGULAR_USER_NAME} /bin/bash -c "$1"
     su - ${REGULAR_USER_NAME} -c "$1"
 }
 
 user_zsh_do() {
-    # sudo -u ${REGULAR_USER_NAME} /bin/zsh -c "source ~/.zshrc; $1"
     su - ${REGULAR_USER_NAME} -c "/bin/zsh --login -c '$1'"
 }
 
@@ -57,24 +55,19 @@ echo -e $mirrors > /etc/apt/sources.list.d/official-package-repositories.list
 
 # Update
 show_message "Atualizando repositórios"
-apt update
-
-# Instalando libdvd-pkg (único que pede confirmação)
-# show_message "Instalando libdvd-pkg"
-# apt -y install libdvd-pkg
-# dpkg-reconfigure libdvd-pkg
+apt-get update
 
 # Instalando libdvd-pkg
 # show_message "Instalando libdvd-pkg"
 export DEBIAN_FRONTEND=noninteractive
-apt -y install libdvd-pkg
+apt-get -y install libdvd-pkg
 dpkg-reconfigure -f noninteractive libdvd-pkg
 
 # Install ttf-mscorefonts-installer
 show_message "Instalando ttf-mscorefonts-installer"
 echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula	boolean	true" | debconf-set-selections
 echo "ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note" | debconf-set-selections
-apt install -y ttf-mscorefonts-installer
+apt-get install -y ttf-mscorefonts-installer
 
 # Recover backup files
 show_message "Recuperando arquivos de backup"
@@ -83,23 +76,20 @@ tar -zxvf /tmp/home.tar.gz -C /tmp
 rsync -aAXv /tmp/home/ /home/$REGULAR_USER_NAME/
 chown -R $REGULAR_USER_NAME:$REGULAR_USER_NAME /home/$REGULAR_USER_NAME/
 
-# Recover dconf
-echo $password2 | gpg --batch --yes --passphrase-fd 0 --decrypt assets/cinnamon-settings/dconf/dconf.gpg > /tmp/dconf
-
 # Update tldr
 user_bash_do "tldr --update"
 
 # Upgrade
 show_message "Atualizando pacotes"
-apt upgrade -y
+apt-get upgrade -y
 
 # 32bits packages
 show_message "Habilitando pacotes de 32 bits"
 dpkg --add-architecture i386
 
-# Install apt packages
+# Install apt-get packages
 show_message "Instalando pacotes"
-apt install -y \
+apt-get install -y \
   build-essential \
   git \
   curl \
@@ -126,6 +116,7 @@ apt install -y \
   zsh \
   tmux \
   vim \
+  neovim \
   gedit \
   fonts-firacode \
   fonts-powerline \
@@ -145,7 +136,6 @@ apt install -y \
   acpi-call-dkms \
   dkms \
   gnome-system-tools \
-  gnome-boxes \
   hardinfo \
   p7zip-full \
   unrar \
@@ -169,19 +159,10 @@ apt install -y \
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
-yes Y | apt install -y virtualbox-guest-x11
+yes Y | apt-get install -y virtualbox-guest-x11
 
 # Add user to vbox group
 usermod -aG vboxusers $REGULAR_USER_NAME
-
-# Instalando wireshark
-show_message "Instalando wireshark"
-echo "wireshark-common wireshark-common/install-setuid boolean true" | debconf-set-selections
-DEBIAN_FRONTEND=noninteractive apt install -y wireshark
-
-# Install pylint
-show_message "Instalando pylint"
-pip3 install pylint
 
 # Install flatpak packages
 show_message "Instalando pacotes flatpak"
@@ -203,7 +184,6 @@ flatpak install -y --noninteractive flathub \
   io.beekeeperstudio.Studio \
   com.google.AndroidStudio \
   com.anydesk.Anydesk \
-  io.neovim.nvim \
   com.sublimetext.three \
   org.gimp.GIMP \
   org.inkscape.Inkscape \
@@ -217,7 +197,8 @@ flatpak install -y --noninteractive flathub \
   org.gnome.Cheese \
   org.raspberrypi.rpi-imager \
   org.remmina.Remmina \
-  com.dropbox.Client
+  com.dropbox.Client \
+  org.wireshark.Wireshark
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
@@ -227,7 +208,7 @@ flatpak update -y
 show_message "Instalando Google Chrome"
 wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" -O /tmp/google-chrome.deb
 dpkg -i /tmp/google-chrome.deb
-apt install -fy
+apt-get install -fy
 
 # Install - Adapta Nokto Fonts
 show_message "Instalando fontes Roboto e Noto Sans"
@@ -255,7 +236,7 @@ tar -xf ./assets/themes/Flat-Remix-GTK-Blue-Darkest-Solid-NoBorder.tar.xz -C /us
 
 # La-Capitaine Icons
 show_message "Instalando ícones La-Capitaine"
-tar -zxvf ./assets/icons/la-capitaine.tar.gz -C /usr/share/icons/
+tar -xf ./assets/icons/la-capitaine.tar.xz -C /usr/share/icons/
 
 # WPS Office Fonts
 show_message "Instalando fontes para o WPS Office"
@@ -270,47 +251,31 @@ cp ./assets/programs-settings/virtualbox.desktop /usr/share/applications/virtual
 show_message "Instalando TeamViewer"
 wget "https://download.teamviewer.com/download/linux/teamviewer_amd64.deb" -O /tmp/teamviewer.deb
 dpkg -i /tmp/teamviewer.deb
-apt install -fy
-
-# Install oh-my-zsh
-# show_message "Instalando oh-my-zsh"
-# user_bash_do "sh ./assets/oh-my-zsh/oh-my-zsh-install.sh --unattended"
-# chsh -s $(which zsh) $(whoami)
+apt-get install -fy
 
 # Install oh-my-posh
-# show_message "Instalando oh-my-posh"
-# wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
-# chmod +x /usr/local/bin/oh-my-posh
+show_message "Instalando oh-my-posh"
+wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
+chmod +x /usr/local/bin/oh-my-posh
 
 # Load dconf file
 show_message "Carregando configurações do dconf"
-user_bash_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${REGULAR_UID}/bus' dconf load / < /tmp/dconf"
+user_bash_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${REGULAR_UID}/bus' dconf load / < /home/$REGULAR_USER_NAME/.dconf/dconf"
 
 # Set Transmission as default magnet link app
 xdg-mime default transmission-gtk.desktop x-scheme-handler/magnet
 
-# Install grub2-themes
-# show_message "Instalando grub themes"
-# git clone https://github.com/vinceliuice/grub2-themes assets/grub-themes/grub2-themes
-# ./assets/grub2-themes/install.sh -b -t vimix
-
-# Install minimal-grub-theme
-# git clone https://github.com/tomdewildt/minimal-grub-theme assets/grub-themes/minimal-grub-theme
-# cd assets/grub-themes/minimal-grub-theme
-# make install
-# cd $BASE_DIR
-
 # Install grub-customizer
 show_message "Instalando grub-customizer"
 add-apt-repository ppa:danielrichter2007/grub-customizer -y
-apt update
-apt install -y grub-customizer
+apt-get update
+apt-get install -y grub-customizer
 
 # Install snapd
 # show_message "Instalando snapd"
 # rm /etc/apt/preferences.d/nosnap.pref
-# apt update
-# apt install -y snapd
+# apt-get update
+# apt-get install -y snapd
 
 # Allow games run in fullscreen mode
 echo "SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0" >> /etc/environment
@@ -322,8 +287,8 @@ mkdir -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 chmod a+r /etc/apt/keyrings/docker.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $UBUNTU_CODENAME stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-apt update
-apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+apt-get update
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 docker run hello-world
 groupadd docker
 usermod -aG docker $REGULAR_USER_NAME
@@ -372,11 +337,6 @@ docker create \
   -e MYSQL_PASSWORD=secret \
   -p 3306:3306 \
   mysql:8.0
-
-# Install Homebrew and Github CLI
-show_message "Instalando Homebrew e Github CLI"
-user_bash_do "sh ./assets/homebrew/install.sh --unattended"
-user_bash_do "brew install gh"
 
 # Define zsh como shell padrão
 show_message "Definir zsh como shell padrão"

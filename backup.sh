@@ -3,23 +3,13 @@
 # Checks for root privileges
 [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
 
-# Get current regular user (not sudo user)
-RUID=$(who | awk 'FNR == 1 {print $1}')
-RUSER_UID=$(id -u ${RUID})
+# Get regular user and id
+REGULAR_USER_NAME=$(who am i | awk '{print $1}')
+REGULAR_UID=$(id -u ${REGULAR_USER_NAME})
 
 user_do() {
-    sudo -u ${RUID} /bin/bash -c "$1"
+    sudo -u ${REGULAR_USER_NAME} /bin/bash -c "$1"
 }
-
-# start_uploading() {
-#   echo "Uploading file..."
-#   user_do "mkdir -p /home/$RUID/GDrive"
-#   user_do "google-drive-ocamlfuse /home/$RUID/GDrive"
-#   user_do "rsync -auv --progress --partial --delete assets/backups/home.tar.gz.gpg /home/$RUID/GDrive/Backups/"
-#   umount /home/$RUID/GDrive
-#   rm -rf /home/$RUID/GDrive
-#   # rm -rf assets/backups/home.tar.gz.gpg
-# }
 
 # asks for password confirmation
 while true; do
@@ -32,14 +22,13 @@ while true; do
 done
 
 # Dconf backup & encrypt
-user_do "dconf dump / > assets/cinnamon-settings/dconf/dconf"
-echo $password2 | gpg --batch --yes --passphrase-fd 0 --pinentry-mode loopback -c --cipher-algo AES256 assets/cinnamon-settings/dconf/dconf
-chown $RUID:$RUID assets/cinnamon-settings/dconf/dconf.gpg
-rm -rf assets/cinnamon-settings/dconf/dconf
+mkdir -p /home/$REGULAR_USER_NAME/.dconf
+user_do "dconf dump / > /home/$REGULAR_USER_NAME/.dconf/dconf"
+chown $REGULAR_USER_NAME:$REGULAR_USER_NAME /home/$REGULAR_USER_NAME/.dconf/dconf
 
 # Backup using rsync
 mkdir -p assets/backups/home
-rsync -aAXv --progress --exclude-from=ignore-files /home/$RUID/ assets/backups/home
+rsync -aAXv --progress --exclude-from=ignore-files /home/$REGULAR_USER_NAME/ assets/backups/home
 
 echo "Archiving with tar..."
 tar --warning="no-file-ignored" -czf assets/backups/home.tar.gz -C assets/backups home/
@@ -48,18 +37,5 @@ rm -rf assets/backups/home
 # Encrypt using gpg
 echo "Encrypting..."
 echo $password2 | gpg --batch --yes --passphrase-fd 0 --pinentry-mode loopback -c --cipher-algo AES256 assets/backups/home.tar.gz
-chown $RUID:$RUID assets/backups/home.tar.gz.gpg
+chown $REGULAR_USER_NAME:$REGULAR_USER_NAME assets/backups/home.tar.gz.gpg
 rm -rf assets/backups/home.tar.gz
-
-# Start uploading?
-# while true; do
-#   read -p "Start uploading? (Y/n): " response
-#   response=$(echo "$response" | tr '[:upper:]' '[:lower:]')
-#   if [ "$response" = "y" ] || [ "$response" = "yes" ]; then
-#     start_uploading
-#     break
-#   elif [ "$response" = "n" ] || [ "$response" = "no" ]; then
-#     echo "Backup completed."
-#     break
-#   fi
-# done
