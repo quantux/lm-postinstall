@@ -155,7 +155,8 @@ apt-get install -y \
   wine \
   jstest-gtk \
   scrcpy \
-  libncurses5-dev
+  libncurses5-dev \
+  f3
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
