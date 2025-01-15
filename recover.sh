@@ -188,7 +188,6 @@ flatpak install -y --noninteractive flathub \
   org.gimp.GIMP \
   org.inkscape.Inkscape \
   org.blender.Blender \
-  org.mozilla.firefox \
   org.mozilla.Thunderbird \
   org.videolan.VLC \
   org.filezillaproject.Filezilla \
@@ -198,8 +197,9 @@ flatpak install -y --noninteractive flathub \
   org.raspberrypi.rpi-imager \
   org.remmina.Remmina \
   com.dropbox.Client \
-  org.wireshark.Wireshark
-  com.google.Chrome
+  org.wireshark.Wireshark \
+  com.google.Chrome \
+  md.obsidian.Obsidian
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
