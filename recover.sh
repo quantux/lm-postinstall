@@ -156,7 +156,8 @@ apt-get install -y \
   jstest-gtk \
   scrcpy \
   libncurses5-dev \
-  f3
+  f3 \
+  flameshot
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
