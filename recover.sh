@@ -178,13 +178,11 @@ flatpak install -y --noninteractive flathub \
   com.stremio.Stremio \
   net.xmind.XMind \
   com.obsproject.Studio \
-  com.visualstudio.code \
   com.microsoft.Edge \
   rest.insomnia.Insomnia \
   com.getpostman.Postman \
   io.beekeeperstudio.Studio \
   com.google.AndroidStudio \
-  com.anydesk.Anydesk \
   com.sublimetext.three \
   org.gimp.GIMP \
   org.inkscape.Inkscape \
@@ -199,12 +197,38 @@ flatpak install -y --noninteractive flathub \
   org.remmina.Remmina \
   com.dropbox.Client \
   org.wireshark.Wireshark \
-  com.google.Chrome \
   md.obsidian.Obsidian
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
 flatpak update -y
+
+# Install Chrome
+show_message "Instalando Google Chrome"
+wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" -O /tmp/google-chrome.deb
+dpkg -i /tmp/google-chrome.deb
+apt install -fy
+
+# Install VSCode
+show_message "Instalando VSCode"
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/packages.microsoft.gpg
+install -D -o root -g root -m 644 /tmp/packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+apt update
+apt install code -y
+
+# Install anydesk
+show_message "Instalando anydesk"
+wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add -
+echo "deb http://deb.anydesk.com/ all main" > /etc/apt/sources.list.d/anydesk-stable.list
+apt update
+apt install -y anydesk
+
+# Install Teamviewer
+show_message "Instalando TeamViewer"
+wget "https://download.teamviewer.com/download/linux/teamviewer_amd64.deb" -O /tmp/teamviewer.deb
+dpkg -i /tmp/teamviewer.deb
+apt install -fy
 
 # Install - Adapta Nokto Fonts
 show_message "Instalando fontes Roboto e Noto Sans"
