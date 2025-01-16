@@ -216,7 +216,7 @@ wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /t
 install -D -o root -g root -m 644 /tmp/packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
 sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
 apt update
-apt install code -y
+apt install -y code
 
 # Install anydesk
 show_message "Instalando anydesk"
@@ -224,6 +224,7 @@ wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add -
 echo "deb http://deb.anydesk.com/ all main" > /etc/apt/sources.list.d/anydesk-stable.list
 apt update
 apt install -y anydesk
+systemctl disable apache2
 
 # Install Teamviewer
 show_message "Instalando TeamViewer"
