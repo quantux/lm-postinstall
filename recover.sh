@@ -154,7 +154,6 @@ apt-get install -y \
   plymouth \
   wine \
   jstest-gtk \
-  scrcpy \
   libncurses5-dev \
   f3 \
   flameshot
