@@ -197,7 +197,8 @@ flatpak install -y --noninteractive flathub \
   org.remmina.Remmina \
   com.dropbox.Client \
   org.wireshark.Wireshark \
-  md.obsidian.Obsidian
+  md.obsidian.Obsidian \
+  org.qbittorrent.qBittorrent
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
@@ -283,8 +284,8 @@ chmod +x /usr/local/bin/oh-my-posh
 show_message "Carregando configurações do dconf"
 user_bash_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${REGULAR_UID}/bus' dconf load / < /home/$REGULAR_USER_NAME/.dconf/dconf"
 
-# Set Transmission as default magnet link app
-xdg-mime default transmission-gtk.desktop x-scheme-handler/magnet
+# Set qBitTorrent as default magnet link app
+xdg-mime default org.qbittorrent.qBittorrent.desktop x-scheme-handler/magnet
 
 # Install grub-customizer
 show_message "Instalando grub-customizer"
