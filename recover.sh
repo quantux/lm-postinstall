@@ -198,7 +198,8 @@ flatpak install -y --noninteractive flathub \
   com.dropbox.Client \
   org.wireshark.Wireshark \
   md.obsidian.Obsidian \
-  org.qbittorrent.qBittorrent
+  org.qbittorrent.qBittorrent \
+  org.telegram.desktop
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
