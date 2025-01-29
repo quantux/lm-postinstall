@@ -21,6 +21,12 @@ while true; do
   echo "Please try again"
 done
 
+# Check if the assets/backups directory is empty
+if [ "$(ls -A assets/backups)" ]; then
+  echo "Warning: assets/backups/ is not empty. Exiting..."
+  exit 1
+fi
+
 # Dconf backup & encrypt
 mkdir -p /home/$REGULAR_USER_NAME/.dconf
 user_do "dconf dump / > /home/$REGULAR_USER_NAME/.dconf/dconf"
