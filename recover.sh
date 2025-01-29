@@ -53,6 +53,12 @@ deb http://sft.if.usp.br/ubuntu $UBUNTU_CODENAME-backports main restricted unive
 deb http://security.ubuntu.com/ubuntu/ $UBUNTU_CODENAME-security main restricted universe multiverse"
 echo -e $mirrors > /etc/apt/sources.list.d/official-package-repositories.list
 
+# Nvidia Container Toolkit repository
+curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+  && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+    sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+    sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+
 # Update
 show_message "Atualizando repositórios"
 apt-get update
@@ -156,7 +162,8 @@ apt-get install -y \
   jstest-gtk \
   libncurses5-dev \
   f3 \
-  flameshot
+  flameshot \
+  nvidia-container-toolkit
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
