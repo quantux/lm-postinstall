@@ -11,6 +11,12 @@ user_do() {
     sudo -u ${REGULAR_USER_NAME} /bin/bash -c "$1"
 }
 
+# Check if the assets/backups directory is empty
+if [ "$(ls -A assets/backups)" ]; then
+  echo "Warning: assets/backups/ is not empty. Exiting..."
+  exit 1
+fi
+
 # asks for password confirmation
 while true; do
   read -s -p "GPG Password: " password
@@ -20,12 +26,6 @@ while true; do
   [ "$password" = "$password2" ] && break
   echo "Please try again"
 done
-
-# Check if the assets/backups directory is empty
-if [ "$(ls -A assets/backups)" ]; then
-  echo "Warning: assets/backups/ is not empty. Exiting..."
-  exit 1
-fi
 
 # Dconf backup & encrypt
 mkdir -p /home/$REGULAR_USER_NAME/.dconf
