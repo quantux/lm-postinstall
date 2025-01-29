@@ -11,8 +11,8 @@ user_do() {
     sudo -u ${REGULAR_USER_NAME} /bin/bash -c "$1"
 }
 
-# Check if the assets/backups directory is empty
-if [ "$(ls -A assets/backups)" ]; then
+# Check if the assets/backups directory is empty (ignoring hidden files)
+if [ "$(ls -A assets/backups | grep -v '^\.' )" ]; then
   echo "Warning: assets/backups/ is not empty. Exiting..."
   exit 1
 fi
