@@ -18,6 +18,8 @@ UBUNTU_CODENAME=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME=
 # Base project dir
 BASE_DIR=$(pwd)
 
+BACKUP_FILE="assets/backups/home.tar.gz.gpg"
+
 show_message() {
     clear
     printf "${LightColor}$1${NC}\n\n"
@@ -33,6 +35,12 @@ user_zsh_do() {
 
 # Fix clock time for windows dualboot
 timedatectl set-local-rtc 1
+
+# Check if backup file exists
+if [[ ! -f "$BACKUP_FILE" ]]; then
+    echo "Erro: O arquivo de backup não foi encontrado em '$BACKUP_FILE'. Saindo..."
+    exit 1
+fi
 
 # asks for gpg password confirmation
 while true; do
@@ -77,7 +85,7 @@ apt-get install -y ttf-mscorefonts-installer
 
 # Recover backup files
 show_message "Recuperando arquivos de backup"
-echo $password2 | gpg --batch --yes --passphrase-fd 0 --decrypt assets/backups/home.tar.gz.gpg > /tmp/home.tar.gz
+echo $password2 | gpg --batch --yes --passphrase-fd 0 --decrypt "$BACKUP_FILE" > /tmp/home.tar.gz
 tar -zxvf /tmp/home.tar.gz -C /tmp
 rsync -aAXv /tmp/home/ /home/$REGULAR_USER_NAME/
 chown -R $REGULAR_USER_NAME:$REGULAR_USER_NAME /home/$REGULAR_USER_NAME/
