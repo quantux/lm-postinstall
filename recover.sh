@@ -54,12 +54,12 @@ done
 
 # Set mirrors
 show_message "Atualizando mirrors"
-mirrors="deb https://mirror.ufscar.br/mint-archive $LINUXMINT_CODENAME main upstream import backport \n\n\
-deb http://sft.if.usp.br/ubuntu $UBUNTU_CODENAME main restricted universe multiverse\n\
-deb http://sft.if.usp.br/ubuntu $UBUNTU_CODENAME-updates main restricted universe multiverse\n\
-deb http://sft.if.usp.br/ubuntu $UBUNTU_CODENAME-backports main restricted universe multiverse\n\n\
-deb http://security.ubuntu.com/ubuntu/ $UBUNTU_CODENAME-security main restricted universe multiverse"
-echo -e $mirrors > /etc/apt/sources.list.d/official-package-repositories.list
+mirrors="deb https://mint-packages.c3sl.ufpr.br wilma main upstream import backport
+deb http://mirror.unesp.br/ubuntu noble main restricted universe multiverse
+deb http://mirror.unesp.br/ubuntu noble-updates main restricted universe multiverse
+deb http://mirror.unesp.br/ubuntu noble-backports main restricted universe multiverse
+deb http://security.ubuntu.com/ubuntu/ noble-security main restricted universe multiverse"
+echo "$mirrors" > /etc/apt/sources.list.d/official-package-repositories.list
 
 # Nvidia Container Toolkit repository
 curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
