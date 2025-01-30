@@ -152,6 +152,8 @@ apt-get install -y \
   gnome-system-tools \
   hardinfo \
   p7zip-full \
+  virtualbox \
+  virtualbox-qt \
   unrar \
   rar \
   qpdf \
