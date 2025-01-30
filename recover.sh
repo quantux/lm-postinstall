@@ -154,6 +154,7 @@ apt-get install -y \
   p7zip-full \
   virtualbox \
   virtualbox-qt \
+  virtualbox-guest-additions-iso \
   unrar \
   rar \
   qpdf \
