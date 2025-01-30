@@ -90,6 +90,39 @@ tar -zxvf /tmp/home.tar.gz -C /tmp
 rsync -aAXv /tmp/home/ /home/$REGULAR_USER_NAME/
 chown -R $REGULAR_USER_NAME:$REGULAR_USER_NAME /home/$REGULAR_USER_NAME/
 
+# Install - Roboto and Noto Sans Fonts
+show_message "Instalando fontes Roboto e Noto Sans"
+wget "https://fonts.google.com/download?family=Roboto" -O /tmp/roboto.zip
+wget "https://fonts.google.com/download?family=Noto Sans" -O /tmp/noto_sans.zip
+unzip /tmp/roboto.zip -d /usr/share/fonts/
+unzip /tmp/noto_sans.zip -d /usr/share/fonts/
+
+# Install NerdFront Firacode
+show_message "Instalando fontes NerdFont Firacode"
+wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.1/FiraCode.zip" -O /tmp/firacode.zip
+unzip /tmp/firacode.zip -d /usr/share/fonts/
+
+# Install - Adapta Nokto theme
+show_message "Instalando Adapta Nokto"
+tar -xf ./assets/themes/Adapta-Nokto.tar.xz -C /usr/share/themes
+
+# Install Flat Remix theme
+show_message "Instalando Flat Remix theme"
+tar -xf ./assets/themes/Flat-Remix-GTK-Blue-Darkest-Solid-NoBorder.tar.xz -C /usr/share/themes
+
+# La-Capitaine Icons
+show_message "Instalando ícones La-Capitaine"
+tar -xf ./assets/icons/la-capitaine.tar.xz -C /usr/share/icons/
+
+# WPS Office Fonts
+show_message "Instalando fontes para o WPS Office"
+git clone https://github.com/udoyen/wps-fonts.git /tmp/wps-fonts
+mv /tmp/wps-fonts/wps /usr/share/fonts/
+
+# Load dconf file
+show_message "Carregando configurações do dconf"
+user_bash_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${REGULAR_UID}/bus' dconf load / < /home/$REGULAR_USER_NAME/.dconf/dconf"
+
 # Update tldr
 user_bash_do "tldr --update"
 
@@ -180,6 +213,10 @@ apt-get install -y \
 show_message "Instalando virtualbox-guest-x11"
 yes Y | apt-get install -y virtualbox-guest-x11
 
+# Set virtualbox dark theme
+show_message "Copiando arquivo de tema para o Virtualbox"
+cp ./assets/programs-settings/virtualbox.desktop /usr/share/applications/virtualbox.desktop
+
 # Add user to vbox group
 usermod -aG vboxusers $REGULAR_USER_NAME
 
@@ -237,7 +274,7 @@ sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg]
 apt update
 apt install -y code
 
-# Install anydesk
+# Install Anydesk
 show_message "Instalando anydesk"
 wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add -
 echo "deb http://deb.anydesk.com/ all main" > /etc/apt/sources.list.d/anydesk-stable.list
@@ -251,57 +288,10 @@ wget "https://download.teamviewer.com/download/linux/teamviewer_amd64.deb" -O /t
 dpkg -i /tmp/teamviewer.deb
 apt install -fy
 
-# Install - Adapta Nokto Fonts
-show_message "Instalando fontes Roboto e Noto Sans"
-wget "https://fonts.google.com/download?family=Roboto" -O /tmp/roboto.zip
-wget "https://fonts.google.com/download?family=Noto Sans" -O /tmp/noto_sans.zip
-unzip /tmp/roboto.zip -d /usr/share/fonts/
-unzip /tmp/noto_sans.zip -d /usr/share/fonts/
-
-# Install NerdFront Firacode
-show_message "Instalando fontes NerdFont Firacode"
-wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.1/FiraCode.zip" -O /tmp/firacode.zip
-unzip /tmp/firacode.zip -d /usr/share/fonts/
-
-# Install - Adapta Nokto theme
-show_message "Instalando Adapta Nokto"
-tar -xf ./assets/themes/Adapta-Nokto.tar.xz -C /usr/share/themes
-
-# Install Sweet Theme
-show_message "Instalando Sweet Theme"
-tar -xf ./assets/themes/Sweet-mars-v40.tar.xz -C /usr/share/themes
-
-# Install Sweet Theme
-show_message "Instalando Flat Remix theme"
-tar -xf ./assets/themes/Flat-Remix-GTK-Blue-Darkest-Solid-NoBorder.tar.xz -C /usr/share/themes
-
-# La-Capitaine Icons
-show_message "Instalando ícones La-Capitaine"
-tar -xf ./assets/icons/la-capitaine.tar.xz -C /usr/share/icons/
-
-# WPS Office Fonts
-show_message "Instalando fontes para o WPS Office"
-git clone https://github.com/udoyen/wps-fonts.git /tmp/wps-fonts
-mv /tmp/wps-fonts/wps /usr/share/fonts/
-
-# Set virtualbox dark theme
-show_message "Copiando arquivo de tema para o Virtualbox"
-cp ./assets/programs-settings/virtualbox.desktop /usr/share/applications/virtualbox.desktop
-
-# Install Teamviewer
-show_message "Instalando TeamViewer"
-wget "https://download.teamviewer.com/download/linux/teamviewer_amd64.deb" -O /tmp/teamviewer.deb
-dpkg -i /tmp/teamviewer.deb
-apt-get install -fy
-
 # Install oh-my-posh
 show_message "Instalando oh-my-posh"
 wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
 chmod +x /usr/local/bin/oh-my-posh
-
-# Load dconf file
-show_message "Carregando configurações do dconf"
-user_bash_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${REGULAR_UID}/bus' dconf load / < /home/$REGULAR_USER_NAME/.dconf/dconf"
 
 # Set qBitTorrent as default magnet link app
 xdg-mime default org.qbittorrent.qBittorrent.desktop x-scheme-handler/magnet
