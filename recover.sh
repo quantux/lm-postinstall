@@ -260,6 +260,11 @@ flatpak install -y --noninteractive flathub \
 show_message "Atualizando pacotes flatpak"
 flatpak update -y
 
+# Install nvim
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+sudo rm -rf /opt/nvim
+sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+
 # Install Chrome
 show_message "Instalando Google Chrome"
 wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" -O /tmp/google-chrome.deb
@@ -280,7 +285,7 @@ wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add -
 echo "deb http://deb.anydesk.com/ all main" > /etc/apt/sources.list.d/anydesk-stable.list
 apt update
 apt install -y anydesk
-systemctl disable apache2
+systemctl disable anydesk
 
 # Install Teamviewer
 show_message "Instalando TeamViewer"
