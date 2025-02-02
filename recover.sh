@@ -207,7 +207,8 @@ apt-get install -y \
   libncurses5-dev \
   f3 \
   flameshot \
-  nvidia-container-toolkit
+  nvidia-container-toolkit \
+  wireguard
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
