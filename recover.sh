@@ -255,7 +255,8 @@ flatpak install -y --noninteractive flathub \
   org.wireshark.Wireshark \
   md.obsidian.Obsidian \
   org.qbittorrent.qBittorrent \
-  org.telegram.desktop
+  org.telegram.desktop \
+  com.sweethome3d.Sweethome3d
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
