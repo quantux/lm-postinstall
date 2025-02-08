@@ -256,7 +256,9 @@ flatpak install -y --noninteractive flathub \
   md.obsidian.Obsidian \
   org.qbittorrent.qBittorrent \
   org.telegram.desktop \
-  com.sweethome3d.Sweethome3d
+  com.sweethome3d.Sweethome3d \
+  fr.handbrake.ghb \
+  org.kde.kdenlive
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
