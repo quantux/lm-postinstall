@@ -259,7 +259,8 @@ flatpak install -y --noninteractive flathub \
   org.telegram.desktop \
   com.sweethome3d.Sweethome3d \
   fr.handbrake.ghb \
-  org.kde.kdenlive
+  org.kde.kdenlive \
+  com.calibre_ebook.calibre
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
