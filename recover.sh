@@ -209,7 +209,8 @@ apt-get install -y \
   flameshot \
   nvidia-container-toolkit \
   wireguard \
-  kdeconnect
+  kdeconnect \
+  iperf
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
