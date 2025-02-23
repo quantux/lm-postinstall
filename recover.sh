@@ -210,7 +210,7 @@ apt-get install -y \
   nvidia-container-toolkit \
   wireguard \
   kdeconnect \
-  iperf
+  iperf3
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
