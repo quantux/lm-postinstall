@@ -10,6 +10,7 @@ VirtualBox VMs
 Jellyfin Server Media
 Android
 workspace/lm-postinstall
+.scripts/lm-postinstall
 .android
 .local/share/Trash
 .steam
