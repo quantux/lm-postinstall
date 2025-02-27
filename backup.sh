@@ -11,6 +11,9 @@ user_do() {
     sudo -u ${REGULAR_USER_NAME} /bin/bash -c "$1"
 }
 
+# Define o caminho do Google Drive
+GDRIVE_PATH="gdrive:/Áreas/Família/Matheus/Backups/Backups\ Linux/"
+
 # Verifica se o diretório assets/backups está vazio (ignorando arquivos ocultos)
 if [ "$(ls -A assets/backups | grep -v '^\.' )" ]; then
   clear
@@ -36,7 +39,7 @@ while true; do
   echo "Please try again"
 done
 
-# Dconf backup & encrypt
+# Dconf backup
 mkdir -p /home/$REGULAR_USER_NAME/.dconf
 user_do "dconf dump / > /home/$REGULAR_USER_NAME/.dconf/dconf"
 chown $REGULAR_USER_NAME:$REGULAR_USER_NAME /home/$REGULAR_USER_NAME/.dconf/dconf
@@ -63,4 +66,23 @@ chown "$REGULAR_USER_NAME:$REGULAR_USER_NAME" "$ENCRYPTED_FILE"
 rm -rf "$BACKUP_FILE"
 
 # Backup to Cloud Storage usando interpolação diretamente
-user_do "rclone move --progress $ENCRYPTED_FILE gdrive:/Áreas/Família/Matheus/Backups/Backups\ Linux/"
+user_do "rclone move --progress $ENCRYPTED_FILE $GDRIVE_PATH"
+echo "Backup concluído!"
+
+# Excluindo arquivos antigos...
+# Contar arquivos no diretório de backups do Google Drive
+FILE_COUNT=$(user_do "rclone ls $GDRIVE_PATH | wc -l")
+
+# Se o número de arquivos for maior que 10, exclua o arquivo mais antigo
+if [ "$FILE_COUNT" -gt 10 ]; then
+  echo "Número de arquivos no Google Drive: $FILE_COUNT. Apagando o arquivo mais antigo..."
+
+  # Listar os arquivos e ordenar com base na data no nome do arquivo (extraindo a data do formato DD-MM-YYYY)
+  OLDEST_FILE=$(user_do "rclone lsf --files-only $GDRIVE_PATH" | sort -t'-' -k2,2 -k3,3 -k4,4 | head -n 1)
+
+  # Excluir o arquivo mais antigo
+  user_do "rclone delete $GDRIVE_PATH$OLDEST_FILE"
+  echo "Arquivo mais antigo ($OLDEST_FILE) excluído."
+else
+  echo "O número de arquivos no Google Drive está abaixo de 10. Nenhum arquivo será excluído."
+fi
