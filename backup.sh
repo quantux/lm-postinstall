@@ -11,10 +11,19 @@ user_do() {
     sudo -u ${REGULAR_USER_NAME} /bin/bash -c "$1"
 }
 
-# Check if the assets/backups directory is empty (ignoring hidden files)
+# Verifica se o diretório assets/backups está vazio (ignorando arquivos ocultos)
 if [ "$(ls -A assets/backups | grep -v '^\.' )" ]; then
-  echo "Warning: assets/backups/ is not empty. Exiting..."
-  exit 1
+  clear
+  echo "Aviso: assets/backups/ não está vazio."
+  echo -n "Deseja excluir todos os arquivos e continuar? (Y/n) "
+  read -r escolha
+  if [[ "$escolha" =~ ^[Yy]?$ ]]; then
+    rm -rf assets/backups/*
+    echo "Arquivos excluídos. Continuando o backup..."
+  else
+    echo "Backup cancelado."
+    exit 1
+  fi
 fi
 
 # asks for password confirmation
@@ -40,8 +49,18 @@ echo "Archiving with tar..."
 tar --warning="no-file-ignored" -czf assets/backups/home.tar.gz -C assets/backups home/
 rm -rf assets/backups/home
 
-# Encrypt using gpg
+# Definir a data no formato DD-MM-YYYY
+TODAY=$(date +"%d-%m-%Y")
+
+# Caminho do arquivo original e nome do arquivo criptografado
+BACKUP_FILE="assets/backups/home.tar.gz"
+ENCRYPTED_FILE="assets/backups/home-${TODAY}.tar.gz.gpg"
+
+# Encrypt using gpg com interpolação de string
 echo "Encrypting..."
-echo $password2 | gpg --batch --yes --passphrase-fd 0 --pinentry-mode loopback -c --cipher-algo AES256 assets/backups/home.tar.gz
-chown $REGULAR_USER_NAME:$REGULAR_USER_NAME assets/backups/home.tar.gz.gpg
-rm -rf assets/backups/home.tar.gz
+echo "$password2" | gpg --batch --yes --passphrase-fd 0 --pinentry-mode loopback -c --cipher-algo AES256 -o "$ENCRYPTED_FILE" "$BACKUP_FILE"
+chown "$REGULAR_USER_NAME:$REGULAR_USER_NAME" "$ENCRYPTED_FILE"
+rm -rf "$BACKUP_FILE"
+
+# Backup to Cloud Storage usando interpolação diretamente
+user_do "rclone move --progress $ENCRYPTED_FILE gdrive:/Áreas/Família/Matheus/Backups/Backups\ Linux/"
