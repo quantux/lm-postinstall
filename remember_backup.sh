@@ -2,13 +2,13 @@
 
 # Diretório do script e arquivo de controle .lock
 script_dir=$(dirname "$(realpath "$0")")
-backup_lock_file="$script_dir/last_backup_week"
+backup_control_file="$script_dir/backup_control_file"
 current_week=$(date +%U)  # Semana atual do ano
 current_day=$(date +%u)   # Dia da semana (1 = Segunda, ..., 7 = Domingo)
 
 # Verifica se o backup já foi feito na semana
 backup_feito() {
-    [[ -f "$backup_lock_file" && "$(cat "$backup_lock_file")" == "$current_week" ]]
+    [[ -f "$backup_control_file" && "$(cat "$backup_control_file")" == "$current_week" ]]
 }
 
 # Pergunta ao usuário e executa o backup se necessário
@@ -18,7 +18,7 @@ executar_backup() {
 
     (
         cd "$script_dir" || exit 1
-        ./backup.sh && echo "$current_week" > "$backup_lock_file" && echo "Backup concluído!"
+        ./backup.sh && echo "$current_week" > "$backup_control_file" && echo "Backup concluído!"
         echo "Processo concluído. Pressione Enter para sair."
         read -r
     )
