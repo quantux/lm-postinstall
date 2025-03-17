@@ -4,15 +4,18 @@
 [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
 
 # Vars
-REGULAR_USER_NAME=$(who am i | awk '{print $1}')
+REGULAR_USER_NAME="${SUDO_USER:-$LOGNAME}"
 REGULAR_UID=$(id -u ${REGULAR_USER_NAME})
-BACKUP_FILE="assets/backups/home.tar.gz"
 TODAY=$(date +"%d-%m-%Y")
 ENCRYPTED_FILE="assets/backups/home-${TODAY}.tar.gz.gpg"
 GDRIVE_PATH="gdrive:/Áreas/Família/Matheus/Backups/Backups\ Linux/"
 
 user_do() {
-    sudo -u ${REGULAR_USER_NAME} /bin/bash -c "$1"
+    if command -v zsh >/dev/null 2>&1; then
+        su - ${REGULAR_USER_NAME} -c "/bin/zsh --login -c '$1'"
+    else
+        su - ${REGULAR_USER_NAME} -c "/bin/bash -c '$1'"
+    fi
 }
 
 # asks for password confirmation
@@ -30,21 +33,14 @@ mkdir -p /home/$REGULAR_USER_NAME/.dconf
 user_do "dconf dump / > /home/$REGULAR_USER_NAME/.dconf/dconf"
 chown $REGULAR_USER_NAME:$REGULAR_USER_NAME /home/$REGULAR_USER_NAME/.dconf/dconf
 
-# Backup using rsync
-mkdir -p assets/backups/home
-rsync -aAXv --progress --exclude-from=ignore-files /home/$REGULAR_USER_NAME/ assets/backups/home
+# Archive and encrypt in one step
+echo "Archiving and encrypting with tar and gpg..."
+tar --warning="no-file-ignored" -cz -C /home/$REGULAR_USER_NAME --exclude-from=ignore-files . | \
+    gpg --batch --yes --passphrase "$password" --pinentry-mode loopback -c --cipher-algo AES256 -o "$ENCRYPTED_FILE"
 
-echo "Archiving with tar..."
-tar --warning="no-file-ignored" -czf $BACKUP_FILE -C assets/backups home/
-rm -rf assets/backups/home
-
-# Encrypt using gpg com interpolação de string
-echo "Encrypting..."
-echo "$password2" | gpg --batch --yes --passphrase-fd 0 --pinentry-mode loopback -c --cipher-algo AES256 -o "$ENCRYPTED_FILE" "$BACKUP_FILE"
 chown "$REGULAR_USER_NAME:$REGULAR_USER_NAME" "$ENCRYPTED_FILE"
-rm -rf "$BACKUP_FILE"
 
-# Backup to Cloud Storage usando interpolação diretamente
+# Backup to Cloud Storage
 user_do "rclone move --progress $ENCRYPTED_FILE $GDRIVE_PATH"
 echo "Backup concluído!"
 
