@@ -3,31 +3,17 @@
 # Checks for root privileges
 [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
 
-# Get regular user and id
+# Vars
 REGULAR_USER_NAME=$(who am i | awk '{print $1}')
 REGULAR_UID=$(id -u ${REGULAR_USER_NAME})
+BACKUP_FILE="assets/backups/home.tar.gz"
+TODAY=$(date +"%d-%m-%Y")
+ENCRYPTED_FILE="assets/backups/home-${TODAY}.tar.gz.gpg"
+GDRIVE_PATH="gdrive:/Áreas/Família/Matheus/Backups/Backups\ Linux/"
 
 user_do() {
     sudo -u ${REGULAR_USER_NAME} /bin/bash -c "$1"
 }
-
-# Define o caminho do Google Drive
-GDRIVE_PATH="gdrive:/Áreas/Família/Matheus/Backups/Backups\ Linux/"
-
-# Verifica se o diretório assets/backups está vazio (ignorando arquivos ocultos)
-if [ "$(ls -A assets/backups | grep -v '^\.' )" ]; then
-  clear
-  echo "Aviso: assets/backups/ não está vazio."
-  echo -n "Deseja excluir todos os arquivos e continuar? (Y/n) "
-  read -r escolha
-  if [[ "$escolha" =~ ^[Yy]?$ ]]; then
-    rm -rf assets/backups/*
-    echo "Arquivos excluídos. Continuando o backup..."
-  else
-    echo "Backup cancelado."
-    exit 1
-  fi
-fi
 
 # asks for password confirmation
 while true; do
@@ -49,15 +35,8 @@ mkdir -p assets/backups/home
 rsync -aAXv --progress --exclude-from=ignore-files /home/$REGULAR_USER_NAME/ assets/backups/home
 
 echo "Archiving with tar..."
-tar --warning="no-file-ignored" -czf assets/backups/home.tar.gz -C assets/backups home/
+tar --warning="no-file-ignored" -czf $BACKUP_FILE -C assets/backups home/
 rm -rf assets/backups/home
-
-# Definir a data no formato DD-MM-YYYY
-TODAY=$(date +"%d-%m-%Y")
-
-# Caminho do arquivo original e nome do arquivo criptografado
-BACKUP_FILE="assets/backups/home.tar.gz"
-ENCRYPTED_FILE="assets/backups/home-${TODAY}.tar.gz.gpg"
 
 # Encrypt using gpg com interpolação de string
 echo "Encrypting..."
@@ -70,19 +49,4 @@ user_do "rclone move --progress $ENCRYPTED_FILE $GDRIVE_PATH"
 echo "Backup concluído!"
 
 # Excluindo arquivos antigos...
-# Contar arquivos no diretório de backups do Google Drive
-FILE_COUNT=$(user_do "rclone ls $GDRIVE_PATH | wc -l")
-
-# Se o número de arquivos for maior que 10, exclua o arquivo mais antigo
-if [ "$FILE_COUNT" -gt 10 ]; then
-  echo "Número de arquivos no Google Drive: $FILE_COUNT. Apagando o arquivo mais antigo..."
-
-  # Listar os arquivos e ordenar com base na data no nome do arquivo (extraindo a data do formato DD-MM-YYYY)
-  OLDEST_FILE=$(user_do "rclone lsf --files-only $GDRIVE_PATH" | sort -t'-' -k2,2 -k3,3 -k4,4 | head -n 1)
-
-  # Excluir o arquivo mais antigo
-  user_do "rclone delete $GDRIVE_PATH$OLDEST_FILE"
-  echo "Arquivo mais antigo ($OLDEST_FILE) excluído."
-else
-  echo "O número de arquivos no Google Drive está abaixo de 10. Nenhum arquivo será excluído."
-fi
+docker exec rclone rclone delete --min-age $((FILES_TO_KEEP * 7))d "$GDRIVE_PATH"
