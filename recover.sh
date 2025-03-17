@@ -138,6 +138,7 @@ dpkg --add-architecture i386
 show_message "Instalando pacotes"
 apt-get install -y \
   build-essential \
+  steam-devices \
   git \
   curl \
   wget \
@@ -314,12 +315,6 @@ show_message "Instalando grub-customizer"
 add-apt-repository ppa:danielrichter2007/grub-customizer -y
 apt-get update
 apt-get install -y grub-customizer
-
-# Install snapd
-# show_message "Instalando snapd"
-# rm /etc/apt/preferences.d/nosnap.pref
-# apt-get update
-# apt-get install -y snapd
 
 # Allow games run in fullscreen mode
 echo "SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0" >> /etc/environment
