@@ -7,17 +7,11 @@
 LightColor='\033[1;32m'
 NC='\033[0m'
 
-# Get regular user and id
-REGULAR_USER_NAME=$(who am i | awk '{print $1}')
+# Vars
+REGULAR_USER_NAME="${SUDO_USER:-$LOGNAME}"
 REGULAR_UID=$(id -u ${REGULAR_USER_NAME})
-
-# Distro codenames
 LINUXMINT_CODENAME=$(lsb_release -cs)
 UBUNTU_CODENAME=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME= | cut -f2 -d "=")
-
-# Base project dir
-BASE_DIR=$(pwd)
-
 BACKUP_FILE="assets/backups/home.tar.gz.gpg"
 
 show_message() {
@@ -25,12 +19,12 @@ show_message() {
     printf "${LightColor}$1${NC}\n\n"
 }
 
-user_bash_do() {
-    su - ${REGULAR_USER_NAME} -c "$1"
-}
-
-user_zsh_do() {
-    su - ${REGULAR_USER_NAME} -c "/bin/zsh --login -c '$1'"
+user_do() {
+    if command -v zsh >/dev/null 2>&1; then
+        su - ${REGULAR_USER_NAME} -c "/bin/zsh --login -c '$1'"
+    else
+        su - ${REGULAR_USER_NAME} -c "/bin/bash -c '$1'"
+    fi
 }
 
 # Fix clock time for windows dualboot
@@ -121,10 +115,10 @@ mv /tmp/wps-fonts/wps /usr/share/fonts/
 
 # Load dconf file
 show_message "Carregando configurações do dconf"
-user_bash_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${REGULAR_UID}/bus' dconf load / < /home/$REGULAR_USER_NAME/.dconf/dconf"
+user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${REGULAR_UID}/bus' dconf load / < /home/$REGULAR_USER_NAME/.dconf/dconf"
 
 # Update tldr
-user_bash_do "tldr --update"
+user_do "tldr --update"
 
 # Upgrade
 show_message "Atualizando pacotes"
@@ -379,7 +373,7 @@ docker create \
 
 # Define zsh como shell padrão
 show_message "Definir zsh como shell padrão"
-user_bash_do "chsh -s $(which zsh)"
+chsh -s $(which zsh) $REGULAR_USER_NAME
 
 # Reiniciar
 show_message ""
