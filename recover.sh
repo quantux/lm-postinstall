@@ -258,7 +258,9 @@ flatpak install -y --noninteractive flathub \
   com.sweethome3d.Sweethome3d \
   fr.handbrake.ghb \
   org.kde.kdenlive \
-  com.calibre_ebook.calibre
+  com.calibre_ebook.calibre \
+  org.libretro.RetroArch \
+  net.pcsx2.PCSX2
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
