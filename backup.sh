@@ -45,4 +45,4 @@ user_do "rclone move --progress $ENCRYPTED_FILE $GDRIVE_PATH"
 echo "Backup concluído!"
 
 # Excluindo arquivos antigos...
-docker exec rclone rclone delete --min-age $((FILES_TO_KEEP * 7))d "$GDRIVE_PATH"
+user_do "rclone delete --min-age $((FILES_TO_KEEP * 7))d \"$GDRIVE_PATH\""
