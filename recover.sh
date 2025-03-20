@@ -206,7 +206,8 @@ apt-get install -y \
   wireguard \
   kdeconnect \
   iperf3 \
-  rclone
+  rclone \
+  smartmontools
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
