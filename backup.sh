@@ -7,7 +7,8 @@
 REGULAR_USER_NAME="${SUDO_USER:-$LOGNAME}"
 REGULAR_UID=$(id -u ${REGULAR_USER_NAME})
 TODAY=$(date +"%d-%m-%Y")
-ENCRYPTED_FILE="assets/backups/home-${TODAY}.tar.gz.gpg"
+HOME="/home/$REGULAR_USER_NAME"
+ENCRYPTED_FILE="$HOME/.scripts/lm-postinstall/assets/backups/home-${TODAY}.tar.gz.gpg"
 GDRIVE_PATH="gdrive:/Áreas/Família/Matheus/Backups/Backups\ Linux/"
 
 user_do() {
@@ -45,4 +46,4 @@ user_do "rclone move --progress $ENCRYPTED_FILE $GDRIVE_PATH"
 echo "Backup concluído!"
 
 # Excluindo arquivos antigos...
-user_do "rclone delete --min-age $((FILES_TO_KEEP * 7))d \"$GDRIVE_PATH\""
+user_do "rclone delete --min-age $((FILES_TO_KEEP * 7))d $GDRIVE_PATH"
