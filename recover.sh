@@ -207,7 +207,8 @@ apt-get install -y \
   kdeconnect \
   iperf3 \
   rclone \
-  smartmontools
+  smartmontools \
+  iotop
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
