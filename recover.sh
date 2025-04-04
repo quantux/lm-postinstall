@@ -208,7 +208,8 @@ apt-get install -y \
   iperf3 \
   rclone \
   smartmontools \
-  iotop
+  iotop \
+  dstat
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
