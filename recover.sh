@@ -209,7 +209,8 @@ apt-get install -y \
   rclone \
   smartmontools \
   iotop \
-  dstat
+  dstat \
+  mkvtoolnix-gui
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
