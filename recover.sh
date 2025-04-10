@@ -210,7 +210,8 @@ apt-get install -y \
   smartmontools \
   iotop \
   dstat \
-  mkvtoolnix-gui
+  mkvtoolnix-gui \
+  mame-tools
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
