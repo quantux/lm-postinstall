@@ -211,7 +211,8 @@ apt-get install -y \
   iotop \
   dstat \
   mkvtoolnix-gui \
-  mame-tools
+  mame-tools \
+  sysstat
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
@@ -241,7 +242,6 @@ flatpak install -y --noninteractive flathub \
   rest.insomnia.Insomnia \
   com.getpostman.Postman \
   io.beekeeperstudio.Studio \
-  com.google.AndroidStudio \
   com.sublimetext.three \
   org.gimp.GIMP \
   org.inkscape.Inkscape \
