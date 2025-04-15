@@ -10,6 +10,7 @@ TODAY=$(date +"%d-%m-%Y")
 HOME="/home/$REGULAR_USER_NAME"
 ENCRYPTED_FILE="$HOME/.scripts/lm-postinstall/assets/backups/home-${TODAY}.tar.gz.gpg"
 GDRIVE_PATH="gdrive:/Áreas/Família/Matheus/Backups/Backups\ Linux/"
+FILES_TO_KEEP=8
 
 user_do() {
     if command -v zsh >/dev/null 2>&1; then
