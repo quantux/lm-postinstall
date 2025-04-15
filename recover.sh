@@ -201,7 +201,6 @@ apt-get install -y \
   wine \
   jstest-gtk \
   f3 \
-  flameshot \
   nvidia-container-toolkit \
   wireguard \
   kdeconnect \
@@ -268,7 +267,8 @@ flatpak install -y --noninteractive flathub \
   org.kde.kdenlive \
   com.calibre_ebook.calibre \
   org.libretro.RetroArch \
-  net.pcsx2.PCSX2
+  net.pcsx2.PCSX2 \
+  org.flameshot.Flameshot
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
