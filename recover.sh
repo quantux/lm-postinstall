@@ -36,15 +36,23 @@ if [[ ! -f "$BACKUP_FILE" ]]; then
     exit 1
 fi
 
-# asks for gpg password confirmation
+# Loop até conseguir descriptografar com sucesso
 while true; do
   read -s -p "GPG Password: " password
   echo
-  read -s -p "Password confirmation: " password2
-  echo
-  [ "$password" = "$password2" ] && break
-  echo "Please try again"
+
+  show_message "Tentando descriptografar o backup..."
+  if echo "$password" | gpg --batch --yes --passphrase-fd 0 --pinentry-mode loopback --decrypt "$BACKUP_FILE" > /tmp/home.tar.gz 2>/dev/null; then
+    echo "Descriptografia bem-sucedida!"
+    break
+  else
+    echo "Senha incorreta ou erro ao descriptografar. Tente novamente."
+  fi
 done
+
+# Extrai e restaura
+tar -zxvf /tmp/home.tar.gz -C /home/$REGULAR_USER_NAME/
+chown -R $REGULAR_USER_NAME:$REGULAR_USER_NAME /home/$REGULAR_USER_NAME/
 
 # Set mirrors
 show_message "Atualizando mirrors"
@@ -54,6 +62,9 @@ deb http://mirror.unesp.br/ubuntu noble-updates main restricted universe multive
 deb http://mirror.unesp.br/ubuntu noble-backports main restricted universe multiverse
 deb http://security.ubuntu.com/ubuntu/ noble-security main restricted universe multiverse"
 echo "$mirrors" > /etc/apt/sources.list.d/official-package-repositories.list
+
+# Disable ESM Ubuntu Pro
+rm /etc/apt/apt.conf.d/20apt-esm-hook.conf
 
 # Nvidia Container Toolkit repository
 curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
@@ -76,13 +87,6 @@ show_message "Instalando ttf-mscorefonts-installer"
 echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula	boolean	true" | debconf-set-selections
 echo "ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note" | debconf-set-selections
 apt-get install -y ttf-mscorefonts-installer
-
-# Recover backup files
-show_message "Recuperando arquivos de backup"
-echo $password2 | gpg --batch --yes --passphrase-fd 0 --decrypt "$BACKUP_FILE" > /tmp/home.tar.gz
-tar -zxvf /tmp/home.tar.gz -C /tmp
-rsync -aAXv /tmp/home/ /home/$REGULAR_USER_NAME/
-chown -R $REGULAR_USER_NAME:$REGULAR_USER_NAME /home/$REGULAR_USER_NAME/
 
 # Install - Roboto and Noto Sans Fonts
 show_message "Instalando fontes Roboto e Noto Sans"
@@ -167,11 +171,9 @@ apt-get install -y \
   ffmpeg \
   htop \
   neofetch \
-  screenfetch \
   pv \
   ncdu \
   tree \
-  speedtest-cli \
   whois \
   tlp \
   pavucontrol \
@@ -192,14 +194,12 @@ apt-get install -y \
   traceroute \
   jq \
   python3-setuptools \
-  gnome-system-tools \
-  ubuntu-restricted-extras \
+  mint-meta-codecs \
   software-properties-common \
   libxcb-cursor0 \
   plymouth \
   wine \
   jstest-gtk \
-  libncurses5-dev \
   f3 \
   flameshot \
   nvidia-container-toolkit \
@@ -228,6 +228,9 @@ usermod -aG vboxusers $REGULAR_USER_NAME
 # Install flatpak packages
 show_message "Instalando pacotes flatpak"
 flatpak install -y --noninteractive flathub \
+  com.google.Chrome \
+  com.brave.Browser \
+  com.visualstudio.code \
   com.github.calo001.fondo \
   com.github.tchx84.Flatseal \
   org.openshot.OpenShot \
@@ -236,6 +239,7 @@ flatpak install -y --noninteractive flathub \
   com.spotify.Client \
   org.librehunt.Organizer \
   com.stremio.Stremio \
+  com.anydesk.Anydesk \
   net.xmind.XMind \
   com.obsproject.Studio \
   com.microsoft.Edge \
@@ -275,28 +279,6 @@ curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x8
 sudo rm -rf /opt/nvim
 sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 
-# Install Chrome
-show_message "Instalando Google Chrome"
-wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" -O /tmp/google-chrome.deb
-dpkg -i /tmp/google-chrome.deb
-apt install -fy
-
-# Install VSCode
-show_message "Instalando VSCode"
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/packages.microsoft.gpg
-install -D -o root -g root -m 644 /tmp/packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-apt update
-apt install -y code
-
-# Install Anydesk
-show_message "Instalando anydesk"
-wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add -
-echo "deb http://deb.anydesk.com/ all main" > /etc/apt/sources.list.d/anydesk-stable.list
-apt update
-apt install -y anydesk
-systemctl disable anydesk
-
 # Install Teamviewer
 show_message "Instalando TeamViewer"
 wget "https://download.teamviewer.com/download/linux/teamviewer_amd64.deb" -O /tmp/teamviewer.deb
@@ -310,12 +292,6 @@ chmod +x /usr/local/bin/oh-my-posh
 
 # Set qBitTorrent as default magnet link app
 xdg-mime default org.qbittorrent.qBittorrent.desktop x-scheme-handler/magnet
-
-# Install grub-customizer
-show_message "Instalando grub-customizer"
-add-apt-repository ppa:danielrichter2007/grub-customizer -y
-apt-get update
-apt-get install -y grub-customizer
 
 # Allow games run in fullscreen mode
 echo "SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0" >> /etc/environment
