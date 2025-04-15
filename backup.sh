@@ -37,7 +37,7 @@ chown $REGULAR_USER_NAME:$REGULAR_USER_NAME /home/$REGULAR_USER_NAME/.dconf/dcon
 
 # Archive and encrypt in one step
 echo "Archiving and encrypting with tar and gpg..."
-tar --warning="no-file-ignored" -cz -C /home/$REGULAR_USER_NAME --exclude-from=ignore-files . | \
+tar --warning="no-file-ignored" -cz -C /home/$REGULAR_USER_NAME --exclude-from=tar-ignore . | \
     gpg --batch --yes --passphrase "$password" --pinentry-mode loopback -c --cipher-algo AES256 -o "$ENCRYPTED_FILE"
 
 chown "$REGULAR_USER_NAME:$REGULAR_USER_NAME" "$ENCRYPTED_FILE"
