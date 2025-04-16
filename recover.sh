@@ -355,6 +355,10 @@ docker create \
   -p 3306:3306 \
   mysql:8.0
 
+# Install ollama
+show_message "Instalando Ollama"
+docker pull ollama/ollama
+
 # Define zsh como shell padrão
 show_message "Definir zsh como shell padrão"
 chsh -s $(which zsh) $REGULAR_USER_NAME
