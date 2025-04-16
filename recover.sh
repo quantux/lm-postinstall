@@ -268,7 +268,8 @@ flatpak install -y --noninteractive flathub \
   com.calibre_ebook.calibre \
   org.libretro.RetroArch \
   net.pcsx2.PCSX2 \
-  org.flameshot.Flameshot
+  org.flameshot.Flameshot \
+  org.kiwix.desktop
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
