@@ -136,7 +136,6 @@ dpkg --add-architecture i386
 show_message "Instalando pacotes"
 apt-get install -y \
   build-essential \
-  steam-devices \
   git \
   curl \
   wget \
