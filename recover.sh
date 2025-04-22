@@ -212,7 +212,9 @@ apt-get install -y \
   mame-tools \
   sysstat \
   ovmf \
-  ovmf-ia32
+  ovmf-ia32 \
+  qemu-system \
+  qemu-user-static
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
