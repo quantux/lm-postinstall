@@ -210,7 +210,9 @@ apt-get install -y \
   dstat \
   mkvtoolnix-gui \
   mame-tools \
-  sysstat
+  sysstat \
+  ovmf \
+  ovmf-ia32
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
