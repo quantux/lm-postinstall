@@ -272,8 +272,7 @@ flatpak install -y --noninteractive flathub \
   org.libretro.RetroArch \
   net.pcsx2.PCSX2 \
   org.flameshot.Flameshot \
-  org.kiwix.desktop \
-  org.freedownloadmanager.Manager
+  org.kiwix.desktop
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
