@@ -363,6 +363,10 @@ docker create \
 show_message "Instalando Ollama"
 docker pull ollama/ollama
 
+# Install Syncthing
+show_message "Instalando Syncthing"
+docker pull syncthing/syncthing
+
 # Define zsh como shell padrão
 show_message "Definir zsh como shell padrão"
 chsh -s $(which zsh) $REGULAR_USER_NAME
