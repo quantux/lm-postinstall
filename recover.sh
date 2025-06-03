@@ -214,7 +214,9 @@ apt-get install -y \
   ovmf \
   ovmf-ia32 \
   qemu-system \
-  qemu-user-static
+  qemu-user-static \
+  steam-devices \
+  steam
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
@@ -255,7 +257,6 @@ flatpak install -y --noninteractive flathub \
   org.mozilla.Thunderbird \
   org.videolan.VLC \
   org.filezillaproject.Filezilla \
-  com.valvesoftware.Steam \
   org.audacityteam.Audacity \
   org.gnome.Cheese \
   org.raspberrypi.rpi-imager \
