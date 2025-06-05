@@ -216,7 +216,8 @@ apt-get install -y \
   qemu-system \
   qemu-user-static \
   steam-devices \
-  steam
+  steam \
+  firejail
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
