@@ -275,7 +275,8 @@ flatpak install -y --noninteractive flathub \
   net.pcsx2.PCSX2 \
   org.flameshot.Flameshot \
   org.kiwix.desktop \
-  dev.lizardbyte.app.Sunshine
+  dev.lizardbyte.app.Sunshine \
+  com.usebottles.bottles
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
