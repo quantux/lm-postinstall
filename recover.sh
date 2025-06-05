@@ -276,7 +276,8 @@ flatpak install -y --noninteractive flathub \
   org.flameshot.Flameshot \
   org.kiwix.desktop \
   dev.lizardbyte.app.Sunshine \
-  com.usebottles.bottles
+  com.usebottles.bottles \
+  com.heroicgameslauncher.hgl
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
