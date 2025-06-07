@@ -277,7 +277,8 @@ flatpak install -y --noninteractive flathub \
   org.kiwix.desktop \
   dev.lizardbyte.app.Sunshine \
   com.usebottles.bottles \
-  com.heroicgameslauncher.hgl
+  com.heroicgameslauncher.hgl \
+  net.lutris.Lutris
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
