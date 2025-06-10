@@ -215,6 +215,7 @@ apt-get install -y \
   ovmf-ia32 \
   qemu-system \
   qemu-user-static \
+  meson \
   steam-devices \
   steam \
   firejail
