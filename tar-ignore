@@ -13,6 +13,7 @@ workspace/lm-postinstall
 .android
 .local/share/Trash
 .steam
+.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common/
 .vmware
 vmware
 .cache

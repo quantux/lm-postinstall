@@ -279,7 +279,8 @@ flatpak install -y --noninteractive flathub \
   dev.lizardbyte.app.Sunshine \
   com.usebottles.bottles \
   com.heroicgameslauncher.hgl \
-  net.lutris.Lutris
+  net.lutris.Lutris \
+  com.google.AndroidStudio
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
