@@ -218,7 +218,8 @@ apt-get install -y \
   meson \
   steam-devices \
   steam \
-  firejail
+  firejail \
+  libvlc-dev
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
