@@ -216,8 +216,8 @@ apt-get install -y \
   qemu-system \
   qemu-user-static \
   meson \
-  steam-devices \
   steam \
+  steam-devices \
   firejail \
   libvlc-dev
 
@@ -281,7 +281,8 @@ flatpak install -y --noninteractive flathub \
   com.usebottles.bottles \
   com.heroicgameslauncher.hgl \
   net.lutris.Lutris \
-  com.google.AndroidStudio
+  com.google.AndroidStudio \
+  com.steamgriddb.steam-rom-manager
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
