@@ -282,7 +282,8 @@ flatpak install -y --noninteractive flathub \
   com.heroicgameslauncher.hgl \
   net.lutris.Lutris \
   com.google.AndroidStudio \
-  com.steamgriddb.steam-rom-manager
+  com.steamgriddb.steam-rom-manager \
+  net.rpcs3.RPCS3
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
