@@ -5,9 +5,12 @@ Modelos
 Música
 Público
 Vídeos
+Games
 VirtualBox VMs
 Jellyfin Server Media
 Android
+Syncthing/Sync/*
+Syncthing/Sync/**/*
 workspace/lm-postinstall
 .scripts/lm-postinstall
 .android
