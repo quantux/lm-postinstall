@@ -8,8 +8,10 @@ REGULAR_USER_NAME="${SUDO_USER:-$LOGNAME}"
 REGULAR_UID=$(id -u ${REGULAR_USER_NAME})
 TODAY=$(date +"%d-%m-%Y")
 HOME="/home/$REGULAR_USER_NAME"
-ENCRYPTED_FILE="$HOME/.scripts/lm-postinstall/assets/backups/home-${TODAY}.tar.gz.gpg"
-GDRIVE_PATH="gdrive:/Áreas/Família/Matheus/Backups/Backups\ Linux/"
+BACKUP_DIR="$HOME/.scripts/lm-postinstall/assets/backups"
+TAR_FILE="$BACKUP_DIR/home-${TODAY}.tar.gz"
+ENCRYPTED_FILE="${TAR_FILE}.gpg"
+GDRIVE_PATH="gdrive:/Áreas/Família/Matheus/Backups/Backups Linux/"
 FILES_TO_KEEP=8
 
 user_do() {
@@ -35,16 +37,26 @@ mkdir -p /home/$REGULAR_USER_NAME/.dconf
 user_do "dconf dump / > /home/$REGULAR_USER_NAME/.dconf/dconf"
 chown $REGULAR_USER_NAME:$REGULAR_USER_NAME /home/$REGULAR_USER_NAME/.dconf/dconf
 
-# Archive and encrypt in one step
-echo "Archiving and encrypting with tar and gpg..."
-tar --warning="no-file-ignored" -cz -C /home/$REGULAR_USER_NAME --exclude-from=tar-ignore . | \
-    gpg --batch --yes --passphrase "$password" --pinentry-mode loopback -c --cipher-algo AES256 -o "$ENCRYPTED_FILE"
+# Criação do diretório de backup, se necessário
+mkdir -p "$BACKUP_DIR"
 
+# Arquivando com tar e mostrando progresso
+echo "Criando o arquivo .tar.gz..."
+tar --warning="no-file-ignored" -cvz -C /home/$REGULAR_USER_NAME --exclude-from=tar-ignore . -f "$TAR_FILE"
+
+# Criptografando com gpg
+echo "Criptografando o backup com GPG..."
+gpg --batch --yes --passphrase "$password" --pinentry-mode loopback -c --cipher-algo AES256 -o "$ENCRYPTED_FILE" "$TAR_FILE"
+
+# Ajusta a propriedade
 chown "$REGULAR_USER_NAME:$REGULAR_USER_NAME" "$ENCRYPTED_FILE"
 
-# Backup to Cloud Storage
-user_do "rclone move --progress $ENCRYPTED_FILE $GDRIVE_PATH"
+# Remove o tar desnecessário após criptografar
+rm -f "$TAR_FILE"
+
+# Backup para a nuvem
+user_do "rclone move --progress \"$ENCRYPTED_FILE\" \"$GDRIVE_PATH\""
 echo "Backup concluído!"
 
-# Excluindo arquivos antigos...
-user_do "rclone delete --min-age $((FILES_TO_KEEP * 7))d $GDRIVE_PATH"
+# Excluir backups antigos
+user_do "rclone delete --min-age $((FILES_TO_KEEP * 7))d \"$GDRIVE_PATH\""
