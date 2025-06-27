@@ -219,7 +219,9 @@ apt-get install -y \
   steam \
   steam-devices \
   firejail \
-  libvlc-dev
+  libvlc-dev \
+  tesseract-ocr \
+  tesseract-ocr-por
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
