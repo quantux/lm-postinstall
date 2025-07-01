@@ -221,7 +221,8 @@ apt-get install -y \
   firejail \
   libvlc-dev \
   tesseract-ocr \
-  tesseract-ocr-por
+  tesseract-ocr-por \
+  hashdeep
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
