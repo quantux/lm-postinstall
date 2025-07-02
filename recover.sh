@@ -158,6 +158,7 @@ apt-get install -y \
   libyaml-dev \
   libgtk-3-dev \
   liblzma-dev \
+  lib32z1 \
   zsh \
   tmux \
   vim \
