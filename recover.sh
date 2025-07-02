@@ -222,7 +222,8 @@ apt-get install -y \
   libvlc-dev \
   tesseract-ocr \
   tesseract-ocr-por \
-  hashdeep
+  hashdeep \
+  restic
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
