@@ -226,7 +226,8 @@ apt-get install -y \
   hashdeep \
   restic \
   jmtpfs \
-  imagemagick
+  imagemagick \
+  mediainfo
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
