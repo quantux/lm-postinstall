@@ -225,7 +225,8 @@ apt-get install -y \
   tesseract-ocr-por \
   hashdeep \
   restic \
-  jmtpfs
+  jmtpfs \
+  imagemagick
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
