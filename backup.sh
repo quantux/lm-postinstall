@@ -31,6 +31,6 @@ dconf dump / > "$HOME/.dconf/dconf"
 
 # Executa o backup com restic
 echo "Iniciando backup com Restic no repositório: $RESTIC_REPO"
-restic -r "$RESTIC_REPO" backup "$HOME" --exclude-file "$EXCLUDE_FILE" --verbose --tag mths --tag linux_mint
+restic -r "$RESTIC_REPO" backup "$HOME" --exclude-file "$EXCLUDE_FILE" -vv --tag mths --tag linux_mint
 
 echo "Backup concluído com sucesso!"

@@ -15,9 +15,12 @@ workspace/lm-postinstall
 .scripts/lm-postinstall
 .android
 .local/share/Trash
-.steam/steam/steamapps/common
 .steam/debian-installation/steamapps/common
+.steam/debian-installation/steamapps/shadercache
+.steam/debian-installation/steamapps/compatdata
 .var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common
+.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/shadercache
+.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/compatdata
 .vmware
 vmware
 .cache
