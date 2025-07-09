@@ -227,7 +227,9 @@ apt-get install -y \
   restic \
   jmtpfs \
   imagemagick \
-  mediainfo
+  mediainfo \
+  util-linux \
+  util-linux-extra
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
