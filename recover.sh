@@ -12,7 +12,9 @@ REGULAR_USER_NAME="${SUDO_USER:-$LOGNAME}"
 REGULAR_UID=$(id -u ${REGULAR_USER_NAME})
 LINUXMINT_CODENAME=$(lsb_release -cs)
 UBUNTU_CODENAME=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME= | cut -f2 -d "=")
-BACKUP_FILE="assets/backups/home.tar.gz.gpg"
+RESTIC_REPO="rclone:gdrive:/restic_repo"
+RESTIC_TAGS=(--tag mths --tag linux_mint)
+RESTORE_PATH="/home/$REGULAR_USER_NAME"
 
 show_message() {
     clear
@@ -20,39 +22,20 @@ show_message() {
 }
 
 user_do() {
-    if command -v zsh >/dev/null 2>&1; then
-        su - ${REGULAR_USER_NAME} -c "/bin/zsh --login -c '$1'"
-    else
-        su - ${REGULAR_USER_NAME} -c "/bin/bash -c '$1'"
-    fi
+    su - "$REGULAR_USER_NAME" -c "$SHELL --login -c '$1'"
 }
 
 # Fix clock time for windows dualboot
 timedatectl set-local-rtc 1
 
-# Check if backup file exists
-if [[ ! -f "$BACKUP_FILE" ]]; then
-    echo "Erro: O arquivo de backup não foi encontrado em '$BACKUP_FILE'. Saindo..."
-    exit 1
-fi
+# Restaurar diretamente para a home
+show_message "Restaurando backup Restic diretamente para $RESTORE_PATH..."
+restic -r "$RESTIC_REPO" restore latest --target "$RESTORE_PATH" "${RESTIC_TAGS[@]}"
 
-# Loop até conseguir descriptografar com sucesso
-while true; do
-  read -s -p "GPG Password: " password
-  echo
+# Ajusta permissões
+chown -R "$REGULAR_USER_NAME:$REGULAR_USER_NAME" "$RESTORE_PATH"
 
-  show_message "Tentando descriptografar o backup..."
-  if echo "$password" | gpg --batch --yes --passphrase-fd 0 --pinentry-mode loopback --decrypt "$BACKUP_FILE" > /tmp/home.tar.gz 2>/dev/null; then
-    echo "Descriptografia bem-sucedida!"
-    break
-  else
-    echo "Senha incorreta ou erro ao descriptografar. Tente novamente."
-  fi
-done
-
-# Extrai e restaura
-tar -zxvf /tmp/home.tar.gz -C /home/$REGULAR_USER_NAME/
-chown -R $REGULAR_USER_NAME:$REGULAR_USER_NAME /home/$REGULAR_USER_NAME/
+show_message "Restauração concluída com sucesso!"
 
 # Set mirrors
 show_message "Atualizando mirrors"
