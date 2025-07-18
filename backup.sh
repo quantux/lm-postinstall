@@ -28,6 +28,15 @@ case "$choice" in
     ;;
 esac
 
+# Pausa os containers Docker
+echo "Pausando containers Docker..."
+PAUSED_CONTAINERS=$(docker ps -q)
+if [ -n "$PAUSED_CONTAINERS" ]; then
+  docker pause $PAUSED_CONTAINERS
+else
+  echo "Nenhum container em execução para pausar."
+fi
+
 # Backup do dconf
 mkdir -p "$HOME/.dconf"
 dconf dump / > "$HOME/.dconf/dconf"
