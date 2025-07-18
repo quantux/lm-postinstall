@@ -28,6 +28,19 @@ case "$choice" in
     ;;
 esac
 
+# Aguarda containers que estão iniciando ou reiniciando ficarem prontos
+echo "Aguardando containers em estado 'starting' ou 'restarting' ficarem prontos..."
+while true; do
+  PENDING_CONTAINERS=$(docker ps --filter "status=restarting" -q)
+  if [ -z "$PENDING_CONTAINERS" ]; then
+    echo "Todos os containers estão prontos."
+    break
+  else
+    echo "Aguardando ${#PENDING_CONTAINERS[@]} container(es)..."
+    sleep 5
+  fi
+done
+
 # Pausa os containers Docker
 echo "Pausando containers Docker..."
 PAUSED_CONTAINERS=$(docker ps -q)
