@@ -1,2 +1,2 @@
-1. Executar o backup.sh antes de formatar;
-2. Executar o recover.sh para instalar os programas e recuperar os arquivos;
+Para restaurar:
+1. Fazer o backup do raspberry_pi do restic em "$HOME/raspberry_pi"
