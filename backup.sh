@@ -1,9 +1,12 @@
 #!/bin/bash
 
+# Checks for root privileges
+[ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+
 # Variáveis
-REGULAR_USER_NAME="${USER}"
-REGULAR_UID=$(id -u)
-HOME="/home/$REGULAR_USER_NAME"
+REGULAR_USER_NAME="${SUDO_USER:-$USER}"
+REGULAR_UID=$(id -u "$REGULAR_USER_NAME")
+HOME=$(getent passwd "$REGULAR_USER_NAME" | cut -d: -f6)
 EXCLUDE_FILE="$HOME/.scripts/lm-postinstall/ignore-files"
 
 # Pergunta onde fazer o backup
