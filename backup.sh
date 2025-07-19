@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Checks for root privileges
-[ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
-
 # Variáveis
 REGULAR_USER_NAME="${SUDO_USER:-$USER}"
 REGULAR_UID=$(id -u "$REGULAR_USER_NAME")
@@ -20,7 +17,12 @@ case "$choice" in
     RESTIC_REPO="rclone:gdrive:/restic_repo"
     ;;
   2)
-    RESTIC_REPO="/media/hdd/restic_repo"
+    LOCAL_PATH="/media/hdd/restic_repo"
+    if [ ! -d "$LOCAL_PATH" ]; then
+      echo "O caminho $LOCAL_PATH não existe. Saindo..."
+      exit 1
+    fi
+    RESTIC_REPO="$LOCAL_PATH"
     ;;
   *)
     echo "Opção inválida. Saindo..."
@@ -28,27 +30,12 @@ case "$choice" in
     ;;
 esac
 
-# Aguarda containers que estão iniciando ou reiniciando ficarem prontos
-echo "Aguardando containers em estado 'starting' ou 'restarting' ficarem prontos..."
-while true; do
-  PENDING_CONTAINERS=$(docker ps --filter "status=restarting" -q)
-  if [ -z "$PENDING_CONTAINERS" ]; then
-    echo "Todos os containers estão prontos."
-    break
-  else
-    echo "Aguardando ${#PENDING_CONTAINERS[@]} container(es)..."
-    sleep 5
-  fi
-done
+# Para os containers Docker usando docker compose
+echo "Parando containers com docker compose..."
+docker compose -f "$HOME/.scripts/docker-apps/docker-compose.yml" down
 
-# Pausa os containers Docker
-echo "Pausando containers Docker..."
-PAUSED_CONTAINERS=$(docker ps -q)
-if [ -n "$PAUSED_CONTAINERS" ]; then
-  docker pause $PAUSED_CONTAINERS
-else
-  echo "Nenhum container em execução para pausar."
-fi
+echo "Corrigindo permissões da pasta home apenas para arquivos e pastas com dono root..."
+sudo find "$HOME" -user root -exec chown "$REGULAR_USER_NAME:$REGULAR_USER_NAME" {} +
 
 # Backup do dconf
 mkdir -p "$HOME/.dconf"
@@ -57,5 +44,9 @@ dconf dump / > "$HOME/.dconf/dconf"
 # Executa o backup com restic
 echo "Iniciando backup com Restic no repositório: $RESTIC_REPO"
 restic -r "$RESTIC_REPO" backup "$HOME" --exclude-file "$EXCLUDE_FILE" -vv --tag mths --tag linux_mint
+
+# Depois do backup, sobe os containers novamente
+echo "Subindo containers com docker compose..."
+docker compose -f "$HOME/.scripts/docker-apps/docker-compose.yml" up -d
 
 echo "Backup concluído com sucesso!"
