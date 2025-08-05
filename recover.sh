@@ -277,7 +277,7 @@ flatpak install -y --noninteractive flathub \
   com.google.AndroidStudio \
   com.steamgriddb.steam-rom-manager \
   net.rpcs3.RPCS3 \
-  io.appflowy.AppFlowy
+  com.rustdesk.RustDesk
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
