@@ -195,6 +195,7 @@ docker compose -f "$DOCKER_COMPOSE_PATH" up -d
 # Define zsh como shell padrão
 show_message "Definir zsh como shell padrão"
 chsh -s $(which zsh) $USER_NAME
+user_do "chsh -s $(which zsh)"
 
 # Reiniciar
 show_message ""
