@@ -6,7 +6,7 @@ fi
 
 # Global
 USER_NAME="${SUDO_USER:-$USER}"
-USER_HOME="/home/$USER_NAME"
+USER_HOME=$(getent passwd "$USER_NAME" | cut -d: -f6)
 EXCLUDE_FILE="$USER_HOME/.scripts/lm-postinstall/ignore-files"
 
 # Pergunta onde fazer o backup
