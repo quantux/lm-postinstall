@@ -3,61 +3,80 @@
 # Checks for root privileges
 [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
 
-# Terminal colors
-LightColor='\033[1;32m'
-NC='\033[0m'
-
-# Vars
-REGULAR_USER_NAME="${SUDO_USER:-$LOGNAME}"
-REGULAR_UID=$(id -u ${REGULAR_USER_NAME})
-LINUXMINT_CODENAME=$(lsb_release -cs)
+# Global
+USER_NAME="${SUDO_USER:-$LOGNAME}"
+USER_UID=$(id -u ${USER_NAME})
+LINUXMINT_CODENAME=$(grep CODENAME /etc/linuxmint/info | cut -d= -f2)
 UBUNTU_CODENAME=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME= | cut -f2 -d "=")
 RESTIC_REPO="rclone:gdrive:/restic_repo"
-RESTIC_TAGS=(--tag mths --tag linux_mint)
-RESTORE_PATH="/home/$REGULAR_USER_NAME"
+USER_HOME="/home/$USER_NAME"
+
+# Perguntar onde restaurar o backup
+echo "De onde deseja restaurar o backup Restic?"
+echo "1) Local ($USER_HOME/restic/restic_repo)"
+echo "2) Nuvem (Google Drive via rclone)"
+read -rp "Escolha 1 ou 2: " choice
+
+case "$choice" in
+  1)
+    LOCAL_PATH="$USER_HOME/restic/restic_repo"
+    if [ ! -d "$LOCAL_PATH" ]; then
+      echo "O caminho $LOCAL_PATH não existe. Saindo..."
+      exit 1
+    fi
+    RESTIC_REPO="$LOCAL_PATH"
+    ;;
+  2)
+    RESTIC_REPO="rclone:gdrive:/restic_repo"
+    ;;
+  *)
+    echo "Opção inválida. Saindo..."
+    exit 1
+    ;;
+esac
 
 show_message() {
-    clear
-    printf "${LightColor}$1${NC}\n\n"
+	printf '%0.s-' {1..45}; echo
+	printf "%s\n\n" "$1"
 }
 
 user_do() {
-    su - "$REGULAR_USER_NAME" -c "$SHELL --login -c '$1'"
+    su - "$USER_NAME" -c "$SHELL --login -c '$1'"
 }
 
 # Fix clock time for windows dualboot
 timedatectl set-local-rtc 1
 
 # Restaurar diretamente para a home
-show_message "Restaurando backup Restic diretamente para $RESTORE_PATH..."
-restic -r "$RESTIC_REPO" restore latest --target "$RESTORE_PATH" "${RESTIC_TAGS[@]}"
-
-# Ajusta permissões
-chown -R "$REGULAR_USER_NAME:$REGULAR_USER_NAME" "$RESTORE_PATH"
-
-show_message "Restauração concluída com sucesso!"
+show_message "Restaurando backup Restic diretamente para $USER_HOME..."
+restic -r "$RESTIC_REPO" restore latest --target "$USER_HOME" --tag mths --tag linux_mint
 
 # Set mirrors
 show_message "Atualizando mirrors"
-mirrors="deb https://mint-packages.c3sl.ufpr.br wilma main upstream import backport
-deb http://mirror.unesp.br/ubuntu noble main restricted universe multiverse
-deb http://mirror.unesp.br/ubuntu noble-updates main restricted universe multiverse
-deb http://mirror.unesp.br/ubuntu noble-backports main restricted universe multiverse
-deb http://security.ubuntu.com/ubuntu/ noble-security main restricted universe multiverse"
-echo "$mirrors" > /etc/apt/sources.list.d/official-package-repositories.list
+cp /etc/apt/sources.list.d/official-package-repositories.list /etc/apt/sources.list.d/official-package-repositories.list.bkp
+sed -i "s/wilma/$LINUXMINT_CODENAME/g; s/noble/$UBUNTU_CODENAME/g" /etc/apt/sources.list.d/official-package-repositories.list
 
-# Disable ESM Ubuntu Pro
-rm /etc/apt/apt.conf.d/20apt-esm-hook.conf
+# 32bits packages
+show_message "Habilitando pacotes de 32 bits"
+dpkg --add-architecture i386
+
+# Update
+show_message "Atualizando repositórios"
+apt-get update
+
+# Upgrade
+show_message "Atualizando pacotes"
+apt-get upgrade -y
+
+# Install apt-get packages
+show_message "Instalando pacotes"
+apt-get install -y $(cat pacotes_apt.txt)
 
 # Nvidia Container Toolkit repository
 curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
   && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
     sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
     sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
-
-# Update
-show_message "Atualizando repositórios"
-apt-get update
 
 # Instalando libdvd-pkg
 show_message "Instalando libdvd-pkg"
@@ -102,117 +121,10 @@ mv /tmp/wps-fonts/wps /usr/share/fonts/
 
 # Load dconf file
 show_message "Carregando configurações do dconf"
-user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${REGULAR_UID}/bus' dconf load / < /home/$REGULAR_USER_NAME/.dconf/dconf"
+user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${USER_UID}/bus' dconf load / < /$USER_HOME/.dconf/dconf"
 
 # Update tldr
 user_do "tldr --update"
-
-# Upgrade
-show_message "Atualizando pacotes"
-apt-get upgrade -y
-
-# 32bits packages
-show_message "Habilitando pacotes de 32 bits"
-dpkg --add-architecture i386
-
-# Install apt-get packages
-show_message "Instalando pacotes"
-apt-get install -y \
-  build-essential \
-  git \
-  curl \
-  wget \
-  gpg \
-  ca-certificates \
-  gnupg \
-  lsb-release \
-  debconf-utils \
-  apt-transport-https \
-  python3 \
-  python3-gpg \
-  python3-pip \
-  clang \
-  cmake \
-  ninja-build \
-  pkg-config \
-  libncurses5-dev \
-  libgmp-dev \
-  libmysqlclient-dev \
-  libyaml-dev \
-  libgtk-3-dev \
-  liblzma-dev \
-  lib32z1 \
-  zsh \
-  tmux \
-  vim \
-  neovim \
-  gedit \
-  fonts-firacode \
-  fonts-powerline \
-  gparted \
-  sox \
-  ffmpeg \
-  htop \
-  neofetch \
-  pv \
-  ncdu \
-  tree \
-  whois \
-  tlp \
-  pavucontrol \
-  acpi-call-dkms \
-  dkms \
-  gnome-system-tools \
-  hardinfo \
-  p7zip-full \
-  virtualbox \
-  virtualbox-qt \
-  virtualbox-guest-additions-iso \
-  unrar \
-  rar \
-  qpdf \
-  exiftool \
-  fdupes \
-  nmap \
-  traceroute \
-  jq \
-  python3-setuptools \
-  mint-meta-codecs \
-  software-properties-common \
-  libxcb-cursor0 \
-  plymouth \
-  wine \
-  jstest-gtk \
-  f3 \
-  nvidia-container-toolkit \
-  wireguard \
-  kdeconnect \
-  iperf3 \
-  rclone \
-  smartmontools \
-  iotop \
-  dstat \
-  mkvtoolnix-gui \
-  mame-tools \
-  sysstat \
-  ovmf \
-  ovmf-ia32 \
-  qemu-system \
-  qemu-user-static \
-  meson \
-  steam \
-  steam-devices \
-  firejail \
-  libvlc-dev \
-  tesseract-ocr \
-  tesseract-ocr-por \
-  hashdeep \
-  restic \
-  jmtpfs \
-  imagemagick \
-  mediainfo \
-  util-linux \
-  util-linux-extra
 
 # Instalando virtualbox-guest-x11
 show_message "Instalando virtualbox-guest-x11"
@@ -223,61 +135,11 @@ show_message "Copiando arquivo de tema para o Virtualbox"
 cp ./assets/programs-settings/virtualbox.desktop /usr/share/applications/virtualbox.desktop
 
 # Add user to vbox group
-usermod -aG vboxusers $REGULAR_USER_NAME
+usermod -aG vboxusers $USER_NAME
 
 # Install flatpak packages
 show_message "Instalando pacotes flatpak"
-flatpak install -y --noninteractive flathub \
-  com.google.Chrome \
-  com.brave.Browser \
-  com.visualstudio.code \
-  com.github.calo001.fondo \
-  com.github.tchx84.Flatseal \
-  org.openshot.OpenShot \
-  com.bitwarden.desktop \
-  com.discordapp.Discord \
-  com.spotify.Client \
-  org.librehunt.Organizer \
-  com.stremio.Stremio \
-  com.anydesk.Anydesk \
-  net.xmind.XMind \
-  com.obsproject.Studio \
-  com.microsoft.Edge \
-  rest.insomnia.Insomnia \
-  com.getpostman.Postman \
-  io.beekeeperstudio.Studio \
-  com.sublimetext.three \
-  org.gimp.GIMP \
-  org.inkscape.Inkscape \
-  org.blender.Blender \
-  org.mozilla.Thunderbird \
-  org.videolan.VLC \
-  org.filezillaproject.Filezilla \
-  org.audacityteam.Audacity \
-  org.gnome.Cheese \
-  org.raspberrypi.rpi-imager \
-  org.remmina.Remmina \
-  com.dropbox.Client \
-  org.wireshark.Wireshark \
-  md.obsidian.Obsidian \
-  org.qbittorrent.qBittorrent \
-  org.telegram.desktop \
-  com.sweethome3d.Sweethome3d \
-  fr.handbrake.ghb \
-  org.kde.kdenlive \
-  com.calibre_ebook.calibre \
-  org.libretro.RetroArch \
-  net.pcsx2.PCSX2 \
-  org.flameshot.Flameshot \
-  org.kiwix.desktop \
-  dev.lizardbyte.app.Sunshine \
-  com.usebottles.bottles \
-  com.heroicgameslauncher.hgl \
-  net.lutris.Lutris \
-  com.google.AndroidStudio \
-  com.steamgriddb.steam-rom-manager \
-  net.rpcs3.RPCS3 \
-  com.rustdesk.RustDesk
+flatpak install -y --noninteractive flathub $(cat pacotes_flatpak.txt)
 
 # Update flatpak
 show_message "Atualizando pacotes flatpak"
@@ -305,7 +167,7 @@ xdg-mime default org.qbittorrent.qBittorrent.desktop x-scheme-handler/magnet
 # Allow games run in fullscreen mode
 echo "SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0" >> /etc/environment
 
-# ---- Programming things
+# ---- Programming
 # Instalar docker
 show_message "Instalando Docker"
 mkdir -p /etc/apt/keyrings
@@ -316,7 +178,7 @@ apt-get update
 apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 docker run hello-world
 groupadd docker
-usermod -aG docker $REGULAR_USER_NAME
+usermod -aG docker $USER_NAME
 
 # Criar uma rede Docker para comunicação entre os contêineres
 docker network create web-network
@@ -373,7 +235,7 @@ docker pull syncthing/syncthing
 
 # Define zsh como shell padrão
 show_message "Definir zsh como shell padrão"
-chsh -s $(which zsh) $REGULAR_USER_NAME
+chsh -s $(which zsh) $USER_NAME
 
 # Reiniciar
 show_message ""
