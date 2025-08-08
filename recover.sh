@@ -6,10 +6,11 @@
 # Global
 USER_NAME="${SUDO_USER:-$LOGNAME}"
 USER_UID=$(id -u ${USER_NAME})
+USER_HOME=$(getent passwd "$USER_NAME" | cut -d: -f6)
 LINUXMINT_CODENAME=$(grep CODENAME /etc/linuxmint/info | cut -d= -f2)
 UBUNTU_CODENAME=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME= | cut -f2 -d "=")
 RESTIC_REPO="rclone:gdrive:/restic_repo"
-USER_HOME="/home/$USER_NAME"
+DOCKER_COMPOSE_PATH="$USER_HOME/.scripts/docker-apps/docker-compose.yml"
 
 # Perguntar onde restaurar o backup
 echo "De onde deseja restaurar o backup Restic?"
@@ -167,71 +168,33 @@ xdg-mime default org.qbittorrent.qBittorrent.desktop x-scheme-handler/magnet
 # Allow games run in fullscreen mode
 echo "SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0" >> /etc/environment
 
-# ---- Programming
-# Instalar docker
-show_message "Instalando Docker"
-mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-chmod a+r /etc/apt/keyrings/docker.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $UBUNTU_CODENAME stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+# Docker
+# Remove pacotes antigos relacionados ao Docker
+for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do 
+    apt-get remove -y "$pkg"
+done
+
+# Cria diretório para chave GPG do Docker
+install -m 0755 -d /etc/apt/keyrings
+
+# Baixa a chave GPG do Docker
+curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+chmod a+r /etc/apt/keyrings/docker.asc
+
+# Adiciona o repositório oficial do Docker
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" \
+> /etc/apt/sources.list.d/docker.list
+
+# Atualiza repositórios e instala pacotes Docker
 apt-get update
-apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-docker run hello-world
-groupadd docker
-usermod -aG docker $USER_NAME
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-# Criar uma rede Docker para comunicação entre os contêineres
-docker network create web-network
+# Adiciona usuário ao grupo docker
+usermod -aG docker "${SUDO_USER:-$USER}"
 
-# Configurar um contêiner com Apache (não executar)
-show_message "Instalando Apache"
-docker create \
-  --name apache \
-  --network web-network \
-  -v /var/www/html:/var/www/html \
-  -p 80:80 \
-  httpd:latest
-
-# Configurar um contêiner com Nginx
-show_message "Instalando Nginx"
-docker create \
-  --name nginx \
-  --network web-network \
-  -v /var/www/html:/usr/share/nginx/html \
-  -p 8080:80 \
-  nginx:latest
-
-# Configurar um contêiner com PHP
-show_message "Instalando PHP"
-docker create \
-  --name php \
-  --network web-network \
-  -v /var/www/html:/var/www/html \
-  php:8.2-fpm
-
-# Install composer
-show_message "Instalando PHP composer"
-docker pull composer:latest
-
-# Configurar um contêiner com MySQL
-show_message "Instalando MySQL"
-docker create \
-  --name mysql \
-  --network web-network \
-  -e MYSQL_ROOT_PASSWORD=root \
-  -e MYSQL_DATABASE=default_db \
-  -e MYSQL_USER=user \
-  -e MYSQL_PASSWORD=secret \
-  -p 3306:3306 \
-  mysql:8.0
-
-# Install ollama
-show_message "Instalando Ollama"
-docker pull ollama/ollama
-
-# Install Syncthing
-show_message "Instalando Syncthing"
-docker pull syncthing/syncthing
+# Start containers
+docker compose -f "$DOCKER_COMPOSE_PATH" up -d
 
 # Define zsh como shell padrão
 show_message "Definir zsh como shell padrão"
