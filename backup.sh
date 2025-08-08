@@ -33,20 +33,13 @@ case "$choice" in
     ;;
 esac
 
-# Para os containers Docker usando docker compose
-echo "Parando containers com docker compose..."
-docker compose -f "$USER_HOME/.scripts/docker-apps/docker-compose.yml" down
-
 # Backup do dconf
 mkdir -p "$USER_HOME/.dconf"
 dconf dump / > "$USER_HOME/.dconf/dconf"
 
-# Check if file exists
-if [ -f "$EXCLUDE_FILE" ]; then
-  echo "Usando arquivo de exclusão: $EXCLUDE_FILE"
-else
-  echo "Arquivo de exclusão não encontrado, nenhum arquivo será ignorado."
-fi
+# Para os containers Docker usando docker compose
+echo "Parando containers com docker compose..."
+docker compose -f "$USER_HOME/.scripts/docker-apps/docker-compose.yml" down
 
 # Executa o backup com restic
 echo "Iniciando backup com Restic no repositório: $RESTIC_REPO"
