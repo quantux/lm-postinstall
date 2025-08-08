@@ -131,10 +131,6 @@ user_do "tldr --update"
 show_message "Instalando virtualbox-guest-x11"
 yes Y | apt-get install -y virtualbox-guest-x11
 
-# Set virtualbox dark theme
-show_message "Copiando arquivo de tema para o Virtualbox"
-cp ./assets/programs-settings/virtualbox.desktop /usr/share/applications/virtualbox.desktop
-
 # Add user to vbox group
 usermod -aG vboxusers $USER_NAME
 
