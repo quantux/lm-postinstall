@@ -12,6 +12,9 @@ UBUNTU_CODENAME=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME=
 RESTIC_REPO="rclone:gdrive:/restic_repo"
 DOCKER_COMPOSE_PATH="$USER_HOME/.scripts/docker-apps/docker-compose.yml"
 
+RESTIC_REPO="/media/restic/restic_repo"
+echo "O repositório restic deve estar em $RESTIC_REPO"
+
 # Perguntar onde restaurar o backup
 echo "De onde deseja restaurar o backup Restic?"
 echo "1) Local ($USER_HOME/restic/restic_repo)"

@@ -93,3 +93,5 @@ imagemagick
 mediainfo
 util-linux
 util-linux-extra
+optipng
+
