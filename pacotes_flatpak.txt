@@ -1,6 +1,5 @@
 com.google.Chrome
 com.brave.Browser
-com.visualstudio.code
 com.github.calo001.fondo
 com.github.tchx84.Flatseal
 org.openshot.OpenShot
