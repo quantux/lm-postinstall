@@ -95,4 +95,5 @@ util-linux
 util-linux-extra
 optipng
 wimtools
+easytag
 
