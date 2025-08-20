@@ -96,4 +96,6 @@ util-linux-extra
 optipng
 wimtools
 easytag
+eyed3
+id3v2
 
