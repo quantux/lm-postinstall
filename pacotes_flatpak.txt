@@ -18,7 +18,6 @@ com.sublimetext.three
 org.gimp.GIMP
 org.inkscape.Inkscape
 org.blender.Blender
-org.mozilla.Thunderbird
 org.videolan.VLC
 org.filezillaproject.Filezilla
 org.audacityteam.Audacity
