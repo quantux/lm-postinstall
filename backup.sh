@@ -18,13 +18,13 @@ EXCLUDE_FILE="$USER_HOME/.scripts/lm-postinstall/ignore-files"
 
 # Pergunta onde fazer o backup
 echo "Onde deseja fazer o backup?"
-echo "1) Local ($USER_HOME/restic/restic_repo)"
+echo "1) Local (/media/restic/restic_repo)"
 echo "2) Nuvem (Google Drive via rclone)"
 read -rp "Escolha 1 ou 2: " choice
 
 case "$choice" in
   1)
-    LOCAL_PATH="$USER_HOME/restic/restic_repo"
+    LOCAL_PATH="/media/restic/restic_repo"
     if [ ! -d "$LOCAL_PATH" ]; then
       echo "O caminho $LOCAL_PATH não existe. Saindo..."
       exit 1
