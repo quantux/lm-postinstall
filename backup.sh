@@ -1,7 +1,14 @@
 #!/bin/bash
 
-if [ "$UID" -ne 0 ] || [ -z "$SUDO_USER" ]; then
-  echo "Execute com sudo a partir de um usuário comum"; exit 1
+# Se não for root, relança o script com sudo
+if [ "$EUID" -ne 0 ]; then
+  exec sudo "$0" "$@"
+fi
+
+# Agora garantido como root
+if [ -z "$SUDO_USER" ]; then
+  echo "Execute com sudo a partir de um usuário comum"
+  exit 1
 fi
 
 # Global
