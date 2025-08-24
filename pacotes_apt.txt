@@ -2,7 +2,6 @@ build-essential
 git
 curl
 wget
-gpg
 ca-certificates
 gnupg
 lsb-release
@@ -15,7 +14,7 @@ clang
 cmake
 ninja-build
 pkg-config
-libncurses5-dev
+libncurses-dev
 libgmp-dev
 libmysqlclient-dev
 libyaml-dev
@@ -51,7 +50,7 @@ virtualbox-guest-additions-iso
 unrar
 rar
 qpdf
-exiftool
+libimage-exiftool-perl
 fdupes
 nmap
 traceroute
@@ -64,14 +63,13 @@ plymouth
 wine
 jstest-gtk
 f3
-nvidia-container-toolkit
 wireguard
 kdeconnect
 iperf3
 rclone
 smartmontools
 iotop
-dstat
+pcp
 mkvtoolnix-gui
 mame-tools
 sysstat

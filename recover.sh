@@ -5,33 +5,33 @@
 
 # Global
 USER_NAME="${SUDO_USER:-$LOGNAME}"
-USER_UID=$(id -u ${USER_NAME})
+USER_UID=$(id -u "$USER_NAME")
 USER_HOME=$(getent passwd "$USER_NAME" | cut -d: -f6)
 LINUXMINT_CODENAME=$(grep CODENAME /etc/linuxmint/info | cut -d= -f2)
-UBUNTU_CODENAME=$(cat /etc/upstream-release/lsb-release | grep DISTRIB_CODENAME= | cut -f2 -d "=")
-RESTIC_REPO="rclone:gdrive:/restic_repo"
+UBUNTU_CODENAME=$(grep DISTRIB_CODENAME /etc/upstream-release/lsb-release | cut -d= -f2)
 DOCKER_COMPOSE_PATH="$USER_HOME/.scripts/docker-apps/docker-compose.yml"
 
-RESTIC_REPO="/media/restic/restic_repo"
-echo "O repositório restic deve estar em $RESTIC_REPO"
+RESTIC_REPO_LOCAL="/media/restic/restic_repo"
+RESTIC_REPO_REMOTE="rclone:gdrive:/restic_repo"
+
+echo "O repositório restic local deve estar em: $RESTIC_REPO_LOCAL"
 
 # Perguntar onde restaurar o backup
 echo "De onde deseja restaurar o backup Restic?"
-echo "1) Local ($USER_HOME/restic/restic_repo)"
+echo "1) Local ($RESTIC_REPO_LOCAL)"
 echo "2) Nuvem (Google Drive via rclone)"
 read -rp "Escolha 1 ou 2: " choice
 
 case "$choice" in
   1)
-    LOCAL_PATH="$USER_HOME/restic/restic_repo"
-    if [ ! -d "$LOCAL_PATH" ]; then
-      echo "O caminho $LOCAL_PATH não existe. Saindo..."
+    if [ ! -d "$RESTIC_REPO_LOCAL" ]; then
+      echo "O caminho $RESTIC_REPO_LOCAL não existe."
       exit 1
     fi
-    RESTIC_REPO="$LOCAL_PATH"
+    RESTIC_REPO="$RESTIC_REPO_LOCAL"
     ;;
   2)
-    RESTIC_REPO="rclone:gdrive:/restic_repo"
+    RESTIC_REPO="$RESTIC_REPO_REMOTE"
     ;;
   *)
     echo "Opção inválida. Saindo..."
@@ -77,7 +77,7 @@ show_message "Instalando pacotes"
 apt-get install -y $(cat pacotes_apt.txt)
 
 # Nvidia Container Toolkit repository
-curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
   && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
     sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
     sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
