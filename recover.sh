@@ -80,7 +80,7 @@ apt-get install -y $(cat pacotes_apt.txt)
 curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
   && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
     sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
-    sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+    tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
 
 # Instalando libdvd-pkg
 show_message "Instalando libdvd-pkg"
@@ -164,8 +164,8 @@ apt install -y code
 
 # Install nvim
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-sudo rm -rf /opt/nvim
-sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+rm -rf /opt/nvim
+tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 
 # Install Teamviewer
 show_message "Instalando TeamViewer"
@@ -184,29 +184,17 @@ xdg-mime default org.qbittorrent.qBittorrent.desktop x-scheme-handler/magnet
 # Allow games run in fullscreen mode
 echo "SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0" >> /etc/environment
 
-# Docker
-# Remove pacotes antigos relacionados ao Docker
-for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do 
-    apt-get remove -y "$pkg"
-done
-
-# Cria diretório para chave GPG do Docker
+# Install Docker
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do apt-get remove $pkg; done
 install -m 0755 -d /etc/apt/keyrings
-
-# Baixa a chave GPG do Docker
-curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 chmod a+r /etc/apt/keyrings/docker.asc
-
-# Adiciona o repositório oficial do Docker
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
-https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" \
-> /etc/apt/sources.list.d/docker.list
-
-# Atualiza repositórios e instala pacotes Docker
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  tee /etc/apt/sources.list.d/docker.list > /dev/null
 apt-get update
-apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-# Adiciona usuário ao grupo docker
+apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 usermod -aG docker "${SUDO_USER:-$USER}"
 
 # Start containers
