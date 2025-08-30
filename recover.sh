@@ -50,7 +50,7 @@ timedatectl set-local-rtc 1
 
 # Restaurar diretamente para a home
 show_message "Restaurando backup Restic diretamente para $USER_HOME..."
-restic -r "$RESTIC_REPO" restore latest --target "$USER_HOME" --tag mths --tag linux_mint
+restic -r "$RESTIC_REPO" restore latest --target / --tag mths --tag linux_mint
 
 # Set mirrors
 show_message "Atualizando mirrors"
