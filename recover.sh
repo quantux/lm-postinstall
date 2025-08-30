@@ -10,34 +10,14 @@ USER_HOME=$(getent passwd "$USER_NAME" | cut -d: -f6)
 LINUXMINT_CODENAME=$(grep CODENAME /etc/linuxmint/info | cut -d= -f2)
 UBUNTU_CODENAME=$(grep DISTRIB_CODENAME /etc/upstream-release/lsb-release | cut -d= -f2)
 DOCKER_COMPOSE_PATH="$USER_HOME/.scripts/docker-apps/docker-compose.yml"
+RESTIC_REPO="/media/restic/restic_notebook_repo"
 
-RESTIC_REPO_LOCAL="/media/restic/restic_repo"
-RESTIC_REPO_REMOTE="rclone:gdrive:/restic_repo"
+echo "O repositório restic deve estar em: $RESTIC_REPO"
 
-echo "O repositório restic local deve estar em: $RESTIC_REPO_LOCAL"
-
-# Perguntar onde restaurar o backup
-echo "De onde deseja restaurar o backup Restic?"
-echo "1) Local ($RESTIC_REPO_LOCAL)"
-echo "2) Nuvem (Google Drive via rclone)"
-read -rp "Escolha 1 ou 2: " choice
-
-case "$choice" in
-  1)
-    if [ ! -d "$RESTIC_REPO_LOCAL" ]; then
-      echo "O caminho $RESTIC_REPO_LOCAL não existe."
-      exit 1
-    fi
-    RESTIC_REPO="$RESTIC_REPO_LOCAL"
-    ;;
-  2)
-    RESTIC_REPO="$RESTIC_REPO_REMOTE"
-    ;;
-  *)
-    echo "Opção inválida. Saindo..."
-    exit 1
-    ;;
-esac
+if [ ! -d "$RESTIC_REPO" ]; then
+  echo "O caminho $RESTIC_REPO não existe."
+  exit 1
+fi
 
 show_message() {
 	printf '%0.s-' {1..45}; echo
