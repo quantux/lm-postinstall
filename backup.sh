@@ -15,30 +15,14 @@ fi
 USER_NAME="${SUDO_USER:-$USER}"
 USER_HOME=$(getent passwd "$USER_NAME" | cut -d: -f6)
 EXCLUDE_FILE="$USER_HOME/.scripts/lm-postinstall/ignore-files"
+RESTIC_REPO="/media/restic/restic_notebook_repo"
 
-# Pergunta onde fazer o backup
-echo "Onde deseja fazer o backup?"
-echo "1) Local (/media/restic/restic_repo)"
-echo "2) Nuvem (Google Drive via rclone)"
-read -rp "Escolha 1 ou 2: " choice
+echo "O repositório restic deve estar em: $RESTIC_REPO"
 
-case "$choice" in
-  1)
-    LOCAL_PATH="/media/restic/restic_repo"
-    if [ ! -d "$LOCAL_PATH" ]; then
-      echo "O caminho $LOCAL_PATH não existe. Saindo..."
-      exit 1
-    fi
-    RESTIC_REPO="$LOCAL_PATH"
-    ;;
-  2)
-    RESTIC_REPO="rclone:gdrive:/restic_repo"
-    ;;
-  *)
-    echo "Opção inválida. Saindo..."
-    exit 1
-    ;;
-esac
+if [ ! -d "$RESTIC_REPO" ]; then
+  echo "O caminho $RESTIC_REPO não existe."
+  exit 1
+fi
 
 # Backup do dconf
 mkdir -p "$USER_HOME/.dconf"
