@@ -18,7 +18,7 @@ executar_backup() {
 
     (
         cd "$script_dir" || exit 1
-        ./backup.sh && echo "$current_week" > "$backup_control_file" && echo "Backup concluído!"
+        sudo ./backup.sh && echo "$current_week" > "$backup_control_file" && echo "Backup concluído!"
         echo "Processo concluído. Pressione Enter para sair."
         read -r
     )
