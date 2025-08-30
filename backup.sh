@@ -17,8 +17,6 @@ USER_HOME=$(getent passwd "$USER_NAME" | cut -d: -f6)
 EXCLUDE_FILE="$USER_HOME/.scripts/lm-postinstall/ignore-files"
 RESTIC_REPO="/media/restic/restic_notebook_repo"
 
-echo "O repositório restic deve estar em: $RESTIC_REPO"
-
 # Testa se o repositório existe
 if [ ! -d "$RESTIC_REPO" ]; then
   echo "O caminho $RESTIC_REPO não existe."

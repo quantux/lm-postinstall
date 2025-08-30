@@ -12,8 +12,6 @@ UBUNTU_CODENAME=$(grep DISTRIB_CODENAME /etc/upstream-release/lsb-release | cut 
 DOCKER_COMPOSE_PATH="$USER_HOME/.scripts/docker-apps/docker-compose.yml"
 RESTIC_REPO="/media/restic/restic_notebook_repo"
 
-echo "O repositório restic deve estar em: $RESTIC_REPO"
-
 # Testa se o repositório existe
 if [ ! -d "$RESTIC_REPO" ]; then
   echo "O caminho $RESTIC_REPO não existe."
