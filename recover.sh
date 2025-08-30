@@ -42,7 +42,7 @@ show_message() {
 }
 
 user_do() {
-    sudo -u "$USER_NAME" bash -c "$1"
+    sudo -u "$USER_NAME" bash -l -c "$1"
 }
 
 # Fix clock time for windows dualboot
