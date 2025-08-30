@@ -1,18 +1,19 @@
 #!/bin/bash
 
-# Se não for root, relança o script com sudo
-if [ "$EUID" -ne 0 ]; then
-  exec sudo "$0" "$@"
+# Verifica se o sudo está instalado
+if ! command -v sudo >/dev/null 2>&1; then
+    echo "❌ O sudo não está instalado. Este script precisa do sudo."
+    exit 1
 fi
 
-# Agora garantido como root
+# Verifica se o script está sendo executado via sudo
 if [ -z "$SUDO_USER" ]; then
-  echo "Execute com sudo a partir de um usuário comum"
-  exit 1
+    echo "❌ Execute este script usando sudo: sudo $0"
+    exit 1
 fi
 
 # Global
-USER_NAME="${SUDO_USER:-$USER}"
+USER_NAME="$SUDO_USER"
 USER_HOME=$(getent passwd "$USER_NAME" | cut -d: -f6)
 EXCLUDE_FILE="$USER_HOME/.scripts/lm-postinstall/ignore-files"
 RESTIC_REPO="/media/restic/restic_notebook_repo"
@@ -32,9 +33,13 @@ else
     exit 1
 fi
 
+user_do() {
+    sudo -u "$USER_NAME" bash -c "$1"
+}
+
 # Backup do dconf
 mkdir -p "$USER_HOME/.dconf"
-dconf dump / > "$USER_HOME/.dconf/dconf"
+user_do "dconf dump / > $USER_HOME/.dconf/dconf"
 
 # Para os containers Docker usando docker compose
 echo "Parando containers com docker compose..."

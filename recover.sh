@@ -1,10 +1,19 @@
 #!/bin/bash
 
-# Checks for root privileges
-[ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+# Verifica se o sudo está instalado
+if ! command -v sudo >/dev/null 2>&1; then
+    echo "❌ O sudo não está instalado. Este script precisa do sudo."
+    exit 1
+fi
+
+# Verifica se o script está sendo executado via sudo
+if [ -z "$SUDO_USER" ]; then
+    echo "❌ Execute este script usando sudo: sudo $0"
+    exit 1
+fi
 
 # Global
-USER_NAME="${SUDO_USER:-$LOGNAME}"
+USER_NAME="$SUDO_USER"
 USER_UID=$(id -u "$USER_NAME")
 USER_HOME=$(getent passwd "$USER_NAME" | cut -d: -f6)
 LINUXMINT_CODENAME=$(grep CODENAME /etc/linuxmint/info | cut -d= -f2)
@@ -33,7 +42,7 @@ show_message() {
 }
 
 user_do() {
-    su - "$USER_NAME" -c "$SHELL --login -c '$1'"
+    sudo -u "$USER_NAME" bash -c "$1"
 }
 
 # Fix clock time for windows dualboot
