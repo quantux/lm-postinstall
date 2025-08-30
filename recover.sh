@@ -122,7 +122,7 @@ mv /tmp/wps-fonts/wps /usr/share/fonts/
 
 # Load dconf file
 show_message "Carregando configurações do dconf"
-user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${USER_UID}/bus' dconf load / < /$USER_HOME/.dconf/dconf"
+user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${USER_UID}/bus' dconf load / < $USER_HOME/.dconf/dconf"
 
 # Update tldr
 user_do "tldr --update"
