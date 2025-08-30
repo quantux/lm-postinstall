@@ -34,11 +34,11 @@ else
 fi
 
 user_do() {
-    sudo -u "$USER_NAME" bash -c "$1"
+    sudo -u "$USER_NAME" bash -l -c "$1"
 }
 
 # Backup do dconf
-mkdir -p "$USER_HOME/.dconf"
+user_do "mkdir -p $USER_HOME/.dconf"
 user_do "dconf dump / > $USER_HOME/.dconf/dconf"
 
 # Para os containers Docker usando docker compose
