@@ -19,9 +19,19 @@ RESTIC_REPO="/media/restic/restic_notebook_repo"
 
 echo "O repositório restic deve estar em: $RESTIC_REPO"
 
+# Testa se o repositório existe
 if [ ! -d "$RESTIC_REPO" ]; then
   echo "O caminho $RESTIC_REPO não existe."
   exit 1
+fi
+
+# Testa se o restic está instalado
+if command -v restic >/dev/null 2>&1; then
+    echo "✅ Restic está instalado."
+    restic version
+else
+    echo "❌ Restic não está instalado."
+    exit 1
 fi
 
 # Backup do dconf
