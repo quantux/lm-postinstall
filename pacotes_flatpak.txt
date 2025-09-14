@@ -38,3 +38,6 @@ org.flameshot.Flameshot
 org.kiwix.desktop
 com.google.AndroidStudio
 org.musicbrainz.Picard
+com.heroicgameslauncher.hgl
+net.lutris.Lutris
+
