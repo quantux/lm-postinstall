@@ -97,4 +97,5 @@ easytag
 eyed3
 id3v2
 dislocker
+xvfb
 
