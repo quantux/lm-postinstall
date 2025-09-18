@@ -51,6 +51,6 @@ restic -r "$RESTIC_REPO" backup "$USER_HOME" --exclude-file="$EXCLUDE_FILE" -vv 
 
 # Depois do backup, sobe os containers novamente
 echo "Subindo containers com docker compose..."
-docker compose -f "$USER_HOME/.scripts/docker-apps/docker-compose.yml" up -d
+docker compose -f "$USER_HOME/.scripts/docker-apps/docker-compose.yml" up -d syncthing stirling-pdf
 
 echo "Backup concluído com sucesso!"
