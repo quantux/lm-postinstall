@@ -99,4 +99,5 @@ id3v2
 dislocker
 xvfb
 nvme-cli
+fio
 
