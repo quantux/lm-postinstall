@@ -101,4 +101,5 @@ xvfb
 nvme-cli
 fio
 nasm
+chromium
 
