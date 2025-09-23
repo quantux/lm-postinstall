@@ -100,4 +100,5 @@ dislocker
 xvfb
 nvme-cli
 fio
+nasm
 
