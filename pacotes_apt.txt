@@ -102,4 +102,5 @@ nvme-cli
 fio
 nasm
 chromium
+clonezilla
 
