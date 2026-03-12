@@ -40,4 +40,5 @@ com.google.AndroidStudio
 org.musicbrainz.Picard
 com.heroicgameslauncher.hgl
 net.lutris.Lutris
+org.qgis.qgis
 
