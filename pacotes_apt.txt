@@ -103,4 +103,5 @@ fio
 nasm
 chromium
 clonezilla
+k3b
 
