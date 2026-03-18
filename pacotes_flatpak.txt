@@ -41,4 +41,5 @@ org.musicbrainz.Picard
 com.heroicgameslauncher.hgl
 net.lutris.Lutris
 org.qgis.qgis
+org.gnome.Brasero
 
