@@ -104,4 +104,5 @@ nasm
 chromium
 clonezilla
 k3b
+osmium-tool
 
