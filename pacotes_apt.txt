@@ -44,9 +44,6 @@ dkms
 gnome-system-tools
 hardinfo
 p7zip-full
-virtualbox
-virtualbox-qt
-virtualbox-guest-additions-iso
 unrar
 rar
 qpdf
@@ -105,4 +102,7 @@ chromium
 clonezilla
 k3b
 osmium-tool
+liblzf1
+libtpms0
+libxcb-cursor0
 
