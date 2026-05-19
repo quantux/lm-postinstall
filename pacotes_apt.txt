@@ -105,4 +105,11 @@ osmium-tool
 liblzf1
 libtpms0
 libxcb-cursor0
+virtualbox
+virtualbox-dkms
+virtualbox-qt
+virtualbox-ext-pck
+btop
+nvidia-container-toolkit
+nvidia-cuda-toolkit
 
