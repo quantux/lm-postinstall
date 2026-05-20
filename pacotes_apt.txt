@@ -112,4 +112,5 @@ virtualbox-ext-pck
 btop
 nvidia-container-toolkit
 nvidia-cuda-toolkit
+moreutils
 
