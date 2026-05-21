@@ -113,4 +113,6 @@ btop
 nvidia-container-toolkit
 nvidia-cuda-toolkit
 moreutils
+cheese
+cheese-common
 
