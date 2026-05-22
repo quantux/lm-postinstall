@@ -108,7 +108,7 @@ libxcb-cursor0
 virtualbox
 virtualbox-dkms
 virtualbox-qt
-virtualbox-ext-pck
+virtualbox-ext-pack
 btop
 nvidia-container-toolkit
 nvidia-cuda-toolkit
