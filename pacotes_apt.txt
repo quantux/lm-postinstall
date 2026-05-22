@@ -109,6 +109,7 @@ virtualbox
 virtualbox-dkms
 virtualbox-qt
 virtualbox-ext-pack
+virtualbox-guest-additions-iso
 btop
 nvidia-container-toolkit
 nvidia-cuda-toolkit
