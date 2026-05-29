@@ -118,4 +118,5 @@ cheese
 cheese-common
 freerdp3-x11
 stress
+glmark2
 
