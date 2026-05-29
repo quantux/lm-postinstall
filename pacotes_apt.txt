@@ -117,4 +117,5 @@ moreutils
 cheese
 cheese-common
 freerdp3-x11
+stress
 
