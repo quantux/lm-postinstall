@@ -42,4 +42,5 @@ com.heroicgameslauncher.hgl
 net.lutris.Lutris
 org.qgis.qgis
 org.gnome.Brasero
+net.pcsx2.PCSX2
 
