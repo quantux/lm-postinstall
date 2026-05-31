@@ -123,4 +123,7 @@ gddrescue
 testdisk
 gpart
 openssh-server
+virt-manager
+bridge-utils
+ifupdown
 
