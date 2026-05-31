@@ -121,4 +121,5 @@ stress
 glmark2
 gddrescue
 testdisk
+gpart
 
