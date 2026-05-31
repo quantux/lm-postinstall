@@ -132,9 +132,6 @@ user_do "tldr --update"
 show_message "Instalando virtualbox-guest-x11"
 yes Y | apt-get install -y virtualbox-guest-x11
 
-# Add user to vbox group
-usermod -aG vboxusers $USER_NAME
-
 # Install flatpak packages
 show_message "Instalando pacotes flatpak"
 flatpak install -y --noninteractive flathub $(cat pacotes_flatpak.txt)
@@ -202,7 +199,9 @@ echo \
   tee /etc/apt/sources.list.d/docker.list > /dev/null
 apt-get update
 apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-usermod -aG docker "${SUDO_USER:-$USER}"
+
+# Add user to groups
+usermod -aG docker,vboxusers,kvm,libvirt "$USER_NAME"
 
 # Start containers
 docker compose -f "$DOCKER_COMPOSE_PATH" up -d
