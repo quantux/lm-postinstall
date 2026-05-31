@@ -122,4 +122,5 @@ glmark2
 gddrescue
 testdisk
 gpart
+openssh-server
 
