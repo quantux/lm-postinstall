@@ -185,6 +185,12 @@ echo "SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0" >> /etc/environment
 # Install Tailscale
 curl -fsSL https://tailscale.com/install.sh | sh
 
+# Restore custom SSH config
+cp "$USER_HOME/.ssh/sshd_custom.conf" /etc/ssh/sshd_config.d/sshd_custom.conf
+chmod 644 /etc/ssh/sshd_config.d/sshd_custom.conf
+chown root:root /etc/ssh/sshd_config.d/sshd_custom.conf
+systemctl restart ssh
+
 # Install Docker
 for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do apt-get remove $pkg; done
 install -m 0755 -d /etc/apt/keyrings
