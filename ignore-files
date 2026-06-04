@@ -45,7 +45,6 @@ vmware
 .ebcli-virtual-env
 .electrum
 .emulator_console_auth_token
-.eteks
 .expo
 .fastboot
 .flutter
