@@ -125,4 +125,5 @@ virt-manager
 bridge-utils
 ifupdown
 mpv
+vlc
 
