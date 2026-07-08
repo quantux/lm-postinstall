@@ -126,4 +126,5 @@ bridge-utils
 ifupdown
 mpv
 vlc
+ddcutil
 
