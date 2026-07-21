@@ -45,4 +45,5 @@ net.pcsx2.PCSX2
 org.gnome.Boxes
 app.organicmaps.desktop
 com.anydesk.Anydesk
+org.fedoraproject.MediaWriter
 
