@@ -46,4 +46,5 @@ org.gnome.Boxes
 app.organicmaps.desktop
 com.anydesk.Anydesk
 org.fedoraproject.MediaWriter
+io.anytype.anytype
 
