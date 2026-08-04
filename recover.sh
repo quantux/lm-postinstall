@@ -140,14 +140,6 @@ flatpak install -y --noninteractive flathub $(cat pacotes_flatpak.txt)
 show_message "Atualizando pacotes flatpak"
 flatpak update -y
 
-# Install Anydesk
-install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY -o /etc/apt/keyrings/keys.anydesk.com.asc
-chmod a+r /etc/apt/keyrings/keys.anydesk.com.asc
-echo "deb [signed-by=/etc/apt/keyrings/keys.anydesk.com.asc] https://deb.anydesk.com all main" | tee /etc/apt/sources.list.d/anydesk-stable.list > /dev/null
-apt update
-apt install -y anydesk
-
 # Install VSCode
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 install -D -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/packages.microsoft.gpg
@@ -161,6 +153,108 @@ apt install -y code
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
 rm -rf /opt/nvim
 tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+
+# Install Android Studio
+show_message "Instalando Android Studio"
+wget "https://edgedl.me.gvt1.com/android/studio/ide-zips/2026.1.3.7/android-studio-quail3-linux.tar.gz" -O /tmp/android-studio.tar.gz
+rm -rf /opt/android-studio
+tar -xzf /tmp/android-studio.tar.gz -C /opt
+
+# Install Android SDK (tools + platforms + emulator) in ~/Android/Sdk
+show_message "Instalando Android SDK em $ANDROID_HOME"
+ANDROID_HOME="$USER_HOME/Android/Sdk"
+ANDROID_JAVA_HOME="/opt/android-studio/jbr"
+SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+
+# Download the latest command-line tools (version resolved dynamically from Google's repo)
+mkdir -p /tmp/cmdline-tools-extract
+LATEST_CMDLINE=$(curl -s "https://dl.google.com/android/repository/repository2-3.xml" \
+    | grep -oE 'commandlinetools-linux-[0-9]+_latest\.zip' | sort -u -t- -k3 -n | tail -1)
+wget "https://dl.google.com/android/repository/$LATEST_CMDLINE" -O /tmp/cmdline-tools.zip
+unzip -q /tmp/cmdline-tools.zip -d /tmp/cmdline-tools-extract
+mkdir -p "$ANDROID_HOME/cmdline-tools"
+rm -rf "$ANDROID_HOME/cmdline-tools/latest"
+mv /tmp/cmdline-tools-extract/cmdline-tools "$ANDROID_HOME/cmdline-tools/latest"
+chown -R "$USER_NAME:$USER_NAME" "$ANDROID_HOME"
+
+# Accept licenses (as user, using the Java bundled with Android Studio)
+user_do "export JAVA_HOME=$ANDROID_JAVA_HOME && yes | $SDKMANAGER --licenses >/dev/null 2>&1"
+
+# Resolve packages dynamically from what sdkmanager offers (stable channel)
+SDK_LIST=$(user_do "export JAVA_HOME=$ANDROID_JAVA_HOME && $SDKMANAGER --list")
+
+# Last two major Android versions (e.g. 37 and 36)
+PLAT_LINES=$(printf '%s\n' "$SDK_LIST" | awk -F'|' '
+    /^  platforms;android-/ {
+        p=$1; gsub(/^ +| +$/,"",p); sub(/^platforms;android-/,"",p);
+        if (p ~ /(-beta|-rc|-alpha|-canary)/) next;
+        m=p; sub(/-.*|\..*/,"",m);
+        print m, p
+    }' | sort -u -k2)
+TOP_MAJORS=$(printf '%s\n' "$PLAT_LINES" | awk '{print $1}' | sort -un | tail -2)
+
+# Assemble the package list
+SDK_PACKAGES=()
+for m in $TOP_MAJORS; do
+    while read -r M P; do
+        [ "$M" = "$m" ] || continue
+        SDK_PACKAGES+=("platforms;android-$P")
+        [[ "$P" != *-ext* ]] && SDK_PACKAGES+=("sources;android-$P")
+    done <<< "$PLAT_LINES"
+done
+for m in $TOP_MAJORS; do
+    while read -r M V; do
+        [ "$M" = "$m" ] && SDK_PACKAGES+=("build-tools;$V")
+    done <<< "$(printf '%s\n' "$SDK_LIST" | awk -F'|' '
+        /^  build-tools;/ {
+            v=$1; gsub(/^ +| +$/,"",v); sub(/^build-tools;/,"",v);
+            if (v ~ /-rc|-beta/) next;
+            m=v; sub(/\..*/,"",m); print m, v
+        }' | sort -V -k2)"
+done
+
+LATEST_NDK=$(printf '%s\n' "$SDK_LIST" | awk -F'|' '/^  ndk;/{gsub(/^ +| +$/,"",$1); sub(/^ndk;/,"",$1); if($1 ~ /-/) next; print $1}' | sort -V | tail -1)
+LATEST_CMAKE=$(printf '%s\n' "$SDK_LIST" | awk -F'|' '/^  cmake;/{gsub(/^ +| +$/,"",$1); sub(/^cmake;/,"",$1); print $1}' | sort -V | tail -1)
+
+SDK_PACKAGES+=(
+    "platform-tools"
+    "emulator"
+    "cmdline-tools;latest"
+    "ndk;$LATEST_NDK"
+    "cmake;$LATEST_CMAKE"
+    "extras;android;m2repository"
+    "extras;google;m2repository"
+)
+
+# Install everything (as user)
+user_do "export JAVA_HOME=$ANDROID_JAVA_HOME && yes | $SDKMANAGER ${SDK_PACKAGES[*]}"
+
+echo "ANDROID_HOME=$ANDROID_HOME" >> /etc/environment
+echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> /etc/environment
+
+# Install scrcpy
+show_message "Instalando scrcpy"
+SCRCPY_URL=$(curl -s "https://api.github.com/repos/Genymobile/scrcpy/releases/latest" \
+    | grep -oE '"browser_download_url": "[^"]*linux-x86_64[^"]*\.tar\.gz"' | cut -d'"' -f4)
+wget "$SCRCPY_URL" -O /tmp/scrcpy.tar.gz
+rm -rf /tmp/scrcpy
+mkdir -p /tmp/scrcpy
+tar -xzf /tmp/scrcpy.tar.gz -C /tmp/scrcpy --strip-components=1
+install -m 755 /tmp/scrcpy/scrcpy /usr/local/bin/scrcpy
+install -m 755 /tmp/scrcpy/scrcpy_server /usr/local/bin/scrcpy_server
+
+# Install VirtualBox from virtualbox.org (latest compatible with the Ubuntu base of this Mint)
+show_message "Instalando VirtualBox"
+wget -O- https://www.virtualbox.org/download/oracle_vbox_2016.asc \
+    | gpg --yes --output /usr/share/keyrings/oracle-virtualbox-2016.gpg --dearmor
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-virtualbox-2016.gpg] https://download.virtualbox.org/virtualbox/debian $UBUNTU_CODENAME contrib" \
+    > /etc/apt/sources.list.d/virtualbox.list
+apt-get update
+VBOX_PKG="virtualbox-$(curl -s https://download.virtualbox.org/virtualbox/LATEST.TXT | cut -d. -f1-2)"
+if ! apt-cache show "$VBOX_PKG" >/dev/null 2>&1; then
+    VBOX_PKG=$(apt-cache search --names-only '^virtualbox-[0-9]' | awk '{print $1}' | sort -V | tail -1)
+fi
+apt-get install -y "$VBOX_PKG"
 
 # Install Teamviewer
 show_message "Instalando TeamViewer"
