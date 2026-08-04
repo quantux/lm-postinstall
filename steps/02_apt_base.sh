@@ -4,7 +4,7 @@
 
 step_02_apt_base() {
     show_message "Atualizando mirrors"
-    cp /etc/apt/sources.list.d/official-package-repositories.list /etc/apt/sources.list.d/official-package-repositories.list.bkp
+    cp /etc/apt/sources.list.d/official-package-repositories.list "$USER_HOME/official-package-repositories.list.bkp"
     sed -i "s/wilma/$LINUXMINT_CODENAME/g; s/noble/$UBUNTU_CODENAME/g" /etc/apt/sources.list.d/official-package-repositories.list
 
     show_message "Habilitando pacotes de 32 bits"
