@@ -26,5 +26,5 @@ step_16_antigravity() {
     show_message "Instalando Google Antigravity CLI"
     CLI_URL=$(echo "$IDE_HTML" | grep -oE 'https://antigravity\.google/cli/install\.sh' | head -1 || true)
     [ -z "$CLI_URL" ] && CLI_URL="https://antigravity.google/cli/install.sh"
-    curl -fsSL "$CLI_URL" | bash || echo "⚠️  Falha ao instalar CLI, continuando..."
+    user_do "curl -fsSL '$CLI_URL' | bash" || echo "⚠️  Falha ao instalar CLI, continuando..."
 }
