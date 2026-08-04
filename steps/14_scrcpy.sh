@@ -12,5 +12,5 @@ step_14_scrcpy() {
     mkdir -p /tmp/scrcpy
     tar -xzf /tmp/scrcpy.tar.gz -C /tmp/scrcpy --strip-components=1
     install -m 755 /tmp/scrcpy/scrcpy /usr/local/bin/scrcpy
-    install -m 755 /tmp/scrcpy/scrcpy_server /usr/local/bin/scrcpy_server
+    install -m 755 /tmp/scrcpy/scrcpy-server /usr/local/bin/scrcpy-server
 }

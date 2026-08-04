@@ -23,5 +23,9 @@ step_21_docker() {
     done
 
     show_message "Subindo containers"
-    docker compose -f "$DOCKER_COMPOSE_PATH" up -d
+    if [ -f "$DOCKER_COMPOSE_PATH" ]; then
+        docker compose -f "$DOCKER_COMPOSE_PATH" up -d
+    else
+        echo "⚠️  $DOCKER_COMPOSE_PATH não encontrado após o restore; pulando subida dos containers."
+    fi
 }

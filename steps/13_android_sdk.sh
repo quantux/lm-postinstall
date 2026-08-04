@@ -66,7 +66,8 @@ step_13_android_sdk() {
         "extras;google;m2repository"
     )
 
-    user_do "export JAVA_HOME=$ANDROID_JAVA_HOME && yes | $SDKMANAGER ${SDK_PACKAGES[*]}"
+    SDK_PACKAGES_Q=$(printf '%q ' "${SDK_PACKAGES[@]}")
+    user_do "export JAVA_HOME=$ANDROID_JAVA_HOME && yes | $SDKMANAGER $SDK_PACKAGES_Q"
 
     echo "ANDROID_HOME=$ANDROID_HOME" >> /etc/environment
     echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> /etc/environment
