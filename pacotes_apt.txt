@@ -105,11 +105,6 @@ osmium-tool
 liblzf1
 libtpms0
 libxcb-cursor0
-virtualbox
-virtualbox-dkms
-virtualbox-qt
-virtualbox-ext-pack
-virtualbox-guest-additions-iso
 btop
 moreutils
 cheese
