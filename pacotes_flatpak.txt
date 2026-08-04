@@ -38,7 +38,7 @@ org.kiwix.desktop
 org.musicbrainz.Picard
 com.heroicgameslauncher.hgl
 net.lutris.Lutris
-org.qgis.qgis
+org.qgis.qgis//stable
 org.gnome.Brasero
 net.pcsx2.PCSX2
 org.gnome.Boxes
