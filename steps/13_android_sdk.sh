@@ -56,6 +56,7 @@ step_13_android_sdk() {
     LATEST_NDK=$(printf '%s\n' "$SDK_LIST" | awk -F'|' '/^  ndk;/{gsub(/^ +| +$/,"",$1); sub(/^ndk;/,"",$1); if($1 ~ /-/) next; print $1}' | sort -V | tail -1)
     LATEST_CMAKE=$(printf '%s\n' "$SDK_LIST" | awk -F'|' '/^  cmake;/{gsub(/^ +| +$/,"",$1); sub(/^cmake;/,"",$1); print $1}' | sort -V | tail -1)
 
+    # Componentes de "SDK Tools" solicitados explicitamente
     SDK_PACKAGES+=(
         "platform-tools"
         "emulator"
@@ -64,6 +65,14 @@ step_13_android_sdk() {
         "cmake;$LATEST_CMAKE"
         "extras;android;m2repository"
         "extras;google;m2repository"
+        "extras;google;google_play_services"
+        "extras;google;market_apk_expansion"
+        "extras;google;market_licensing"
+        "extras;google;webdriver"
+        "skiaparser;1"
+        "skiaparser;2"
+        "skiaparser;3"
+        "build;lightbuild;0.0.10-alpha01"
     )
 
     SDK_PACKAGES_Q=$(printf '%q ' "${SDK_PACKAGES[@]}")
