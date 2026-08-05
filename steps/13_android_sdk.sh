@@ -56,11 +56,14 @@ step_13_android_sdk() {
     LATEST_NDK=$(printf '%s\n' "$SDK_LIST" | awk -F'|' '/^  ndk;/{gsub(/^ +| +$/,"",$1); sub(/^ndk;/,"",$1); if($1 ~ /-/) next; print $1}' | sort -V | tail -1)
     LATEST_CMAKE=$(printf '%s\n' "$SDK_LIST" | awk -F'|' '/^  cmake;/{gsub(/^ +| +$/,"",$1); sub(/^cmake;/,"",$1); print $1}' | sort -V | tail -1)
 
-    # Componentes de "SDK Tools" solicitados explicitamente
+    # Componentes de "SDK Tools" solicitados explicitamente.
+    # "cmdline-tools;latest" NÃO é pedido aqui de propósito: o cmdline-tools já
+    # foi extraído manualmente em "$ANDROID_HOME/cmdline-tools/latest" acima.
+    # Pedir o pacote faria o sdkmanager detectar o diretório já existente e
+    # instalar num duplicado "latest-2", gerando warnings de local inconsistente.
     SDK_PACKAGES+=(
         "platform-tools"
         "emulator"
-        "cmdline-tools;latest"
         "ndk;$LATEST_NDK"
         "cmake;$LATEST_CMAKE"
         "extras;android;m2repository"
