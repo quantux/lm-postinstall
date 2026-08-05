@@ -39,7 +39,6 @@ vmware
 .dartServer
 .dart-tool
 .dbus
-.docker
 .dotnet
 .dvdcss
 .ebcli-virtual-env
