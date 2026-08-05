@@ -23,9 +23,21 @@ step_21_docker() {
     done
 
     show_message "Subindo containers"
-    if [ -f "$DOCKER_COMPOSE_PATH" ]; then
+    if [ ! -f "$DOCKER_COMPOSE_PATH" ]; then
+        echo "⚠️  $DOCKER_COMPOSE_PATH não encontrado após o restore; pulando subida dos containers."
+        return 0
+    fi
+
+    # O docker-compose reserva GPU para o ollama. Sem o driver NVIDIA carregado
+    # (ex.: num VM sem GPU), o prestart hook do nvidia-container-cli falha com
+    # "nvml error: driver not loaded" e derruba a subida. Nesses casos, sobemos
+    # os containers com um override removendo a reserva de GPU (ollama em CPU).
+    GPU_OFF="/tmp/docker-compose.no-gpu.yml"
+    if command -v nvidia-smi >/dev/null 2>&1 && nvidia-smi >/dev/null 2>&1; then
         docker compose -f "$DOCKER_COMPOSE_PATH" up -d
     else
-        echo "⚠️  $DOCKER_COMPOSE_PATH não encontrado após o restore; pulando subida dos containers."
+        echo "⚠️  Driver NVIDIA não detectado; subindo containers sem reserva de GPU (ollama em CPU)."
+        printf 'services:\n  ollama:\n    deploy:\n      resources:\n        reservations:\n          devices: !reset []\n' > "$GPU_OFF"
+        docker compose -f "$DOCKER_COMPOSE_PATH" -f "$GPU_OFF" up -d
     fi
 }
