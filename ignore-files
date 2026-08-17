@@ -28,6 +28,7 @@ vmware
 .ecryptfs
 .Genymobile
 .var/app/com.stremio.Stremio/cache
+.var/app/*/cache
 .wine
 .dropbox-dist
 .dropbox
