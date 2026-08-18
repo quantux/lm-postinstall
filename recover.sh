@@ -112,6 +112,7 @@ run_step 20-ssh                    step_20_ssh                    || FAILED+=(20
 run_step 21-docker                 step_21_docker                 || FAILED+=(21-docker)
 run_step 22-shell                  step_22_shell                  || FAILED+=(22-shell)
 run_step 23-cleanup                step_23_cleanup                || FAILED+=(23-cleanup)
+run_step 24-udev                   step_24_udev                   || FAILED+=(24-udev)
 
 # ---------------------------------------------------------------------------
 # Resumo final
