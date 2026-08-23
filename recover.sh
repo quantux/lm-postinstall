@@ -58,7 +58,7 @@ fi
 # Variáveis globais usadas pelas etapas
 LINUXMINT_CODENAME=$(grep CODENAME /etc/linuxmint/info | cut -d= -f2)
 UBUNTU_CODENAME=$(grep DISTRIB_CODENAME /etc/upstream-release/lsb-release | cut -d= -f2)
-DOCKER_COMPOSE_PATH="$USER_HOME/.scripts/docker-apps/docker-compose.yml"
+DOCKER_COMPOSE_PATH="$USER_HOME/.custom/docker-apps/docker-compose.yml"
 RESTIC_REPO="/media/restic/restic_notebook_repo"
 
 if [ ! -d "$RESTIC_REPO" ]; then

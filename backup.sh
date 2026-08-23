@@ -15,7 +15,7 @@ fi
 # Global
 USER_NAME="$SUDO_USER"
 USER_HOME=$(getent passwd "$USER_NAME" | cut -d: -f6)
-EXCLUDE_FILE="$USER_HOME/.scripts/lm-postinstall/ignore-files"
+EXCLUDE_FILE="$USER_HOME/.custom/lm-postinstall/ignore-files"
 RESTIC_REPO="/media/restic/restic_notebook_repo"
 
 # Testa se o repositório existe
@@ -43,7 +43,7 @@ user_do "dconf dump / > $USER_HOME/.dconf/dconf"
 
 # Para os containers Docker usando docker compose
 echo "Parando containers com docker compose..."
-docker compose -f "$USER_HOME/.scripts/docker-apps/docker-compose.yml" down
+docker compose -f "$USER_HOME/.custom/docker-apps/docker-compose.yml" down
 
 # Executa o backup com restic
 echo "Iniciando backup com Restic no repositório: $RESTIC_REPO"
@@ -51,6 +51,6 @@ restic -r "$RESTIC_REPO" backup "$USER_HOME" --exclude-file="$EXCLUDE_FILE" -vv 
 
 # Depois do backup, sobe os containers novamente
 echo "Subindo containers com docker compose..."
-docker compose -f "$USER_HOME/.scripts/docker-apps/docker-compose.yml" up -d syncthing stirling-pdf
+docker compose -f "$USER_HOME/.custom/docker-apps/docker-compose.yml" up -d syncthing stirling-pdf
 
 echo "Backup concluído com sucesso!"

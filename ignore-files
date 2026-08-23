@@ -13,7 +13,7 @@ Android
 Syncthing/Sync/*
 Syncthing/Sync/**/*
 workspace/lm-postinstall
-.scripts/lm-postinstall
+.custom/lm-postinstall
 .android
 .local/share/Trash
 .steam/debian-installation/steamapps/common
