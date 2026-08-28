@@ -8,6 +8,7 @@ Scripts de backup e restauração pós-instalação do Linux Mint.
 - `backup.sh` — backup do sistema (restic + dconf + docker)
 - `remember_backup.sh` — lembrete mensal de backup
 - `steps/` — etapas modulares da restauração (`XX_nome.sh`)
+- `auto-update/` — templates da atualização automática (instalados na etapa 25)
 - `lib/common.sh` — helpers compartilhados e infraestrutura de idempotência
 - `pacotes_apt.txt` — lista de pacotes apt
 - `pacotes_flatpak.txt` — lista de pacotes flatpak

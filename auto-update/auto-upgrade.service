@@ -1,0 +1,10 @@
+[Unit]
+Description=Atualizacao automatica quando as listas do apt mudam
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/auto-upgrade.sh
+CPUWeight=20
+IOWeight=20
+Nice=10

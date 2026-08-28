@@ -1,0 +1,9 @@
+[Unit]
+Description=Dispara a atualizacao automatica quando as listas do apt mudam
+
+[Path]
+PathChanged=/var/lib/apt/lists
+Unit=auto-upgrade.service
+
+[Install]
+WantedBy=multi-user.target

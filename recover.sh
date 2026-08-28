@@ -113,6 +113,7 @@ run_step 21-docker                 step_21_docker                 || FAILED+=(21
 run_step 22-shell                  step_22_shell                  || FAILED+=(22-shell)
 run_step 23-cleanup                step_23_cleanup                || FAILED+=(23-cleanup)
 run_step 24-udev                   step_24_udev                   || FAILED+=(24-udev)
+run_step 25-auto-update            step_25_auto_update            || FAILED+=(25-auto-update)
 
 # ---------------------------------------------------------------------------
 # Resumo final
