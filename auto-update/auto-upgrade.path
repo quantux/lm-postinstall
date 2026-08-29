@@ -1,5 +1,10 @@
 [Unit]
 Description=Dispara a atualizacao automatica quando as listas do apt mudam
+# "apt-get update" (rodado pelo apt-daily e pela propria cadeia) reescreve
+# varios arquivos de uma vez, gerando uma rajada de eventos. Sem isto o
+# systemd mata o unit por exceder o limite de starts (padrao: 5 em 10s).
+StartLimitIntervalSec=60
+StartLimitBurst=100
 
 [Path]
 PathChanged=/var/lib/apt/lists
