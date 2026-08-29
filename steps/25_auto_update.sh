@@ -22,9 +22,11 @@ step_25_auto_update() {
 
     install -m 0644 "$SRC/auto-upgrade.service" /etc/systemd/system/auto-upgrade.service
     install -m 0644 "$SRC/auto-upgrade.path" /etc/systemd/system/auto-upgrade.path
+    install -m 0644 "$SRC/auto-upgrade-flatpak.path" /etc/systemd/system/auto-upgrade-flatpak.path
 
     systemctl daemon-reload
     systemctl enable --now auto-upgrade.path
+    systemctl enable --now auto-upgrade-flatpak.path
 
     # Rede de segurança: mantém ativa a automação diária do próprio Mint.
     mkdir -p /var/lib/linuxmint

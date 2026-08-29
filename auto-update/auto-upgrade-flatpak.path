@@ -1,0 +1,16 @@
+[Unit]
+Description=Dispara a atualizacao automatica quando ha atualizacoes de flatpak
+# O mintupdate (tray) atualiza os refs/appstream do flatpak ao detectar
+# atualizacoes; estas mudancas disparam a mesma cadeia de upgrade.
+# Limite de start desabilitado: rajadas de eventos nao podem derrubar o unit.
+StartLimitIntervalSec=0
+StartLimitBurst=1000
+
+[Path]
+PathChanged=/var/lib/flatpak/repo/refs/remotes/flathub/app
+PathChanged=/var/lib/flatpak/repo/refs/remotes/flathub/runtime
+PathChanged=/var/lib/flatpak/repo/refs/remotes/flathub/appstream2
+Unit=auto-upgrade.service
+
+[Install]
+WantedBy=multi-user.target
