@@ -4,18 +4,25 @@ set -u
 LOG=/var/log/auto-upgrade.log
 STAMP=/run/auto-upgrade.last
 LOCK=/run/auto-upgrade.lock
-DEBOUNCE=600
+DEBOUNCE=120
 
 log() { echo "[$(date '+%F %T')] $*" >> "$LOG"; }
 
 # Guarda contra loop: o proprio "apt-get update" da cadeia reescreve as listas
-# (e cria/remove o lock), o que re-dispara este unit. Ignora disparos repetidos.
+# (e cria/remove o lock), o que re-dispara este unit. Disparos dentro da janela
+# so sao ignorados se nao houver nada pendente (apt ou flatpak) - assim uma
+# descoberta de atualizacao logo apos uma execucao nunca e perdida.
 now=$(date +%s)
 last=0
 [ -f "$STAMP" ] && last=$(cat "$STAMP" 2>/dev/null || echo 0)
 if [ $(( now - last )) -lt "$DEBOUNCE" ]; then
-  log "Disparo repetido ignorado (janela ${DEBOUNCE}s)."
-  exit 0
+  pending_apt=$(apt-get -s upgrade 2>/dev/null | grep -c "^Inst ")
+  pending_flatpak=$(timeout 25 flatpak remote-ls --updates 2>/dev/null | grep -c .)
+  if [ $(( pending_apt + pending_flatpak )) -eq 0 ]; then
+    log "Sem atualizacoes pendentes; disparo repetido ignorado (janela ${DEBOUNCE}s)."
+    exit 0
+  fi
+  log "Disparo dentro da janela mas com ${pending_apt} apt + ${pending_flatpak} flatpak pendentes; executando."
 fi
 echo "$now" > "$STAMP"
 

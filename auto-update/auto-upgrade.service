@@ -1,6 +1,11 @@
 [Unit]
 Description=Atualizacao automatica quando as listas do apt mudam
 After=network-online.target
+# Rajadas de eventos (apt-get update reescreve dezenas de listas) disparam este
+# servico varias vezes em 1s. Sem isto o systemd o mata por limite de starts
+# (padrao 5 em 10s). Seguro: cada disparo extra e no-op do debounce.
+StartLimitIntervalSec=0
+StartLimitBurst=1000
 
 [Service]
 Type=oneshot
