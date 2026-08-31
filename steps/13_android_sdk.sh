@@ -81,6 +81,13 @@ step_13_android_sdk() {
     SDK_PACKAGES_Q=$(printf '%q ' "${SDK_PACKAGES[@]}")
     user_do "export JAVA_HOME=$ANDROID_JAVA_HOME && yes | $SDKMANAGER $SDK_PACKAGES_Q"
 
+    if [ -x "$ANDROID_HOME/platform-tools/adb" ]; then
+        ln -sf "$ANDROID_HOME/platform-tools/adb" /usr/local/bin/adb
+        show_message "adb disponível em /usr/local/bin/adb"
+    else
+        echo "⚠️ adb não encontrado em $ANDROID_HOME/platform-tools/adb"
+    fi
+
     echo "ANDROID_HOME=$ANDROID_HOME" >> /etc/environment
     echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> /etc/environment
 }
