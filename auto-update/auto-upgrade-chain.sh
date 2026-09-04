@@ -33,6 +33,19 @@ flatpak update -y
 # Flatpaks instalados por-usuario (o flatpak update como root nao os ve).
 runuser -u __USER_NAME__ -- flatpak update -y --user || true
 
+# O daemon do Update Manager (tray) nao detecta instalacoes de flatpak feitas
+# por fora do proprio mintupdate, deixando o icone obsoleto. Se havia flatpak
+# pendente (acabou de instalar), reinicia o daemon para limpar o estado.
+fp_pending=$(flatpak remote-ls --updates 2>/dev/null | wc -l)
+if [ "$fp_pending" -gt 0 ]; then
+  echo "Flatpaks atualizados; reiniciando o tray do Update Manager para limpar o estado."
+  pkill -f "mintUpdate.py" 2>/dev/null
+  sleep 1
+  sudo -u __USER_NAME__ env DISPLAY=:0 XAUTHORITY=__USER_HOME__/.Xauthority \
+    DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/__USER_UID__/bus XDG_RUNTIME_DIR=/run/user/__USER_UID__ \
+    setsid /usr/lib/linuxmint/mintUpdate/mintUpdate.py </dev/null >/dev/null 2>&1 &
+fi
+
 # Spices sao por-usuario e precisam da sessao grafica; roda como o usuario logado.
 runuser -u __USER_NAME__ -- env DISPLAY=:0 XAUTHORITY=__USER_HOME__/.Xauthority \
   DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/__USER_UID__/bus XDG_RUNTIME_DIR=/run/user/__USER_UID__ \
