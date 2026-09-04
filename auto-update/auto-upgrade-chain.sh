@@ -3,11 +3,31 @@ set -u
 
 # Executado como root pelo auto-upgrade.sh. Sem "sudo" (ja e root).
 # Os valores __USER_* sao substituidos na instalacao (steps/25_auto_update.sh).
-apt-get update -o APT::Acquire::LockTimeout=300
-apt-get upgrade -y -o APT::Acquire::LockTimeout=300
-apt-get dist-upgrade -y -o APT::Acquire::LockTimeout=300
-apt-get autoremove -y -o APT::Acquire::LockTimeout=300
-apt-get autoclean -y -o APT::Acquire::LockTimeout=300
+
+# Always-Include-Phased-Updates: o tray mostra updates em phasing (rollout
+# gradual do Ubuntu) como disponiveis; sem esta opcao o apt os adia para sempre.
+APT_OPTS="-o APT::Acquire::LockTimeout=300 -o Acquire::Retries=3 -o Acquire::http::Timeout=60 -o Acquire::https::Timeout=60 -o APT::Get::Always-Include-Phased-Updates=true"
+
+# Re-tenta ate 3x com pausa: cobre falhas transitorias de rede/DNS e lock.
+apt_retry() {
+  local i
+  for i in 1 2 3; do
+    if apt-get "$@" $APT_OPTS; then
+      return 0
+    fi
+    echo "== apt-get $* falhou (tentativa ${i}/3); aguardando 60s..."
+    sleep 60
+  done
+  echo "== apt-get $* falhou apos 3 tentativas."
+  return 1
+}
+
+apt_retry update
+apt_retry upgrade -y
+apt_retry dist-upgrade -y
+apt_retry autoremove -y || true
+apt_retry autoclean -y || true
+
 flatpak update -y
 
 # Flatpaks instalados por-usuario (o flatpak update como root nao os ve).
