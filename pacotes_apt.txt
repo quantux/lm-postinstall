@@ -123,4 +123,5 @@ ifupdown
 mpv
 vlc
 ddcutil
+aircrack-ng
 
