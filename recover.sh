@@ -114,6 +114,7 @@ run_step 22-shell                  step_22_shell                  || FAILED+=(22
 run_step 23-cleanup                step_23_cleanup                || FAILED+=(23-cleanup)
 run_step 24-udev                   step_24_udev                   || FAILED+=(24-udev)
 run_step 25-auto-update            step_25_auto_update            || FAILED+=(25-auto-update)
+run_step 26-wallpaper              step_26_wallpaper              || FAILED+=(26-wallpaper)
 
 # ---------------------------------------------------------------------------
 # Resumo final

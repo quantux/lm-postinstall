@@ -14,6 +14,7 @@ fi
 
 # Global
 USER_NAME="$SUDO_USER"
+USER_UID=$(id -u "$USER_NAME")
 USER_HOME=$(getent passwd "$USER_NAME" | cut -d: -f6)
 EXCLUDE_FILE="$USER_HOME/.custom/lm-postinstall/ignore-files"
 RESTIC_REPO="/media/restic/restic_notebook_repo"
@@ -40,6 +41,13 @@ user_do() {
 # Backup do dconf
 user_do "mkdir -p $USER_HOME/.dconf"
 user_do "dconf dump / > $USER_HOME/.dconf/dconf"
+
+# Registra qual wallpaper está em uso. A imagem em si já é salva pelo restic;
+# aqui guardamos apenas a escolha para reaplicá-la na restauração (etapa 26).
+echo "Registrando wallpaper em uso..."
+WALLPAPER_STATE="$USER_HOME/.config/lm-postinstall/wallpaper"
+user_do "mkdir -p $USER_HOME/.config/lm-postinstall"
+user_do "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/${USER_UID}/bus' gsettings get org.cinnamon.desktop.background picture-uri > '$WALLPAPER_STATE'"
 
 # Para os containers Docker usando docker compose
 echo "Parando containers com docker compose..."
