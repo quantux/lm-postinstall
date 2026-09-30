@@ -83,6 +83,7 @@ tesseract-ocr
 tesseract-ocr-por
 hashdeep
 restic
+zpaq
 jmtpfs
 imagemagick
 mediainfo
